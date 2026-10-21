@@ -12,8 +12,9 @@ Este também é um projeto de aprendizado: acompanhar a criação de uma aplica�
 - Layout responsivo, menu para telas pequenas e perguntas frequentes expansíveis.
 - Contatos demonstrativos: esta versão não recebe pedidos nem pagamentos.
 - Primeiro commit `c8a7191` enviado e confirmado na branch `main` do GitHub.
-- Configuração de qualidade e CI preparada localmente na branch `ci/validacoes-iniciais`.
-- Workflow ainda não enviado nem executado no GitHub; publicação na Azure pendente.
+- CI integrada à `main` pelo [PR #1](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/1), com execuções bem-sucedidas no PR e após o merge.
+- Azure Static Web App criado manualmente pelo responsável no plano Free.
+- Empacotamento público e deploy manual preparados nesta etapa; primeira publicação ainda pendente.
 
 Repositório informado para este projeto: [anacletocoser/iluminarte-landing-page-azure](https://github.com/anacletocoser/iluminarte-landing-page-azure).
 
@@ -58,9 +59,9 @@ O `package.json` é marcado como `private` para impedir publicação acidental c
 
 O `pnpm-workspace.yaml` configura um único projeto: define versões exatas ao adicionar dependências, verifica a versão do runtime, desabilita scripts de instalação e mantém armazenamento e cache em `.cache/`, que não é versionada. Se as dependências locais estiverem inconsistentes, os comandos falham e pedem uma instalação explícita, em vez de instalar automaticamente. Não há monorepo ou múltiplos pacotes nesta configuração.
 
-## Integração contínua (CI)
+## Integração contínua (CI) e deploy manual
 
-O arquivo [`.github/workflows/ci.yml`](.github/workflows/ci.yml) está preparado localmente. Ele só poderá executar no GitHub depois de enviado e quando o evento e as políticas do repositório permitirem. Nenhuma execução remota foi realizada nesta etapa.
+O arquivo [`.github/workflows/ci.yml`](.github/workflows/ci.yml) já executou com sucesso no [PR #1](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687061827) e na [`main` após o merge](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687477243). Nesta etapa ele recebe o empacotamento e uma opção explícita de deploy manual.
 
 Gatilhos configurados:
 
@@ -68,11 +69,38 @@ Gatilhos configurados:
 - Abertura ou atualização de pull request destinado à `main`.
 - Execução manual em **Actions**, depois que o workflow estiver disponível na branch padrão.
 
-O job usa um executor padrão Ubuntu, Node e pnpm definidos pelo projeto e a instalação com lockfile congelado. Depois executa as mesmas três verificações disponíveis localmente. Um push apenas na branch de trabalho não dispara o gatilho de push; um pull request dessa branch para `main` pode disparar a CI.
+O job de qualidade usa um executor padrão Ubuntu, Node e pnpm definidos pelo projeto e a instalação com lockfile congelado. Executa as três verificações estáticas, gera o pacote público e testa a proteção do empacotamento. Um push apenas na branch de trabalho não dispara o gatilho de push; um pull request dessa branch para `main` pode disparar a CI.
 
-As actions são fixadas por SHA completo, com a versão legível em comentário. O workflow tem permissão `contents: read`, não persiste a credencial de checkout, não usa segredos personalizados e tem limite de dez minutos. Execuções anteriores do mesmo grupo são canceladas quando substituídas por uma nova.
+O job de deploy depende do sucesso da qualidade e só executa em acionamento manual, na `main`, com a opção `deploy` marcada. Pushes e PRs não publicam nesta configuração inicial. O job obtém o mesmo SHA verificado, recria `dist/` com Node e envia o pacote usando o segredo `AZURE_STATIC_WEB_APPS_API_TOKEN`.
+
+As actions são fixadas por SHA completo, com a versão legível em comentário. O workflow tem permissão `contents: read` e não persiste a credencial de checkout. A qualidade tem limite de dez minutos; o deploy, quinze. PRs podem cancelar verificações anteriores substituídas por uma nova; publicações não são canceladas automaticamente por uma execução mais recente.
 
 Essas verificações não substituem testes de comportamento no navegador, revisão de conteúdo, auditoria de acessibilidade ou validação do deploy. O workflow também não impõe uma proteção de branch: tornar um resultado obrigatório para merge é uma configuração separada do GitHub.
+
+## Pacote de publicação
+
+```bash
+pnpm run package:site
+pnpm run test:package
+```
+
+`package:site` recria `dist/` com uma lista explícita de dez arquivos públicos: página, CSS, JavaScript, configuração de hospedagem, logo e ilustrações. Não há compilação de framework. `dist/`, dependências, caches, documentação, metadados Git e segredos não são adicionados ao histórico como pacote de publicação.
+
+O script confere os arquivos antes de substituir a saída anterior e recusa um destino `dist` que seja um link para outra pasta. Os testes verificam exclusão de arquivos de desenvolvimento, limpeza de saída antiga, preservação da saída quando falta uma entrada e recusa de um link no destino.
+
+Para adicionar uma nova imagem ao site publicado, inclua-a na lista de `scripts/package-site.mjs` e revise a mudança. A Azure recebe somente `dist/`, com o build automático desabilitado.
+
+## Primeira publicação na Azure
+
+Recurso informado pelo responsável: [green-water-0008c3810.5.azurestaticapps.net](https://green-water-0008c3810.5.azurestaticapps.net), plano **Free**, criado pelo portal Azure.
+
+Cadastre o token diretamente no GitHub em **Settings → Secrets and variables → Actions → New repository secret**, com o nome exato `AZURE_STATIC_WEB_APPS_API_TOKEN`. Nunca cole o token no chat, nos arquivos ou em um commit. O secret deve pertencer ao recurso acima; o endereço documentado não seleciona por si só o destino do token.
+
+Depois que a configuração estiver na `main`, use **Actions → CI e deploy Azure → Run workflow**, selecione `main` e marque a opção **Publicar na Azure após as verificações**. A opção fica desmarcada por padrão. O job de qualidade precisa passar antes da publicação. O job de deploy verifica a presença do segredo e confere o endereço retornado pela Azure após o upload.
+
+O recurso Azure será administrado pelo portal, conforme a preferência do responsável. Esta etapa não instala Azure CLI ou Bicep e não cria infraestrutura. A publicação automática após alterações na `main` será uma mudança futura e explícita.
+
+Veja o [guia de deploy pelo portal e GitHub](docs/deploy-azure.md) para os cliques, verificações e recuperação de uma versão anterior.
 
 ## Organização
 
@@ -89,8 +117,13 @@ Essas verificações não substituem testes de comportamento no navegador, revis
 │   ├── sabonetes.svg
 │   └── caixa-mdf.svg
 ├── docs/
-│   └── guia-aprendizado.md     # Etapas, decisões e comandos explicados
+│   ├── guia-aprendizado.md     # Etapas, decisões e comandos explicados
+│   └── deploy-azure.md         # Portal, segredo e primeira publicação manual
 ├── .github/workflows/ci.yml    # Verificações no GitHub Actions
+├── scripts/
+│   ├── package-site.mjs        # Lista de arquivos públicos e geração de dist/
+│   └── package-site.test.mjs   # Testes de proteção do empacotamento
+├── staticwebapp.config.json   # Cabeçalhos enviados pela hospedagem
 ├── package.json               # Ferramentas e comandos de desenvolvimento
 ├── pnpm-lock.yaml             # Versões resolvidas das dependências
 ├── pnpm-workspace.yaml        # Configurações locais do gerenciador
@@ -125,7 +158,7 @@ Na primeira versão, foram feitas verificações locais no Chrome:
 - Sintaxe do JavaScript, referências locais, IDs duplicados e estrutura XML dos SVGs.
 - Integridade da cópia da logo, comparada ao original por hash.
 
-Essas verificações foram executadas durante a implementação com ferramentas disponíveis no Codex. Ainda não existe uma suíte versionada de testes de comportamento no navegador. A prévia por HTTP local encontrou uma restrição do ambiente; a validação visual foi feita abrindo o arquivo diretamente no navegador. A configuração de CI acrescenta verificações estáticas reproduzíveis; sua execução remota ainda está pendente.
+Essas verificações foram executadas durante a implementação com ferramentas disponíveis no Codex. Ainda não existe uma suíte versionada de testes de comportamento no navegador. A prévia por HTTP local encontrou uma restrição do ambiente; a validação visual foi feita abrindo o arquivo diretamente no navegador. As verificações estáticas também passaram no GitHub Actions; o empacotamento acrescenta testes de arquivos nesta etapa.
 
 Na preparação da CI, `pnpm run check` passou localmente nas três verificações. Foram corrigidos quatro caracteres `&` no HTML, o papel semântico de um bloco com rótulo acessível e o nome de uma variável que coincidia com o global `navigation` dos navegadores. O CSS mudou apenas de formatação. Após as correções, o menu, as âncoras, o foco por Escape, as perguntas frequentes e a navegação sem JavaScript foram conferidos novamente no Chrome, junto ao carregamento das imagens e ao layout em 320, 768 e 1440 pixels.
 
@@ -138,13 +171,13 @@ Na preparação da CI, `pnpm run check` passou localmente nas três verificaçõ
 5. Publicar com Azure Static Web Apps no plano Free (**CD**, entrega ou implantação contínua, conforme a configuração escolhida).
 6. Aprender a acompanhar uma publicação e retornar a uma versão anterior.
 
-A criação de recursos e a ativação de deploy automático dependerão de autorização específica. Um workflow automático, depois de habilitado, executa conforme os gatilhos configurados; essa consequência será explicada antes de sua ativação.
+O responsável autorizou as modificações locais e no repositório para adaptar o deploy ao recurso já criado. A primeira publicação será manual. A ativação de deploy automático dependerá de uma mudança posterior nos gatilhos, explicada antes de sua execução.
 
 ## Azure e custos
 
-O destino planejado é Azure Static Web Apps no plano Free, com o endereço fornecido pelo serviço. Ainda não há infraestrutura Azure criada por este projeto nem deploy configurado.
+O destino é o Static Web App Free criado pelo responsável pelo portal Azure. A confirmação do plano foi fornecida no chat; o projeto não tem acesso administrativo à assinatura para auditar sua cobrança.
 
-Antes da publicação, serão conferidos plano, cotas, cobrança e permissões na assinatura do responsável. A gratuidade depende dos serviços e das condições efetivamente utilizados; não criaremos recursos pagos como parte do fluxo inicial. No GitHub Actions, também será necessário conferir a visibilidade do repositório e a franquia aplicável à conta.
+O responsável deve manter o plano Free e conferir possíveis recursos adicionais criados na assinatura. O repositório foi confirmado como público, e o workflow usa executores padrão Ubuntu, cobertos pela gratuidade de Actions para repositórios públicos. Nenhum recurso pago é necessário para este fluxo estático.
 
 Referências para consulta na etapa de publicação:
 

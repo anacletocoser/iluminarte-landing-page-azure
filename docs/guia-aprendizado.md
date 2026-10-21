@@ -11,6 +11,8 @@ Este documento acompanha o desenvolvimento da landing page e será atualizado a 
 - Manter o fluxo inicial dentro das opções gratuitas, verificando as condições antes da criação de recursos.
 - Não registrar tokens, senhas ou credenciais neste guia.
 
+Na etapa de adaptação ao recurso Azure criado pelo portal, o responsável autorizou as modificações necessárias localmente e no repositório. Essa autorização abrange a preparação e integração da configuração. A primeira publicação foi escolhida como manual; a publicação automática será habilitada em etapa posterior.
+
 ## 1. Primeira versão local — concluída
 
 ### Objetivo
@@ -170,7 +172,7 @@ Restrições do ambiente exigiram permissão adicional para conexão de rede e g
 
 Código no GitHub e aplicação publicada são etapas diferentes: o site ainda não foi implantado na Azure.
 
-## 5. Qualidade e CI — configuração local
+## 5. Qualidade e CI — integrada e verificada
 
 ### Branch de trabalho
 
@@ -287,7 +289,7 @@ CI não é deploy: esse workflow não publica o site. Também não exige revisã
 
 ### Estado e limites desta etapa
 
-A implementação é local. Não há novo commit, push, pull request, execução de Actions ou recurso Azure nesta autorização.
+A autorização inicial desta etapa cobria a implementação local, sem commit ou alterações remotas. Depois dos resultados locais, commit, envio, abertura de PR e merge receberam autorizações adicionais.
 
 ### Resultados locais
 
@@ -301,22 +303,87 @@ A implementação é local. Não há novo commit, push, pull request, execução
 
 A proteção do ambiente também bloqueou o pnpm ao resolver o caminho da pasta; formatação e verificações locais foram concluídas com a permissão adicional de execução. Não foi necessário instalar ferramentas globalmente.
 
-Na próxima etapa, revisaremos o diff, a visibilidade e as condições de uso de Actions antes de propor commit, envio da branch e abertura de pull request. Essas ações exigem autorizações próprias.
+### Commit, PR e execução remota
 
-## 6. Próxima etapa — Azure e custos
+O commit `dd3351c` registrou a configuração de qualidade. A branch `ci/validacoes-iniciais` foi enviada, e o [PR #1](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/1) foi aberto para a `main`.
 
-O serviço planejado é Azure Static Web Apps no plano Free, usando o endereço disponibilizado pela Azure. A configuração será revisada antes de criar recursos na assinatura existente.
+A [primeira execução da CI](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687061827) passou no ambiente Ubuntu do GitHub. Antes do merge, foram conferidos o SHA da branch, os checks e a ausência de conflitos.
 
-Serão conferidos plano, cotas, permissões e possíveis serviços adicionais. Não assumiremos que uma assinatura ativa torna todos os recursos gratuitos. No GitHub Actions, também serão conferidas as condições de uso da conta e do repositório antes da ativação.
+Com autorização, o PR foi integrado por um commit de merge, `b42a576`, preservando o histórico. A [execução após o merge](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687477243) também passou. A `main` local foi sincronizada com `fetch`, `switch main` e `merge --ff-only origin/main`.
 
-A infraestrutura como código poderá ser introduzida quando a configuração estiver compreendida e houver uma finalidade didática clara. Não é necessária para visualizar a landing page local.
+O merge por API respeitou as permissões e regras do GitHub e validou o SHA aprovado. Não foi necessário clicar no site para abrir o PR ou fazer o merge. Os links continuam disponíveis para acompanhar a revisão e os logs.
+
+O repositório foi confirmado como público, e as execuções utilizaram runners padrão Ubuntu. Essa condição é coberta pela gratuidade de Actions para repositórios públicos.
+
+## 6. Azure pelo portal e primeira publicação manual
+
+### Mudança de abordagem autorizada
+
+O responsável preferiu criar e administrar o recurso pelo portal Azure e informou que ele já estava criado no plano **Free**. O endereço informado é <https://green-water-0008c3810.5.azurestaticapps.net>.
+
+Por isso, a adaptação não instala Azure CLI ou Bicep e não cria recursos na assinatura. Também não gera infraestrutura como código para um recurso que está sendo administrado manualmente. Essa prática pode ser estudada depois, caso o responsável queira mudar a forma de administrar a infraestrutura.
+
+A primeira publicação foi escolhida como manual. O objetivo desta etapa é preparar empacotamento, configuração de hospedagem, testes e workflow no repositório, para publicar no recurso existente quando o responsável iniciar o fluxo.
+
+### Separar fonte e arquivos publicados
+
+`scripts/package-site.mjs` usa apenas APIs nativas do Node. Ele gera a pasta ignorada `dist/` a partir de uma lista explícita de dez arquivos públicos. Isso evita usar a raiz do repositório como conteúdo publicado e inclui o `staticwebapp.config.json` junto à página.
+
+O script verifica todas as entradas antes de remover uma saída anterior. Antes da remoção recursiva, confere que o destino é exatamente `dist/`, dentro da pasta real do projeto, e não um link para outra pasta.
+
+```bash
+pnpm run package:site
+pnpm run test:package
+```
+
+Os testes cobrem vazamento de arquivos de desenvolvimento, limpeza de uma saída antiga, preservação da saída quando falta uma entrada e rejeição de um link no destino. Eles usam cópias em `.cache/`, sem alterar os arquivos originais da landing page.
+
+### Configuração da hospedagem
+
+`staticwebapp.config.json` configura cabeçalhos HTTP da Azure. A política de conteúdo permite os recursos locais usados pela página e bloqueia scripts inline, incorporação em frames, chamadas de rede e envio de formulários. A política deve ser revista se forem adicionadas integrações externas.
+
+O cache usa revalidação (`no-cache`), porque os arquivos ainda não têm nomes com hash. Esses cabeçalhos só podem ser confirmados na hospedagem; abrir a página diretamente pelo arquivo local não aplica o arquivo de configuração Azure.
+
+### Token e segredo do GitHub
+
+O token de implantação fica diretamente em **Settings → Secrets and variables → Actions → New repository secret**, com o nome `AZURE_STATIC_WEB_APPS_API_TOKEN`. Ele não deve ser enviado pelo chat nem gravado no código, na documentação ou no histórico.
+
+O responsável copia o token do recurso correto pelo portal e cadastra o valor no GitHub. Podemos conferir que o nome existe sem ler o valor original. O token determina o recurso de destino; a URL escrita no workflow não redireciona um token de outro recurso.
+
+### Job de publicação manual
+
+O workflow recebe uma opção booleana `deploy`, desmarcada por padrão. O job de publicação só é elegível quando:
+
+1. O evento é uma execução manual (`workflow_dispatch`).
+2. A branch é `main`.
+3. A opção `deploy` está marcada.
+4. O job de qualidade terminou com sucesso (`needs: quality`).
+
+Pushes e PRs executam qualidade, empacotamento e seus testes, mas não publicam. O job de deploy obtém o mesmo SHA verificado, gera `dist/`, usa a action oficial Azure com build automático desabilitado e confere o endereço retornado após o upload. A action é fixada por um SHA confirmado no repositório oficial; o cliente de upload em container é mantido pela Microsoft.
+
+O segredo aparece apenas nos passos que precisam dele. O workflow não precisa de permissões de escrita no repositório nem de uma credencial administrativa da assinatura Azure. Publicações não são canceladas automaticamente por uma execução mais recente.
+
+O job declara o ambiente GitHub `production`; o primeiro uso pode criar esse registro no GitHub, sem criar infraestrutura Azure. Ele permite acompanhar deployments, mas não configura uma aprovação humana obrigatória por si só.
+
+### Verificações locais da adaptação
+
+As verificações estáticas passaram novamente, o pacote público foi gerado com dez arquivos e os três testes de proteção do empacotamento passaram. Nenhuma dependência nova precisou ser adicionada.
+
+O pacote também foi servido em um servidor HTTP temporário restrito ao próprio computador, aplicando os cabeçalhos propostos. No Chrome, imagens, CSS, JavaScript e menu funcionaram em 390 e 1440 pixels, sem erros de console ou bloqueios da política de conteúdo. O servidor e o navegador de teste foram encerrados ao final. Isso é uma simulação local: os cabeçalhos e o comportamento reais da Azure ainda precisam ser conferidos após a primeira publicação.
+
+Os cliques para cadastrar o segredo, executar o workflow e conferir a publicação estão no [guia de deploy](deploy-azure.md). A primeira publicação e a verificação dos cabeçalhos permanecem pendentes até o acionamento manual.
+
+### Custos e responsabilidade sobre o recurso
+
+O plano Free foi confirmado pelo responsável. Não há acesso administrativo da sessão à assinatura para auditar plano ou cobranças; o responsável deve conferir recursos adicionais no portal. O fluxo estático preparado não necessita de recursos pagos, banco de dados ou APIs. A publicação automática após mudanças na `main` será uma alteração explícita posterior.
 
 ## Registro de etapas
 
-| Data       | Etapa              | Resultado                                                                                   |
-| ---------- | ------------------ | ------------------------------------------------------------------------------------------- |
-| 21/10/2026 | Landing page       | Primeira versão local implementada e verificada no Chrome.                                  |
-| 21/10/2026 | Documentação e Git | Criação dos arquivos e configuração local de `main` e `origin`, sem commit ou envio remoto. |
-| 21/10/2026 | Primeiro commit    | `c8a7191`, com autoria local aprovada e 14 arquivos.                                        |
-| 21/10/2026 | Primeiro envio     | `main` enviada ao GitHub e SHA remoto confirmado.                                           |
-| 21/10/2026 | Qualidade e CI     | Configuração local na branch `ci/validacoes-iniciais`; execução remota ainda pendente.      |
+| Data       | Etapa              | Resultado                                                                                                  |
+| ---------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| 21/10/2026 | Landing page       | Primeira versão local implementada e verificada no Chrome.                                                 |
+| 21/10/2026 | Documentação e Git | Criação dos arquivos e configuração local de `main` e `origin`, sem commit ou envio remoto.                |
+| 21/10/2026 | Primeiro commit    | `c8a7191`, com autoria local aprovada e 14 arquivos.                                                       |
+| 21/10/2026 | Primeiro envio     | `main` enviada ao GitHub e SHA remoto confirmado.                                                          |
+| 21/10/2026 | Qualidade e CI     | PR #1 integrado em `b42a576`; CI passou no PR e na `main`.                                                 |
+| 21/10/2026 | Azure pelo portal  | Recurso Free informado pelo responsável; configuração de deploy manual preparada para o recurso existente. |

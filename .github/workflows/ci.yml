@@ -1,4 +1,4 @@
-name: CI
+name: CI e deploy Azure
 
 on:
   push:
@@ -6,17 +6,23 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: Publicar na Azure após as verificações (somente main)
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   quality:
-    name: HTML, JavaScript e formatação
+    name: Qualidade e pacote público
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
@@ -49,3 +55,69 @@ jobs:
 
       - name: Conferir formatação
         run: pnpm run format:check
+
+      - name: Gerar pacote público
+        run: pnpm run package:site
+
+      - name: Testar proteção do empacotamento
+        run: pnpm run test:package
+
+  deploy:
+    name: Publicar na Azure
+    needs: quality
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://green-water-0008c3810.5.azurestaticapps.net
+    concurrency:
+      group: azure-production
+      cancel-in-progress: false
+
+    steps:
+      - name: Obter a mesma versão verificada
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Conferir presença do segredo de deploy
+        env:
+          DEPLOY_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        run: |
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::Cadastre AZURE_STATIC_WEB_APPS_API_TOKEN nos secrets de Actions do repositório."
+            exit 1
+          fi
+
+      - name: Gerar pacote público da versão verificada
+        run: node scripts/package-site.mjs
+
+      - name: Enviar pacote ao Static Web App existente
+        id: azure
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9 # v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: dist
+          api_location: ""
+          output_location: ""
+          skip_app_build: true
+
+      - name: Conferir endereço retornado pela Azure
+        env:
+          DEPLOYED_URL: ${{ steps.azure.outputs.static_web_app_url }}
+          EXPECTED_URL: https://green-water-0008c3810.5.azurestaticapps.net
+        run: |
+          if [ "${DEPLOYED_URL%/}" != "$EXPECTED_URL" ]; then
+            echo "::error::A Azure retornou um endereço diferente do recurso informado. Confira a origem do token."
+            exit 1
+          fi
+          echo "Publicação concluída em $EXPECTED_URL"

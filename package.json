@@ -18,7 +18,9 @@
     "lint:js": "eslint . --max-warnings 0",
     "format:check": "prettier . --check",
     "format": "prettier . --write",
-    "check": "pnpm run lint:html && pnpm run lint:js && pnpm run format:check"
+    "check": "pnpm run lint:html && pnpm run lint:js && pnpm run format:check",
+    "package:site": "node scripts/package-site.mjs",
+    "test:package": "node --test scripts/package-site.test.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
