@@ -5,7 +5,22 @@
 - O responsável criou pelo portal um Azure Static Web App e confirmou o plano **Free**.
 - Endereço informado: <https://green-water-0008c3810.5.azurestaticapps.net>.
 - O repositório é público: [iluminarte-landing-page-azure](https://github.com/anacletocoser/iluminarte-landing-page-azure).
-- A primeira publicação será manual. A automação de publicação após merge ficará para uma etapa posterior.
+- A primeira publicação manual foi concluída. A automação de publicação após merge ficará para uma etapa posterior.
+
+## Registro da primeira publicação
+
+Em 21/10/2026, o responsável confirmou o cadastro do segredo e autorizou a publicação. A presença do nome do segredo foi conferida pela API, sem recuperar seu valor. O workflow foi acionado com `workflow_dispatch`, branch `main` e `deploy: true`.
+
+- Versão publicada: commit `1f161b2d3e2084d2e24513c41e3e84e2214987ac`.
+- [Execução de qualidade e deploy concluída com sucesso](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39690752800).
+- Site: <https://green-water-0008c3810.5.azurestaticapps.net>.
+- HTTP 200, nove arquivos servidos comparados por hash e seis cabeçalhos configurados confirmados.
+- Chrome em 390/1440 pixels: imagens, menu, Escape/foco, âncoras e perguntas frequentes conferidos, sem erros de console ou CSP.
+- `/README.md`, `/package.json`, `/docs/guia-aprendizado.md`, `/.git/config` e `/.env` retornaram HTTP 404.
+
+O pacote contém dez arquivos: o décimo é `staticwebapp.config.json`, usado pela plataforma para aplicar a configuração de hospedagem. Ele não precisa estar acessível como um arquivo público para que os cabeçalhos sejam aplicados.
+
+Uma execução manual também pode ser iniciada pelo Codex via API, com autorização do responsável. Não é obrigatório abrir o site do GitHub para clicar em **Run workflow**. Os passos abaixo documentam a alternativa pela interface e permitem repetir o processo.
 
 O recurso é administrado pelo portal Azure. Não precisamos instalar Azure CLI ou Bicep para este caminho. Não há infraestrutura como código criada nesta etapa.
 
@@ -83,7 +98,7 @@ O job declara o ambiente GitHub `production`, que passa a aparecer no histórico
 
 `Cache-Control: no-cache` permite armazenamento, mas exige revalidação, facilitando a conferência de atualizações em arquivos que ainda não têm hashes no nome. Recursos externos ou novas integrações poderão exigir revisão consciente da política de conteúdo.
 
-Esses cabeçalhos são aplicados pela hospedagem Azure; abrir `index.html` pelo arquivo local não permite verificá-los. A validação final de hospedagem fica pendente até a primeira publicação.
+Esses cabeçalhos são aplicados pela hospedagem Azure; abrir `index.html` pelo arquivo local não permite verificá-los. Eles foram confirmados no primeiro deploy e devem ser conferidos novamente quando sua configuração mudar.
 
 ## 6. Se ocorrer uma falha
 
