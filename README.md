@@ -14,7 +14,9 @@ Este também é um projeto de aprendizado: acompanhar a criação de uma aplica�
 - Primeiro commit `c8a7191` enviado e confirmado na branch `main` do GitHub.
 - CI integrada à `main` pelo [PR #1](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/1), com execuções bem-sucedidas no PR e após o merge.
 - Azure Static Web App criado manualmente pelo responsável no plano Free.
-- Empacotamento público e deploy manual preparados nesta etapa; primeira publicação ainda pendente.
+- Empacotamento público e deploy manual integrados pelo [PR #2](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/2).
+- Primeira publicação concluída e verificada em [green-water-0008c3810.5.azurestaticapps.net](https://green-water-0008c3810.5.azurestaticapps.net).
+- Publicações seguintes continuam sob demanda; a ativação do deploy automático é a próxima etapa.
 
 Repositório informado para este projeto: [anacletocoser/iluminarte-landing-page-azure](https://github.com/anacletocoser/iluminarte-landing-page-azure).
 
@@ -93,6 +95,14 @@ Para adicionar uma nova imagem ao site publicado, inclua-a na lista de `scripts/
 ## Primeira publicação na Azure
 
 Recurso informado pelo responsável: [green-water-0008c3810.5.azurestaticapps.net](https://green-water-0008c3810.5.azurestaticapps.net), plano **Free**, criado pelo portal Azure.
+
+O primeiro deploy foi autorizado e acionado pelo chat como execução manual da `main`, com `deploy: true`. A [execução 39690752800](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39690752800) publicou o commit `1f161b2` e concluiu com sucesso os jobs de qualidade e publicação.
+
+Na conferência ao vivo, a página respondeu HTTP 200, os nove arquivos servidos da página coincidiram por hash com as fontes e os seis cabeçalhos configurados foram confirmados. Menu, Escape/foco, âncoras, perguntas frequentes e imagens funcionaram no Chrome em 390/1440 pixels, sem erros de console. Caminhos de README, package.json, guia, `.git/config` e `.env` retornaram HTTP 404.
+
+O pacote inclui dez arquivos porque `staticwebapp.config.json` é enviado para configurar a hospedagem, além dos nove arquivos servidos e comparados. A comparação não depende de tornar a configuração de hospedagem publicamente acessível.
+
+As instruções abaixo permitem repetir uma publicação sob demanda:
 
 Cadastre o token diretamente no GitHub em **Settings → Secrets and variables → Actions → New repository secret**, com o nome exato `AZURE_STATIC_WEB_APPS_API_TOKEN`. Nunca cole o token no chat, nos arquivos ou em um commit. O secret deve pertencer ao recurso acima; o endereço documentado não seleciona por si só o destino do token.
 

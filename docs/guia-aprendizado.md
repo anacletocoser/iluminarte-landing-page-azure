@@ -371,7 +371,21 @@ As verificações estáticas passaram novamente, o pacote público foi gerado co
 
 O pacote também foi servido em um servidor HTTP temporário restrito ao próprio computador, aplicando os cabeçalhos propostos. No Chrome, imagens, CSS, JavaScript e menu funcionaram em 390 e 1440 pixels, sem erros de console ou bloqueios da política de conteúdo. O servidor e o navegador de teste foram encerrados ao final. Isso é uma simulação local: os cabeçalhos e o comportamento reais da Azure ainda precisam ser conferidos após a primeira publicação.
 
-Os cliques para cadastrar o segredo, executar o workflow e conferir a publicação estão no [guia de deploy](deploy-azure.md). A primeira publicação e a verificação dos cabeçalhos permanecem pendentes até o acionamento manual.
+Os cliques para cadastrar o segredo, executar o workflow e conferir a publicação estão no [guia de deploy](deploy-azure.md). A primeira publicação e a verificação dos cabeçalhos foram concluídas conforme o registro abaixo.
+
+### Primeira publicação concluída
+
+A configuração de publicação foi registrada em `f38d135`, aprovada pela CI no [PR #2](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/2) e integrada à `main` pelo merge `1f161b2`. Nesse merge, o job de deploy foi ignorado, como previsto para eventos de push nesta configuração manual.
+
+O responsável cadastrou o segredo diretamente no GitHub e autorizou a publicação. Conferimos a existência do nome, sem acessar seu valor. O Codex então acionou o workflow pela API com `ref: main` e `inputs.deploy: true`. Manual significa sob demanda: o acionamento não precisa ser feito por um clique no site.
+
+A [execução 39690752800](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39690752800) concluiu com sucesso qualidade, empacotamento, testes, upload e conferência do endereço. A versão publicada foi `1f161b2d3e2084d2e24513c41e3e84e2214987ac`.
+
+Após o deploy, a conferência por HTTPS confirmou HTTP 200 e igualdade por hash dos nove arquivos servidos com as fontes locais. Os seis cabeçalhos do `staticwebapp.config.json` foram confirmados. O décimo arquivo do pacote é essa configuração, utilizada pela plataforma para aplicar a hospedagem.
+
+No Chrome em 390/1440 pixels, foram conferidos imagens, layout, menu, Escape com retorno de foco, âncoras e perguntas frequentes, sem erros de console ou bloqueios de CSP. README, package.json, guia, `.git/config` e `.env` retornaram HTTP 404, demonstrando que esses caminhos de desenvolvimento não foram expostos pela publicação.
+
+O próximo passo é habilitar explicitamente publicação automática após um push aprovado na `main`, sempre dependendo do sucesso da qualidade. Até essa alteração, novos merges continuam sem publicar automaticamente. Mudanças apenas nesta documentação não alteram o conteúdo dos arquivos públicos já publicados.
 
 ### Custos e responsabilidade sobre o recurso
 
