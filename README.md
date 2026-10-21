@@ -16,7 +16,7 @@ Este também é um projeto de aprendizado: acompanhar a criação de uma aplica�
 - Azure Static Web App criado manualmente pelo responsável no plano Free.
 - Empacotamento público e deploy manual integrados pelo [PR #2](https://github.com/anacletocoser/iluminarte-landing-page-azure/pull/2).
 - Primeira publicação concluída e verificada em [green-water-0008c3810.5.azurestaticapps.net](https://green-water-0008c3810.5.azurestaticapps.net).
-- Publicações seguintes continuam sob demanda; a ativação do deploy automático é a próxima etapa.
+- Deploy automático após push ou merge na `main`, condicionado ao sucesso da qualidade; execução manual mantida como alternativa.
 
 Repositório informado para este projeto: [anacletocoser/iluminarte-landing-page-azure](https://github.com/anacletocoser/iluminarte-landing-page-azure).
 
@@ -61,9 +61,9 @@ O `package.json` é marcado como `private` para impedir publicação acidental c
 
 O `pnpm-workspace.yaml` configura um único projeto: define versões exatas ao adicionar dependências, verifica a versão do runtime, desabilita scripts de instalação e mantém armazenamento e cache em `.cache/`, que não é versionada. Se as dependências locais estiverem inconsistentes, os comandos falham e pedem uma instalação explícita, em vez de instalar automaticamente. Não há monorepo ou múltiplos pacotes nesta configuração.
 
-## Integração contínua (CI) e deploy manual
+## Integração e implantação contínuas (CI/CD)
 
-O arquivo [`.github/workflows/ci.yml`](.github/workflows/ci.yml) já executou com sucesso no [PR #1](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687061827) e na [`main` após o merge](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions/runs/39687477243). Nesta etapa ele recebe o empacotamento e uma opção explícita de deploy manual.
+O arquivo [`.github/workflows/ci.yml`](.github/workflows/ci.yml) reúne as verificações, o empacotamento e a publicação na Azure. A configuração atual publica automaticamente após um push ou merge na `main`, depois que a qualidade passa.
 
 Gatilhos configurados:
 
@@ -73,7 +73,7 @@ Gatilhos configurados:
 
 O job de qualidade usa um executor padrão Ubuntu, Node e pnpm definidos pelo projeto e a instalação com lockfile congelado. Executa as três verificações estáticas, gera o pacote público e testa a proteção do empacotamento. Um push apenas na branch de trabalho não dispara o gatilho de push; um pull request dessa branch para `main` pode disparar a CI.
 
-O job de deploy depende do sucesso da qualidade e só executa em acionamento manual, na `main`, com a opção `deploy` marcada. Pushes e PRs não publicam nesta configuração inicial. O job obtém o mesmo SHA verificado, recria `dist/` com Node e envia o pacote usando o segredo `AZURE_STATIC_WEB_APPS_API_TOKEN`.
+O job de deploy depende do sucesso da qualidade (`needs: quality`) e exige a branch `main`. Ele executa em eventos de push, incluindo commits de merge, ou em acionamento manual com a opção `deploy` marcada. PRs apenas validam e não publicam. O job obtém o mesmo SHA verificado, recria `dist/` com Node e envia o pacote usando o segredo `AZURE_STATIC_WEB_APPS_API_TOKEN`. Uma falha na qualidade impede a publicação daquela execução. Até mudanças somente na documentação disparam o fluxo completo quando entram na `main`.
 
 As actions são fixadas por SHA completo, com a versão legível em comentário. O workflow tem permissão `contents: read` e não persiste a credencial de checkout. A qualidade tem limite de dez minutos; o deploy, quinze. PRs podem cancelar verificações anteriores substituídas por uma nova; publicações não são canceladas automaticamente por uma execução mais recente.
 
@@ -108,7 +108,7 @@ Cadastre o token diretamente no GitHub em **Settings → Secrets and variables �
 
 Depois que a configuração estiver na `main`, use **Actions → CI e deploy Azure → Run workflow**, selecione `main` e marque a opção **Publicar na Azure após as verificações**. A opção fica desmarcada por padrão. O job de qualidade precisa passar antes da publicação. O job de deploy verifica a presença do segredo e confere o endereço retornado pela Azure após o upload.
 
-O recurso Azure será administrado pelo portal, conforme a preferência do responsável. Esta etapa não instala Azure CLI ou Bicep e não cria infraestrutura. A publicação automática após alterações na `main` será uma mudança futura e explícita.
+O recurso Azure é administrado pelo portal, conforme a preferência do responsável. O fluxo não instala Azure CLI ou Bicep e não cria infraestrutura. As próximas alterações na `main` publicam automaticamente após as verificações, sem precisar clicar em **Run workflow**.
 
 Veja o [guia de deploy pelo portal e GitHub](docs/deploy-azure.md) para os cliques, verificações e recuperação de uma versão anterior.
 
@@ -181,7 +181,7 @@ Na preparação da CI, `pnpm run check` passou localmente nas três verificaçõ
 5. Publicar com Azure Static Web Apps no plano Free (**CD**, entrega ou implantação contínua, conforme a configuração escolhida).
 6. Aprender a acompanhar uma publicação e retornar a uma versão anterior.
 
-O responsável autorizou as modificações locais e no repositório para adaptar o deploy ao recurso já criado. A primeira publicação será manual. A ativação de deploy automático dependerá de uma mudança posterior nos gatilhos, explicada antes de sua execução.
+O responsável autorizou as modificações locais e no repositório para adaptar o deploy ao recurso já criado. A primeira publicação foi manual; depois, autorizou explicitamente a ativação do deploy automático na `main`. A automação não substitui as autorizações combinadas para mudanças, commits e envios futuros.
 
 ## Azure e custos
 

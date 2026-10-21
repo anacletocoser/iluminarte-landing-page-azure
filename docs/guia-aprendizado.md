@@ -350,7 +350,9 @@ O token de implantação fica diretamente em **Settings → Secrets and variable
 
 O responsável copia o token do recurso correto pelo portal e cadastra o valor no GitHub. Podemos conferir que o nome existe sem ler o valor original. O token determina o recurso de destino; a URL escrita no workflow não redireciona um token de outro recurso.
 
-### Job de publicação manual
+### Configuração inicial: publicação manual (histórico)
+
+As condições abaixo registram a primeira configuração. A etapa 7 descreve o deploy automático que a substitui.
 
 O workflow recebe uma opção booleana `deploy`, desmarcada por padrão. O job de publicação só é elegível quando:
 
@@ -385,11 +387,32 @@ Após o deploy, a conferência por HTTPS confirmou HTTP 200 e igualdade por hash
 
 No Chrome em 390/1440 pixels, foram conferidos imagens, layout, menu, Escape com retorno de foco, âncoras e perguntas frequentes, sem erros de console ou bloqueios de CSP. README, package.json, guia, `.git/config` e `.env` retornaram HTTP 404, demonstrando que esses caminhos de desenvolvimento não foram expostos pela publicação.
 
-O próximo passo é habilitar explicitamente publicação automática após um push aprovado na `main`, sempre dependendo do sucesso da qualidade. Até essa alteração, novos merges continuam sem publicar automaticamente. Mudanças apenas nesta documentação não alteram o conteúdo dos arquivos públicos já publicados.
+A primeira configuração manteve os merges sem publicação automática. Depois da primeira publicação verificada, o responsável autorizou a etapa 7. Mudanças apenas nesta documentação não alteram o conteúdo dos arquivos públicos já publicados.
 
 ### Custos e responsabilidade sobre o recurso
 
-O plano Free foi confirmado pelo responsável. Não há acesso administrativo da sessão à assinatura para auditar plano ou cobranças; o responsável deve conferir recursos adicionais no portal. O fluxo estático preparado não necessita de recursos pagos, banco de dados ou APIs. A publicação automática após mudanças na `main` será uma alteração explícita posterior.
+O plano Free foi confirmado pelo responsável. Não há acesso administrativo da sessão à assinatura para auditar plano ou cobranças; o responsável deve conferir recursos adicionais no portal. O fluxo estático preparado não necessita de recursos pagos, banco de dados ou APIs. A etapa 7 usa o mesmo recurso e o mesmo segredo.
+
+## 7. Implantação contínua após alterações na main
+
+Após a primeira publicação manual, o responsável autorizou o deploy automático, incluindo a publicação disparada pelo merge desta própria configuração. A mudança é preparada na branch `ci/deploy-automatico`, revisada por PR e integrada somente após o sucesso da CI.
+
+A mudança no workflow está na condição `if` do job `deploy`. Ela exige `refs/heads/main` e aceita um evento `push` ou uma execução manual com `inputs.deploy` marcado. O vínculo `needs: quality` permanece: a publicação só começa se as verificações daquela execução passarem.
+
+| Evento                                            | Qualidade | Publicação                        |
+| ------------------------------------------------- | --------- | --------------------------------- |
+| PR destinado à `main`                             | Executa   | Não executa                       |
+| Push ou merge na `main`                           | Executa   | Executa após sucesso da qualidade |
+| Manual na `main`, com `deploy` marcado            | Executa   | Executa após sucesso da qualidade |
+| Manual com `deploy` desmarcado ou em outra branch | Executa   | Não executa                       |
+
+O merge cria um commit na `main`, e esse push inicia uma nova execução. O job de publicação usa exatamente o SHA dessa execução, mantendo a relação entre o código verificado e o código enviado. A checagem no PR e a checagem na `main` são execuções distintas.
+
+Esse fluxo caracteriza implantação contínua: a versão que entra na `main` e passa nas verificações é publicada sem um clique adicional. A execução manual continua sendo uma alternativa, não uma exigência para cada atualização. Mesmo alterações apenas na documentação iniciam o fluxo completo, pois não configuramos filtros por caminho.
+
+Não foram adicionadas dependências, permissões de escrita, infraestrutura ou novos segredos. O recurso Azure continua sendo administrado pelo portal. Para acompanhar uma versão, confira o evento, o SHA e os dois jobs em **Actions**, depois abra o site publicado. Se a qualidade falhar, corrija a causa antes de publicar; se o deploy falhar, consulte seus passos e use o guia de recuperação.
+
+Proteção de branch e revisão obrigatória continuam sendo configurações separadas: esta condição impede o deploy quando a qualidade falha, mas não impede sozinha um push direto na `main`. As autorizações combinadas para mudanças locais, commits e envios futuros continuam valendo.
 
 ## Registro de etapas
 
