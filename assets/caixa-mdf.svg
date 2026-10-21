@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 480 440">
+  <defs><linearGradient id="wood" x1="0" x2="1"><stop stop-color="#c6a273"/><stop offset=".55" stop-color="#d8b789"/><stop offset="1" stop-color="#cba778"/></linearGradient><linearGradient id="lid" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e5c89c"/><stop offset="1" stop-color="#ceb084"/></linearGradient></defs>
+  <ellipse cx="245" cy="353" rx="167" ry="22" fill="#7b5a38" opacity=".17"/>
+  <path d="m99 233 210-32 79 53-208 38Z" fill="#ead1aa"/>
+  <path d="m99 233 81 59v59l-81-59Z" fill="#b38c5f"/>
+  <path d="m180 292 208-38v60l-208 37Z" fill="url(#wood)"/>
+  <path d="m109 234 198-28 64 45-189 34Z" fill="#8a6744"/>
+  <path d="m125 236 178-24 49 35-166 30Z" fill="#b69870"/>
+  <path d="m180 310 207-38m-206 53 206-37m-205 51 205-37" stroke="#ac875c" opacity=".33"/>
+  <path d="m99 245 12 9v12l-12-9m12 18 13 9v12l-13-9m13 18 12 9v12l-12-9m250-37 12-2v11l-12 2m-12 10 12-2v12l-12 2m-12 10 12-2v12l-12 2" fill="none" stroke="#916a43" stroke-width="2"/>
+  <g transform="rotate(-15 247 172)"><path d="m99 136 213-30 79 53-211 38Z" fill="url(#lid)" stroke="#a8875f" stroke-width="1.5"/><path d="m99 136 81 61v11l-81-60Z" fill="#b18c5e"/><path d="m180 197 211-38v12l-211 37Z" fill="#bfa075"/><path d="m125 139 182-24 56 39-178 33Z" fill="none" stroke="#b09268"/><text x="244" y="154" fill="#78583d" font-family="Georgia,serif" font-size="18" font-style="italic" text-anchor="middle" transform="rotate(9 244 154)">Com carinho</text><path d="m236 167 5 4 7-7" fill="none" stroke="#95744f"/></g>
+  <path d="m285 271 24-4v63l-24 5Z" fill="#e4ddd0"/><path d="m170 210 24-3 76 52-24 4Z" fill="#e4ddd0"/><path d="M294 277q-33-34-41-11 4 16 41 11m0 0q27-41 38-18 0 16-38 18" fill="none" stroke="#757c5e" stroke-width="6"/><path d="m295 278-16 31m16-31 19 27" stroke="#757c5e" stroke-width="5"/>
+</svg>

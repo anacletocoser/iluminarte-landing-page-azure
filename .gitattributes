@@ -1,0 +1,13 @@
+# Padroniza os arquivos de texto em LF, inclusive em checkouts no Windows.
+* text=auto eol=lf
+
+# Ilustrações SVG são texto; a logo PNG deve permanecer binária.
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary

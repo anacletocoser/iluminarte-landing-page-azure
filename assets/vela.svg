@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 480 440">
+  <defs><linearGradient id="jar" x1="0" x2="1"><stop stop-color="#bcb3a0"/><stop offset=".3" stop-color="#f0e8d8"/><stop offset=".7" stop-color="#e1d7c4"/><stop offset="1" stop-color="#b2a992"/></linearGradient><radialGradient id="light"><stop stop-color="#f6dba6" stop-opacity=".55"/><stop offset="1" stop-color="#f6dba6" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="248" cy="362" rx="137" ry="18" fill="#8b7960" opacity=".15"/>
+  <path d="M100 347q-26-69-30-128m30 98q-63-21-47-53 36 4 47 53m-12-50q39-31 23-55-30 11-23 55m-11-35q-42-13-35-39 29-1 35 39" fill="#8d9277" opacity=".8"/>
+  <circle cx="241" cy="137" r="74" fill="url(#light)"/>
+  <path d="M151 190h178v140c0 40-178 40-178 0Z" fill="url(#jar)" stroke="#b8ad96"/>
+  <ellipse cx="240" cy="190" rx="89" ry="27" fill="#f6eddc" stroke="#b8ad96" stroke-width="3"/>
+  <ellipse cx="240" cy="190" rx="77" ry="20" fill="#e3d4b7"/><ellipse cx="240" cy="187" rx="72" ry="17" fill="#f7edda"/>
+  <path d="M240 186v-20" stroke="#63483c" stroke-width="3" stroke-linecap="round"/>
+  <path d="M241 117c-2 17-17 24-13 39 4 13 23 10 24-2 1-13-9-23-11-37Z" fill="#cf9150"/><path d="M241 138c0 9-9 15-6 21 3 6 11 4 11-2 0-7-4-12-5-19Z" fill="#ffedbd"/>
+  <rect x="177" y="231" width="126" height="76" rx="1" fill="#faf5e8"/><path d="M232 247h16m-8-7v14" stroke="#8a8f71"/>
+  <text x="240" y="275" fill="#63483c" font-family="Georgia,serif" font-style="italic" font-size="20" text-anchor="middle">luz &amp; afeto</text><text x="240" y="292" fill="#6b7058" font-family="Arial,sans-serif" font-size="7" letter-spacing="2" text-anchor="middle">ILUMINARTE</text>
+  <ellipse cx="346" cy="340" rx="36" ry="10" fill="#a18d71"/><path d="M311 329v10c0 13 71 13 71 0v-10Z" fill="#ae9675"/><ellipse cx="347" cy="329" rx="36" ry="10" fill="#c7b18e"/>
+</svg>

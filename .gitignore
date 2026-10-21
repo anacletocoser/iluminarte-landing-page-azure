@@ -1,0 +1,33 @@
+# Arquivos locais de configuração e segredos. Exemplos sem valores reais podem entrar.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.pfx
+*.p12
+.azure/
+.swa/
+
+# Dependências e saídas de ferramentas, caso sejam adotadas futuramente.
+node_modules/
+/dist/
+/build/
+/coverage/
+/playwright-report/
+/test-results/
+*.tsbuildinfo
+
+# Logs, caches e arquivos temporários.
+*.log
+.cache/
+.tmp/
+*.tmp
+*.swp
+*~
+
+# Metadados locais do sistema operacional.
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conheça a IluminArte: velas, sabonetes artesanais, peças em MDF e caixas personalizadas para presentes com significado.">
+    <meta name="theme-color" content="#d7c3b0">
+    <title>IluminArte — Luz, aroma e arte</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#inicio" aria-label="IluminArte — início">
+          <img src="assets/iluminarte.png" alt="IluminArte, luz, aroma e arte" width="2000" height="2000" fetchpriority="high">
+        </a>
+        <button class="menu-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" hidden>
+          <span>Menu</span><span class="menu-icon" aria-hidden="true"></span>
+        </button>
+        <nav id="menu-principal" class="main-nav" aria-label="Navegação principal">
+          <a href="#colecoes">Coleções</a>
+          <a href="#personalizados">Personalizados</a>
+          <a href="#como-encomendar">Como encomendar</a>
+          <a class="nav-contact" href="#contato">Vamos criar juntos <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span aria-hidden="true">✦</span> Luz, aroma e arte</p>
+            <h1 id="hero-title">Pequenos detalhes.<br>Grandes <em>afetos.</em></h1>
+            <p class="hero-description">Velas, sabonetes e criações em madeira que se encontram para transformar um presente em uma lembrança especial.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#colecoes">Explore nossas criações <span aria-hidden="true">↗</span></a>
+              <a class="text-link" href="#personalizados">Um presente do seu jeito <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="hero-footnote"><span class="small-spark" aria-hidden="true">✧</span><p>Da delicadeza dos aromas<br>ao cuidado de cada detalhe.</p></div>
+          </div>
+          <figure class="hero-visual">
+            <div class="hero-art">
+              <span class="art-caption" aria-hidden="true">FEITO DE IDEIAS & AFETO</span>
+              <img src="assets/kit-artesanal.svg" alt="Ilustração de uma composição com vela acesa, sabonetes e caixa de madeira personalizada" width="720" height="760" fetchpriority="high">
+              <span class="art-seal" aria-hidden="true">luz<br><i>aroma</i><br>& arte</span>
+            </div>
+            <figcaption>Composição ilustrativa · conheça as possibilidades</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="craft-strip" aria-label="Possibilidades de criação">
+        <div class="container craft-items"><span>Velas artesanais</span><span aria-hidden="true">✦</span><span>Sabonetes</span><span aria-hidden="true">✦</span><span>Madeira & personalização</span><span aria-hidden="true">✦</span><span>Presentes com significado</span></div>
+      </div>
+
+      <section class="collections section-space" id="colecoes" aria-labelledby="collections-title">
+        <div class="container">
+          <div class="section-heading"><div><p class="eyebrow">O universo IluminArte</p><h2 id="collections-title">Três formas de <em>encantar.</em></h2></div><p>Aromas, texturas e possibilidades.<br>Encontre a inspiração para o seu presente.</p></div>
+          <div class="collection-grid">
+            <article class="collection-card">
+              <a class="collection-image candle-bg" href="#contato" aria-label="Conhecer possibilidades de velas artesanais">
+                <span class="collection-number" aria-hidden="true">01 /</span>
+                <img src="assets/vela.svg" alt="Ilustração de vela em um recipiente claro com detalhe botânico" width="480" height="440" loading="lazy">
+                <span class="image-arrow" aria-hidden="true">↗</span>
+              </a>
+              <div class="collection-copy"><h3>Um pouco de luz</h3><span class="category">Velas artesanais</span><p>Para presentear e trazer um toque acolhedor aos pequenos momentos.</p></div>
+            </article>
+            <article class="collection-card">
+              <a class="collection-image soap-bg" href="#contato" aria-label="Conhecer possibilidades de sabonetes artesanais">
+                <span class="collection-number" aria-hidden="true">02 /</span>
+                <img src="assets/sabonetes.svg" alt="Ilustração de sabonetes artesanais em tons de creme e verde" width="480" height="440" loading="lazy">
+                <span class="image-arrow" aria-hidden="true">↗</span>
+              </a>
+              <div class="collection-copy"><h3>Delicadeza em cada gesto</h3><span class="category">Sabonetes artesanais</span><p>Texturas e aromas que inspiram presentes delicados e cheios de cuidado.</p></div>
+            </article>
+            <article class="collection-card">
+              <a class="collection-image wood-bg" href="#personalizados" aria-label="Explorar caixas e lembrancinhas personalizadas em MDF">
+                <span class="collection-number" aria-hidden="true">03 /</span>
+                <img src="assets/caixa-mdf.svg" alt="Ilustração de caixa em MDF com corte a laser e inscrição Com carinho" width="480" height="440" loading="lazy">
+                <span class="image-arrow" aria-hidden="true">↗</span>
+              </a>
+              <div class="collection-copy"><h3>Ideias que ganham forma</h3><span class="category">MDF & corte a laser</span><p>Caixas, lembrancinhas e peças personalizadas para contar a sua história.</p></div>
+            </article>
+          </div>
+          <p class="illustration-note">As imagens são ilustrações de referência, não fotografias dos produtos. Modelos, materiais e acabamentos serão definidos na encomenda.</p>
+        </div>
+      </section>
+
+      <section class="personalized" id="personalizados" aria-labelledby="personalized-title">
+        <div class="container personalized-grid">
+          <div class="personalized-art"><span class="detail-label">O carinho também está na embalagem.</span><img src="assets/caixa-mdf.svg" alt="Exemplo ilustrado de uma caixa de madeira personalizada para compor um kit" width="480" height="440" loading="lazy"><span class="handwritten" aria-hidden="true">para guardar bons momentos</span></div>
+          <div class="personalized-copy"><p class="eyebrow">Do seu jeito, em cada detalhe</p><h2 id="personalized-title">Um kit.<br><em>Muitas possibilidades.</em></h2><p>Combine velas e sabonetes com uma caixa personalizada em MDF. Um encontro entre luz, aroma e arte para celebrar as suas ocasiões especiais.</p><ul class="occasion-list"><li>Presentes e datas especiais</li><li>Lembranças para celebrações</li><li>Kits e caixas personalizadas</li></ul><a class="button button-primary" href="#como-encomendar">Como tirar sua ideia do papel <span aria-hidden="true">→</span></a></div>
+        </div>
+      </section>
+
+      <section class="section-space process" id="como-encomendar" aria-labelledby="process-title">
+        <div class="container"><div class="section-heading"><div><p class="eyebrow">Da ideia ao presente</p><h2 id="process-title">Tudo começa com <em>uma conversa.</em></h2></div><p>Um caminho para planejar<br>uma criação com a sua identidade.</p></div>
+          <ol class="process-grid"><li><span class="step-number">01</span><h3>Conte sua ideia</h3><p>Qual é a ocasião? Compartilhe suas referências, a quantidade e a data desejada.</p></li><li><span class="step-number">02</span><h3>Escolha os detalhes</h3><p>Converse sobre os produtos, a personalização e as possibilidades de composição.</p></li><li><span class="step-number">03</span><h3>Combine a encomenda</h3><p>Confirme disponibilidade, orçamento, prazo de produção e forma de entrega antes de fechar.</p></li></ol>
+        </div>
+      </section>
+
+      <section class="faq section-space" aria-labelledby="faq-title"><div class="container faq-grid"><div><p class="eyebrow">Antes de criar</p><h2 id="faq-title">Algumas<br><em>boas perguntas.</em></h2></div><div class="faq-items">
+        <details><summary>Posso montar um kit personalizado?</summary><p>Essa é a proposta: combinar velas, sabonetes e uma caixa em MDF. A composição final depende dos modelos e materiais disponíveis e deve ser combinada na encomenda.</p></details>
+        <details><summary>O que pode ser feito em MDF?</summary><p>A IluminArte trabalha com caixas personalizadas, lembrancinhas e outras peças em MDF com corte a laser. Compartilhe sua ideia para avaliar as possibilidades de fabricação.</p></details>
+        <details><summary>Onde consulto preços e prazos?</summary><p>Preços e prazos precisam ser confirmados conforme a quantidade, os materiais e a personalização. Esta versão demonstrativa ainda não recebe pedidos.</p></details>
+      </div></div></section>
+
+      <section class="contact section-space" id="contato" aria-labelledby="contact-title"><div class="container contact-inner"><span class="contact-star" aria-hidden="true">✧</span><p class="eyebrow">Vamos imaginar algo especial?</p><h2 id="contact-title">Seu próximo presente<br>pode começar com <em>uma ideia.</em></h2><p>Uma vela, um aroma, uma caixa com a sua identidade.<br>Há muitas formas de transformar carinho em presente.</p><div class="demo-contact"><span class="status-dot" aria-hidden="true"></span><span>Em preparação · contatos em breve</span></div><p class="contact-note">Página demonstrativa em desenvolvimento. Os links oficiais do Instagram e do atendimento serão adicionados após confirmação da marca.</p></div></section>
+    </main>
+
+    <footer class="site-footer"><div class="container footer-inner"><a class="brand" href="#inicio" aria-label="IluminArte — voltar ao início"><img src="assets/iluminarte.png" alt="IluminArte, luz, aroma e arte" width="2000" height="2000" loading="lazy"></a><p>Luz para os momentos.<br>Arte para as lembranças.</p><div class="footer-meta"><span>Projeto de aprendizado · versão demonstrativa</span><a class="text-link" href="#inicio">Voltar ao topo <span aria-hidden="true">↑</span></a></div></div></footer>
+  </body>
+</html>
