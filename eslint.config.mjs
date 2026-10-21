@@ -10,6 +10,12 @@ export default [
     files: ["**/*.js", "**/*.mjs"],
   },
   {
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     files: ["script.js"],
     languageOptions: {
       sourceType: "script",
