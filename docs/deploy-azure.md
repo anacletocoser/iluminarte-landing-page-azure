@@ -5,7 +5,7 @@
 - O responsável criou pelo portal um Azure Static Web App e confirmou o plano **Free**.
 - Endereço informado: <https://green-water-0008c3810.5.azurestaticapps.net>.
 - O repositório é público: [iluminarte-landing-page-azure](https://github.com/anacletocoser/iluminarte-landing-page-azure).
-- A primeira publicação manual foi concluída. A automação de publicação após merge ficará para uma etapa posterior.
+- A primeira publicação manual foi concluída. Agora, pushes e merges na `main` publicam automaticamente após o sucesso da qualidade.
 
 ## Registro da primeira publicação
 
@@ -65,9 +65,11 @@ pnpm run test:package
 
 Eles verificam que arquivos locais de desenvolvimento não são copiados, saídas antigas são removidas, entradas ausentes não destroem a saída anterior e um link no lugar de `dist/` é recusado. Os cenários usam pastas temporárias dentro de `.cache/`, não a página original.
 
-## 4. Iniciar a primeira publicação manual
+## 4. Publicação automática e alternativa manual
 
-Depois do merge desta configuração na `main`:
+O fluxo normal é: alteração em uma branch → PR e verificações → merge na `main` → novas verificações → publicação automática na Azure. Não é necessário clicar no GitHub a cada publicação. PRs não publicam; uma falha na qualidade impede o deploy daquela execução. O fluxo também executa para mudanças apenas na documentação.
+
+Para publicar sob demanda, a alternativa manual continua disponível:
 
 1. Abra [Actions](https://github.com/anacletocoser/iluminarte-landing-page-azure/actions).
 2. Selecione **CI e deploy Azure**.
@@ -112,9 +114,9 @@ Logs não devem conter tokens. Evite ativar rastreamento detalhado de comandos q
 
 ## 7. Atualizações e recuperação
 
-Nesta configuração, um merge na `main` executa a qualidade, mas não publica automaticamente. Para publicar uma atualização aprovada, execute novamente o fluxo manual na `main` com a opção de deploy marcada.
+Nesta configuração, um merge na `main` executa a qualidade e, se ela passar, publica automaticamente o mesmo commit. A execução manual na `main` com a opção de deploy marcada continua disponível para uma publicação sob demanda.
 
-Para recuperar conteúdo de uma versão anterior, o caminho inicial será preparar um `git revert` da mudança problemática, revisar por PR e publicar a nova versão da `main`. O revert gera um novo commit sem apagar o histórico. Isso exige autorização para a alteração, commit, envio e integração, conforme o acordo de trabalho. A alteração dos gatilhos para publicação automática será tratada separadamente.
+Para recuperar conteúdo de uma versão anterior, o caminho inicial será preparar um `git revert` da mudança problemática e revisar por PR. O merge dispara as verificações e a publicação da nova versão da `main`. O revert gera um novo commit sem apagar o histórico. Isso exige autorização para a alteração, commit, envio e integração, conforme o acordo de trabalho.
 
 ## Referências
 
