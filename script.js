@@ -3,10 +3,10 @@
 // A navegação já funciona sem JavaScript. Em telas pequenas, adicionamos o menu.
 const menuButton = document.querySelector(".menu-toggle");
 const headerInner = document.querySelector(".header-inner");
-const navigation = document.querySelector("#menu-principal");
+const siteNavigation = document.querySelector("#menu-principal");
 const mobileScreen = window.matchMedia("(max-width: 900px)");
 
-if (menuButton && headerInner && navigation) {
+if (menuButton && headerInner && siteNavigation) {
   const closeMenu = () => {
     menuButton.setAttribute("aria-expanded", "false");
     headerInner.classList.remove("menu-open");
@@ -21,7 +21,7 @@ if (menuButton && headerInner && navigation) {
     headerInner.classList.toggle("menu-open", !isOpen);
   });
 
-  navigation.addEventListener("click", (event) => {
+  siteNavigation.addEventListener("click", (event) => {
     if (event.target instanceof Element && event.target.closest("a")) {
       closeMenu();
     }
@@ -39,10 +39,10 @@ if (menuButton && headerInner && navigation) {
     closeMenu();
 
     // Evita manter o foco em um elemento que acabou de ficar invisível.
-    if (mobileScreen.matches && navigation.contains(focusedElement)) {
+    if (mobileScreen.matches && siteNavigation.contains(focusedElement)) {
       menuButton.focus();
     } else if (!mobileScreen.matches && focusedElement === menuButton) {
-      navigation.querySelector("a")?.focus();
+      siteNavigation.querySelector("a")?.focus();
     }
   });
 }
