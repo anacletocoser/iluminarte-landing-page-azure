@@ -1,0 +1,30 @@
+{
+  "name": "iluminarte-landing-page-azure",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing page da IluminArte e projeto guiado de aprendizado de Git, CI/CD e Azure.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anacletocoser/iluminarte-landing-page-azure.git"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "pnpm": "11.25.0"
+  },
+  "scripts": {
+    "lint:html": "html-validate --max-warnings 0 index.html",
+    "lint:js": "eslint . --max-warnings 0",
+    "format:check": "prettier . --check",
+    "format": "prettier . --write",
+    "check": "pnpm run lint:html && pnpm run lint:js && pnpm run format:check"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "html-validate": "11.17.0",
+    "prettier": "3.9.10"
+  }
+}

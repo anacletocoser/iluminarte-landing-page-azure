@@ -56,7 +56,7 @@ Uma pasta pode ter Git sem estar conectada ao GitHub. Também pode ter um endere
 - Git não estava disponível no PATH consultado inicialmente, mas foi localizado no runtime fornecido pelo Codex.
 - Nenhum nome ou e-mail de autor foi encontrado pela consulta à configuração efetiva do Git antes da inicialização.
 - O responsável informou este repositório: `https://github.com/anacletocoser/iluminarte-landing-page-azure`.
-- O acesso remoto, a autenticação, a visibilidade e o conteúdo atual do repositório ainda precisam ser conferidos antes do primeiro envio.
+- O acesso remoto e o conteúdo do repositório precisavam ser conferidos antes do primeiro envio; a consulta e o envio estão registrados na etapa 4. A visibilidade e as condições de uso de Actions serão conferidas antes de ativar a CI remota.
 
 ### Como executar Git neste computador
 
@@ -76,15 +76,15 @@ O `&` permite executar o programa cujo caminho está entre aspas. Esse caminho p
 
 ### Arquivos criados e seu propósito
 
-| Arquivo | Por que existe |
-| --- | --- |
-| `.gitignore` | Evita adicionar arquivos temporários, dependências e alguns arquivos locais de configuração e segredos. |
-| `.gitattributes` | Padroniza arquivos de texto em LF e preserva imagens binárias, evitando diferenças desnecessárias entre Windows e outros sistemas. |
-| `README.md` | Apresenta o projeto a quem abrir o repositório e explica como visualizar a página. |
-| `LICENSE` | Aplica a MIT ao código, documentação e SVGs originais, excluindo a logo e a identidade da marca. |
-| `docs/guia-aprendizado.md` | Mantém o histórico didático do processo e distingue o que já foi feito do que ainda está planejado. |
+| Arquivo                    | Por que existe                                                                                                                     |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `.gitignore`               | Evita adicionar arquivos temporários, dependências e alguns arquivos locais de configuração e segredos.                            |
+| `.gitattributes`           | Padroniza arquivos de texto em LF e preserva imagens binárias, evitando diferenças desnecessárias entre Windows e outros sistemas. |
+| `README.md`                | Apresenta o projeto a quem abrir o repositório e explica como visualizar a página.                                                 |
+| `LICENSE`                  | Aplica a MIT ao código, documentação e SVGs originais, excluindo a logo e a identidade da marca.                                   |
+| `docs/guia-aprendizado.md` | Mantém o histórico didático do processo e distingue o que já foi feito do que ainda está planejado.                                |
 
-O aviso de autoria usa `anacletocoser`, o identificador GitHub informado. A identidade que aparecerá nos commits será escolhida separadamente antes do primeiro commit.
+O aviso de autoria usa `anacletocoser`, o identificador GitHub informado. A identidade dos commits foi escolhida separadamente pelo responsável, conforme a etapa 3.
 
 ### Comandos de configuração local
 
@@ -121,37 +121,187 @@ O `.gitignore` não remove segredos de arquivos já rastreados e não substitui 
 
 Esta etapa autoriza a criação dos cinco arquivos descritos e a configuração local do repositório com `main` e `origin`. Não autoriza staging (`git add`), commit, push, instalação, criação de recursos na Azure ou ativação de automações.
 
-## 3. Próxima etapa — identidade e primeiro commit
+## 3. Identidade e primeiro commit — concluída
 
-Antes de executar comandos que alterem o repositório:
+O responsável escolheu o nome e o e-mail de autoria e autorizou a configuração local, o staging e o primeiro commit. Os dados foram configurados apenas neste repositório:
 
-1. Escolher o nome e o e-mail de autor. Se desejado, consultar no GitHub o endereço `noreply` correto da conta, sem inventá-lo.
-2. Propor configuração de identidade apenas neste repositório, evitando alterar preferências de outros projetos.
-3. Revisar os arquivos que serão incluídos e procurar conteúdo indevido.
-4. Explicar a diferença entre a pasta de trabalho, a área de preparação (`staging`) e um commit.
-5. Solicitar autorização para a configuração necessária, o staging e o primeiro commit.
-6. Executar e conferir o commit apenas após aprovação.
+```bash
+git config --local user.name "Anacleto Coser"
+git config --local user.email "anacleto.coser@gmail.com"
+```
 
-Um commit é um registro local de uma versão. Ele não publica a página e não envia código ao GitHub.
+`--local` evita modificar as preferências dos outros projetos. Nome e e-mail fazem parte do registro do commit e ficam acessíveis a quem puder consultar o histórico.
 
-## 4. Próxima etapa — primeiro envio ao GitHub
+O processo tem três estados:
 
-1. Conferir o estado do repositório remoto e sua visibilidade.
-2. Preparar autenticação sem colocar credenciais em arquivos ou no histórico.
-3. Explicar quais commits serão enviados e o que ficará visível conforme as permissões do repositório.
-4. Pedir autorização para o `push` e executá-lo somente depois da aprovação.
-5. Conferir no GitHub a branch e os arquivos recebidos.
+1. **Pasta de trabalho:** os arquivos que estamos editando.
+2. **Staging:** a seleção do conteúdo que entrará na próxima versão, preparada com `git add`.
+3. **Commit:** uma versão registrada no histórico local, criada com `git commit`.
 
-## 5. Próximas etapas — qualidade, CI e CD
+Após conferir os 14 arquivos esperados, problemas de espaços e alguns padrões de credenciais, executamos:
 
-- **Qualidade:** escolher verificações úteis de HTML, CSS, JavaScript, navegação e acessibilidade; adicionar ferramentas somente quando necessário e autorizado.
-- **CI:** configurar GitHub Actions para executar verificações de forma reproduzível em eventos definidos, como pull requests.
-- **CD:** configurar a publicação na Azure, definindo se haverá aprovação manual ou implantação automática e em quais eventos ela ocorrerá.
-- **Permissões:** restringir o acesso dos workflows e armazenar credenciais apenas nos mecanismos apropriados, quando necessários.
-- **Mudanças:** aprender a usar branches e pull requests sem impor processos desproporcionais a este projeto de uma pessoa.
-- **Recuperação:** aprender a identificar a versão publicada e a restaurar uma versão anterior.
+```bash
+git add -- .gitattributes .gitignore README.md LICENSE docs/guia-aprendizado.md index.html styles.css script.js assets/
+git diff --cached --check
+git diff --cached --stat
+git commit -m "feat: cria landing page inicial da IluminArte"
+```
 
-Os workflows ainda não existem. Antes de ativá-los, será explicado que um evento autorizado, como um push em `main`, pode executar deploy automaticamente, sem uma nova pergunta do Codex a cada execução.
+Resultado: commit `c8a7191ee6e9a600e42775e53b8ee8492f94a981`, na branch `main`, com 14 arquivos. O prefixo `feat:` identifica a entrega de uma funcionalidade; é uma convenção de mensagem, não uma exigência do Git. A pasta de trabalho ficou limpa.
+
+Um commit é um registro local. Ele não publica a página e não envia código ao GitHub.
+
+## 4. Primeiro envio ao GitHub — concluída
+
+O primeiro push recebeu autorização separada. A consulta remota confirmou que o repositório estava vazio. Como não havia autenticação disponível para escrita, foi usado o Git Credential Manager já instalado, com login pelo navegador e armazenamento da credencial no gerenciador do Windows. Nenhuma senha ou token foi colocado no código ou neste guia.
+
+```bash
+git push -u origin main
+```
+
+- `push`: envia os commits para o repositório remoto.
+- `origin`: o destino configurado na etapa 2.
+- `main`: a branch enviada.
+- `-u`: associa a branch local a `origin/main`, permitindo acompanhar a sincronização.
+
+A consulta remota confirmou que `refs/heads/main` tinha exatamente o SHA do commit local. `git status` mostrou `main...origin/main` e nenhuma alteração pendente.
+
+Restrições do ambiente exigiram permissão adicional para conexão de rede e gravações em `.git`. Essas permissões de execução não substituem as autorizações do responsável para commit e push.
+
+Código no GitHub e aplicação publicada são etapas diferentes: o site ainda não foi implantado na Azure.
+
+## 5. Qualidade e CI — configuração local
+
+### Branch de trabalho
+
+Com autorização, criamos uma branch a partir da `main` sincronizada:
+
+```bash
+git switch -c ci/validacoes-iniciais
+```
+
+Uma branch permite preparar uma mudança separadamente da linha principal. Sua criação não gera commit nem envia conteúdo ao GitHub.
+
+### Ferramentas e limites
+
+| Ferramenta    | Verificação                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| HTML Validate | Estrutura e regras recomendadas do HTML, incluindo verificações básicas de acessibilidade. |
+| ESLint        | Problemas no JavaScript, como variáveis não definidas ou não utilizadas.                   |
+| Prettier      | Formatação de HTML, CSS, JavaScript, configurações e documentação.                         |
+
+Lint é análise estática: procura problemas sem executar o comportamento da página. Formatação padroniza o texto do código. Nenhum desses processos comprova sozinho que o menu funciona ou que a página é acessível em todos os cenários. Os testes de navegador da primeira etapa continuam sendo verificações separadas.
+
+CSS é analisado pelo formatador quanto à leitura da sintaxe e à formatação; não há Stylelint ou validação semântica completa de CSS nesta configuração.
+
+As ferramentas são `devDependencies`: servem ao desenvolvimento e à CI, e não são carregadas pelo visitante. O site continua abrindo diretamente no navegador e não ganhou framework, backend ou etapa de build.
+
+### Arquivos e versões
+
+- `package.json`: identifica o projeto, fixa pnpm e as dependências diretas, e define comandos reutilizáveis.
+- `pnpm-lock.yaml`: registra as versões e integridades das dependências resolvidas; é gerado pelo gerenciador e será versionado.
+- `pnpm-workspace.yaml`: configura apenas o pacote raiz. Desabilita scripts de instalação, exige runtimes compatíveis, usa dependências em estrutura plana e mantém store/cache na pasta ignorada `.cache/`.
+- `.node-version`: fixa Node.js em `24.19.0`, a versão já disponível no Codex.
+- `eslint.config.mjs`: aplica regras recomendadas e reconhece as variáveis de navegador de `script.js`.
+- `.htmlvalidate.json`: aplica as regras recomendadas de HTML com compatibilidade com Prettier.
+- `.prettierrc.json` e `.prettierignore`: definem formatação e exclusões, incluindo o lockfile gerado.
+- `.github/workflows/ci.yml`: descreve as etapas para o GitHub Actions.
+
+O pnpm já fornecido pelo Codex é `11.25.0`. As versões diretas foram consultadas no registro npm e fixadas: ESLint `10.13.0`, `@eslint/js` `10.0.1`, `globals` `17.13.0`, HTML Validate `11.17.0` e Prettier `3.9.10`.
+
+Versões fixas tornam as alterações de ferramentas explícitas. O lockfile congelado faz a instalação falhar se o manifesto e o lockfile estiverem inconsistentes, em vez de atualizar dependências silenciosamente na CI. Isso reduz variações, mas não elimina a necessidade de atualizar e revisar dependências no futuro.
+
+Também definimos `verifyDepsBeforeRun: error`: se `node_modules` estiver inconsistente, o pnpm falha antes de executar um comando, em vez de tentar uma instalação automática. Assim, conferir arquivos não inicia silenciosamente uma instalação de dependências.
+
+### Comandos locais
+
+Com `node` e `pnpm` disponíveis no terminal:
+
+```bash
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm run check
+```
+
+A primeira instalação, antes de existir lockfile, usa `pnpm install --ignore-scripts` para gerá-lo. As conferências posteriores e a CI usam `--frozen-lockfile`. Scripts de instalação estão desabilitados porque estas ferramentas não precisam deles; essa escolha deve ser revista se uma dependência futura exigir compilação ou preparação.
+
+`pnpm run check` executa validação de HTML, ESLint e conferência de formatação. Também é possível chamar cada comando isoladamente:
+
+```bash
+pnpm run lint:html
+pnpm run lint:js
+pnpm run format:check
+```
+
+Para aplicar formatação, o comando autorizado nesta etapa é:
+
+```bash
+pnpm run format
+```
+
+`format` altera arquivos; `format:check` apenas confere. O diff deve ser revisado antes do próximo commit.
+
+### Executar no PowerShell com o runtime do Codex
+
+Nesta sessão, não foi necessário instalar Node ou pnpm globalmente. Os caminhos atuais são:
+
+```text
+Node: C:\Users\anacl\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe
+pnpm: C:\Users\anacl\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd
+```
+
+No terminal PowerShell, a adaptação abaixo altera o PATH apenas do processo atual, não as configurações globais do Windows:
+
+```powershell
+$taskNodeDir = 'C:\Users\anacl\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin'
+$taskToolsDir = 'C:\Users\anacl\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback'
+$env:Path = $taskNodeDir + ';' + $taskToolsDir + ';' + $env:Path
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm run check
+```
+
+Esses caminhos podem mudar com atualizações do Codex. Quem tiver Node e pnpm compatíveis no PATH não precisa desta adaptação.
+
+### Fluxo do GitHub Actions
+
+Quando o workflow for enviado e estiver elegível para execução, os gatilhos serão:
+
+- Push na `main`.
+- Abertura ou atualização de pull request destinado à `main`.
+- Execução manual, depois que o workflow estiver disponível na branch padrão.
+
+Um envio apenas de `ci/validacoes-iniciais` não corresponde ao gatilho de push; a abertura de um pull request para `main` pode executar o workflow incluído nessa mudança. Portanto, a autorização futura para abrir esse PR também deverá considerar a ativação da CI e as condições de uso do GitHub Actions.
+
+O job obtém o código, prepara Node e pnpm, instala com lockfile congelado e executa as três verificações em passos separados. Uma falha deixa a execução com erro e interrompe os passos seguintes; na CI não há correção automática de arquivos.
+
+Escolhas de configuração:
+
+- Executor padrão `ubuntu-24.04` e limite de dez minutos.
+- `permissions: contents: read`, sem permissões de escrita no repositório.
+- `persist-credentials: false` no checkout, sem manter sua credencial disponível aos comandos posteriores.
+- Nenhum segredo personalizado e nenhuma credencial da Azure.
+- Actions fixadas por SHA completo, confirmados nos repositórios de origem; versões legíveis em comentários.
+- Cancelamento de execuções anteriores do mesmo workflow e referência/PR quando substituídas por uma nova.
+- Sem caches remotos de dependências nesta primeira configuração, para reduzir configuração e armazenamento.
+
+CI não é deploy: esse workflow não publica o site. Também não exige revisão para merge por si só; configurar proteção de branch é outra alteração remota, que dependerá de avaliação e autorização.
+
+### Estado e limites desta etapa
+
+A implementação é local. Não há novo commit, push, pull request, execução de Actions ou recurso Azure nesta autorização.
+
+### Resultados locais
+
+- A instalação gerou o lockfile, e uma segunda instalação com `--offline --frozen-lockfile --ignore-scripts` confirmou sua consistência usando os pacotes já baixados.
+- `pnpm run check` passou: HTML Validate, ESLint e Prettier concluíram sem erros ou avisos.
+- HTML Validate encontrou quatro caracteres `&` que precisavam de `&amp;` e um `aria-label` aplicado a um bloco sem papel semântico. Os caracteres foram codificados, e o bloco recebeu `role="group"`.
+- ESLint identificou que `navigation` também é um global de navegador. A variável local foi renomeada para `siteNavigation`, sem alterar a lógica do menu.
+- O CSS atual foi comparado com a formatação da versão do commit inicial: as diferenças são apenas de formatação.
+- No Chrome, foram conferidos novamente imagens e layout em 320, 768 e 1440 pixels, menu móvel, Escape com retorno de foco, âncoras, perguntas frequentes e navegação sem JavaScript. Não houve transbordamento horizontal ou erros de execução nos cenários verificados.
+- A conferência no navegador foi executada com ferramenta já disponível no Codex. Ela não foi adicionada ao workflow ou transformada em suíte versionada nesta etapa.
+
+A proteção do ambiente também bloqueou o pnpm ao resolver o caminho da pasta; formatação e verificações locais foram concluídas com a permissão adicional de execução. Não foi necessário instalar ferramentas globalmente.
+
+Na próxima etapa, revisaremos o diff, a visibilidade e as condições de uso de Actions antes de propor commit, envio da branch e abertura de pull request. Essas ações exigem autorizações próprias.
 
 ## 6. Próxima etapa — Azure e custos
 
@@ -163,7 +313,10 @@ A infraestrutura como código poderá ser introduzida quando a configuração es
 
 ## Registro de etapas
 
-| Data | Etapa | Resultado |
-| --- | --- | --- |
-| 21/10/2026 | Landing page | Primeira versão local implementada e verificada no Chrome. |
+| Data       | Etapa              | Resultado                                                                                   |
+| ---------- | ------------------ | ------------------------------------------------------------------------------------------- |
+| 21/10/2026 | Landing page       | Primeira versão local implementada e verificada no Chrome.                                  |
 | 21/10/2026 | Documentação e Git | Criação dos arquivos e configuração local de `main` e `origin`, sem commit ou envio remoto. |
+| 21/10/2026 | Primeiro commit    | `c8a7191`, com autoria local aprovada e 14 arquivos.                                        |
+| 21/10/2026 | Primeiro envio     | `main` enviada ao GitHub e SHA remoto confirmado.                                           |
+| 21/10/2026 | Qualidade e CI     | Configuração local na branch `ci/validacoes-iniciais`; execução remota ainda pendente.      |

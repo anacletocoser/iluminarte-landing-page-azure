@@ -1,0 +1,12 @@
+# Arquivos gerados ou com formatação mantida pela ferramenta de origem.
+pnpm-lock.yaml
+LICENSE
+
+# Dependências, caches e saídas locais também são excluídos pelo .gitignore.
+node_modules/
+.cache/
+dist/
+build/
+coverage/
+playwright-report/
+test-results/

@@ -1,0 +1,12 @@
+# Configuração de um único projeto, sem pacotes adicionais de workspace.
+saveExact: true
+engineStrict: true
+ignoreScripts: true
+verifyDepsBeforeRun: error
+
+# Evita links simbólicos de dependências neste ambiente Windows/OneDrive.
+nodeLinker: hoisted
+
+# Conteúdo local de ferramentas, já excluído pelo .gitignore.
+storeDir: .cache/pnpm/store
+cacheDir: .cache/pnpm/cache
