@@ -1269,12 +1269,6 @@ label {
 .location-panel h3 {
   font-size: 25px;
 }
-.location-panel iframe {
-  width: 100%;
-  height: 320px;
-  border: 0;
-  margin-bottom: 15px;
-}
 #official-contacts {
   display: flex;
   justify-content: center;
@@ -1374,4 +1368,8 @@ label {
 }
 #resumo {
   scroll-margin-top: 25px;
+}
+
+#official-contacts {
+  flex-wrap: wrap;
 }

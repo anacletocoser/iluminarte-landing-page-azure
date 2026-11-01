@@ -12,11 +12,11 @@ Para revisar: `pnpm run package:site` e `pnpm run preview`, depois abra `http://
 
 Cadastre produtos em `produtos.js`: identificador, nome, categoria, preço em centavos, descrição, opções confirmadas e fotografias com o mesmo identificador nos tamanhos 480 e 960. Inclua novos arquivos na lista de `scripts/package-site.mjs`.
 
-Os campos de contato ficam em `Iluminarte.contact`, no mesmo arquivo. WhatsApp usa somente dígitos, com país e DDD; Instagram usa a URL oficial. Endereço público, URL de incorporação e rotas só devem ser preenchidos após confirmação da marca. Sem esses dados, o site oferece o resumo copiável e mantém envio/mapa indisponíveis, sem usar dados fictícios.
+Os contatos oficiais ficam em `Iluminarte.contact`, em `produtos.js`, e na seção Contatos da página inicial. WhatsApp de vendas (Marcela): +55 (27) 98114-8673. Instagram: `https://www.instagram.com/iluminarte.atelie/`. A localização pública é somente Aracruz–ES, conforme decisão da marca; não incluir endereço residencial, mapa ou rotas. O resumo abre o WhatsApp para o cliente revisar e confirmar o envio.
 
 Verificações adicionais: `pnpm run test:shop` testa cálculos, formatação, rascunhos antigos e mensagem. O HTML das três páginas é validado pela CI; `pnpm run test:package` verifica o pacote.
 
-**Pendente antes da publicação:** número oficial, Instagram, endereço público e ponto exato do mapa, revisão das descrições/composição/opções, regras de personalização, prazo e frete e aprovação visual final. Não houve merge ou deploy desta versão.
+**Pendente antes da publicação:** revisão das descrições/composição/opções, regras de personalização, prazo e frete e aprovação visual final. Não houve merge ou deploy desta versão.
 
 ## Histórico da versão em produção
 

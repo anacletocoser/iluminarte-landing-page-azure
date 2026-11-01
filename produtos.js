@@ -3,7 +3,7 @@
 // Preços fornecidos pela marca nos nomes das fotografias, em centavos.
 // Não acrescentar opções de aroma/tamanho sem confirmação de disponibilidade.
 globalThis.Iluminarte = {
-  contact: { whatsapp: "", instagram: "", address: "", mapsEmbed: "", mapsRoute: "" },
+  contact: { whatsapp: "5527981148673", instagram: "https://www.instagram.com/iluminarte.atelie/" },
   categories: { velas: "Velas", sabonetes: "Sabonetes", mdf: "MDF", kits: "Kits" },
   products: [
     {

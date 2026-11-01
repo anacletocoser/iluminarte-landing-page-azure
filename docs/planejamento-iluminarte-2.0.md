@@ -1,6 +1,6 @@
 # IluminArte 2.0 — planejamento de implementação
 
-Atualizado em 31/10/2026. Estado: implementação local 2.0 disponível para revisão; integrações de contato/localização e validação final pendentes.
+Atualizado em 31/10/2026. Estado: implementação local 2.0 disponível para revisão; contatos oficiais configurados e localização limitada a Aracruz–ES; validação final pendente.
 
 ## Objetivo e acordos
 
@@ -26,9 +26,8 @@ Início
 ├── Convite “Vamos criar juntos”
 ├── Perguntas frequentes
 └── Contatos e localização
-    ├── Canais oficiais e endereço
-    ├── Google Maps incorporado em um quadro
-    └── Botão “Abrir rotas no Google Maps”
+    ├── WhatsApp de vendas e Instagram
+    └── Cidade: Aracruz–ES (sem endereço ou mapa)
 
 Catálogo
 ├── Todos · Velas · Sabonetes · MDF · Kits
@@ -75,17 +74,13 @@ Preservar o rascunho no próprio navegador, sem servidor, permitindo limpar a se
 
 O botão “Enviar minha combinação pelo WhatsApp” abrirá o canal oficial com uma mensagem preenchida contendo produtos, opções, quantidades, valores conhecidos, total estimado e observações. A mensagem solicitará confirmação de disponibilidade, orçamento e prazo. O cliente revisa e confirma o envio no WhatsApp; o site não envia mensagens sozinho e a seleção não constitui pedido confirmado.
 
-O número oficial será fornecido antes da integração final. Testar acentos, quebras de linha, seleções extensas, celular e computador, oferecendo uma alternativa para copiar o resumo caso necessário.
+O número oficial foi confirmado e configurado: +55 (27) 98114-8673, vendas com Marcela. Testar acentos, quebras de linha, seleções extensas, celular e computador, oferecendo uma alternativa para copiar o resumo caso necessário.
 
-### Contatos e localização no Google Maps
+### Contatos e localização pública
 
-Adicionar à seção Contatos o endereço em texto e um mapa Google Maps incorporado em um quadro responsivo dentro do site. O visitante poderá consultar a localização sem sair da página.
+Atualização do responsável: a loja funciona na residência; divulgar somente **Aracruz–ES (Aracruz, Espírito Santo)**. Endereço, mapa e rotas foram retirados do escopo. Não solicitar nem publicar a localização residencial.
 
-Adicionar um botão explícito “Abrir rotas no Google Maps”, com destino na localização confirmada da loja. O serviço Google Maps poderá permitir iniciar a navegação no celular; o site não precisa solicitar acesso à localização do visitante nem garante que a navegação GPS inicie automaticamente.
-
-Antes de implementar, confirmar endereço completo e ponto exato ou link compartilhado do local, bem como se o endereço deve ser divulgado publicamente. Não inventar uma localização. Verificar a forma de incorporação disponível sem cobrança ou habilitação desnecessária de APIs pagas.
-
-Usar carregamento adiado do mapa, título acessível e alternativa em texto/link se o conteúdo externo não carregar. Revisar a política de conteúdo em `staticwebapp.config.json` para permitir somente os domínios externos necessários ao mapa, preservando as demais restrições. Considerar o carregamento de conteúdo de terceiros na informação de privacidade do site.
+WhatsApp de vendas da Marcela: **+55 (27) 98114-8673**, destino `https://wa.me/5527981148673`. Instagram oficial: `https://www.instagram.com/iluminarte.atelie/`, sem parâmetro de compartilhamento. Os contatos aparecem na página inicial, inclusive sem JavaScript. O montador abre a mensagem preenchida; o cliente confirma o envio no WhatsApp.
 
 ## Etapas e critérios de conclusão
 
@@ -96,7 +91,7 @@ Usar carregamento adiado do mapa, título acessível e alternativa em texto/link
 5. **Montagem da combinação:** implementar seleção, opções, quantidades, remoção, observações, cálculos e rascunho local. Concluir com resumo consistente e tratamento de seleções inválidas ou antigas.
 6. **WhatsApp:** gerar a mensagem pronta e integrar o número oficial. Concluir com conteúdo correto e envio sob controle do cliente, incluindo alternativa para copiar o resumo.
 7. **Fotos, arte e movimento:** incorporar fotos reais autorizadas ao carrossel; refinar ilustrações das demais áreas e animações. Concluir com identidade consistente, imagens otimizadas, controles acessíveis e movimento reduzido respeitado.
-8. **Localização:** confirmar endereço e destino; incorporar mapa e botão de rotas; ajustar política de conteúdo. Concluir com mapa responsivo, endereço legível, alternativa de acesso e link de destino correto em celular e computador.
+8. **Localização:** informar somente Aracruz–ES. Não incluir endereço, mapa ou rotas.
 9. **Validação e publicação final:** revisar conteúdo real, valores, cálculos, navegação, teclado, foco, contraste, movimento reduzido, desempenho, armazenamento e pacote público; executar CI e testes pertinentes. Comparar as versões, preparar PR final e aguardar aprovação explícita para merge. Após o merge autorizado, acompanhar CI/deploy e conferir a produção.
 
 Cada etapa terá entrega local revisável e explicação do que mudou e como foi verificado. Commits serão organizados por etapa dentro da autonomia concedida. Nenhum envio da branch de desenvolvimento deverá publicar o site.
@@ -105,7 +100,7 @@ Cada etapa terá entrega local revisável e explicação do que mudou e como foi
 
 - Fotos reais para o carrossel, com identificação dos produtos e autorização de uso.
 - Número oficial do WhatsApp com DDD e perfil do Instagram.
-- Endereço completo, confirmação de divulgação pública e link/ponto exato no Google Maps.
+- Localização pública confirmada: apenas Aracruz–ES, sem mapa ou endereço.
 - Primeiros produtos reais: nomes, categorias, descrições, imagens, preços e opções.
 - Regras de personalização, embalagem/caixas, disponibilidade, prazo e frete a comunicar.
 
@@ -117,6 +112,10 @@ O responsável solicitou pausa após salvar este plano e, em 31/10/2026, autoriz
 
 ## Retomada no computador atual — 31/10/2026
 
-Implementados localmente: navegação, Sobre, catálogo com filtros/busca, dados dos seis produtos fornecidos, montador com caixa opcional, cálculos/quantidades/observações, rascunho e resumo copiável, infraestrutura do WhatsApp e mapa aguardando dados oficiais, carrossel manual com fotos reais, animações discretas e pacote público ampliado. As ilustrações existentes foram preservadas e continuam identificadas como ilustrações.
+Implementados localmente: navegação, Sobre, catálogo com filtros/busca, dados dos seis produtos fornecidos, montador com caixa opcional, cálculos/quantidades/observações, rascunho e resumo copiável, WhatsApp oficial configurado e localização pública limitada a Aracruz–ES, carrossel manual com fotos reais, animações discretas e pacote público ampliado. As ilustrações existentes foram preservadas e continuam identificadas como ilustrações.
 
-Etapas 6 e 8 dependem do número oficial e endereço/ponto público confirmado. A etapa 9 permanece aberta para revisão da marca, composição/opções/personalização, prazo/frete e aprovação explícita de merge/publicação. Não apresentar a integração WhatsApp/mapa como concluída antes da configuração e teste dos destinos reais.
+O canal oficial da etapa 6 foi configurado; envio efetivo da mensagem fica sob controle do cliente. A etapa 8 foi ajustada para informar apenas Aracruz–ES, sem endereço ou mapa. A etapa 9 permanece aberta para revisão da marca, composição/opções/personalização, prazo/frete e aprovação explícita de merge/publicação.
+
+## Contatos confirmados e mudança de localização
+
+WhatsApp de vendas da Marcela e Instagram oficial configurados. A antiga previsão de mapa/endereço está cancelada por solicitação do responsável. A abertura e o envio efetivo da mensagem ficam sob controle do cliente; não foram enviadas mensagens em testes. A revisão final e as autorizações de merge/publicação permanecem pendentes.
