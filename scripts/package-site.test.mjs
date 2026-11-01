@@ -7,6 +7,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
   realpath,
   rm,
   symlink,
@@ -31,7 +32,17 @@ async function createFixture(t) {
     join(projectRoot, "scripts/package-site.mjs"),
     join(fixture, "scripts/package-site.mjs"),
   );
-  for (const file of ["index.html", "styles.css", "script.js", "staticwebapp.config.json"]) {
+  await cp(join(projectRoot, "catalogo"), join(fixture, "catalogo"), { recursive: true });
+  for (const file of [
+    "index.html",
+    "catalogo.html",
+    "produtos.js",
+    "loja-core.js",
+    "loja.js",
+    "styles.css",
+    "script.js",
+    "staticwebapp.config.json",
+  ]) {
     await copyFile(join(projectRoot, file), join(fixture, file));
   }
   await cp(join(projectRoot, "assets"), join(fixture, "assets"), { recursive: true });
@@ -55,9 +66,22 @@ test("publica a página sem copiar arquivos privados ou manter saídas antigas",
 
   runPackage(fixture);
 
-  for (const excluded of [".env", "README.md", "scripts", "arquivo-antigo.txt"]) {
+  for (const excluded of [
+    ".env",
+    "README.md",
+    "scripts",
+    "arquivo-antigo.txt",
+    "assets/fotos-produtos",
+  ]) {
     await assert.rejects(access(join(fixture, "dist", excluded)), { code: "ENOENT" });
   }
+  assert.deepEqual((await readdir(join(fixture, "dist/assets/feedbacks"))).sort(), [
+    "feedback-capa.jpg",
+    "feedback-iluminarte.mp4",
+  ]);
+  assert.deepEqual(await readdir(join(fixture, "dist/assets/quem-somos")), [
+    "casal-iluminarte.jpg",
+  ]);
   assert.deepEqual(
     await readFile(join(fixture, "dist/assets/iluminarte.png")),
     await readFile(join(fixture, "assets/iluminarte.png")),

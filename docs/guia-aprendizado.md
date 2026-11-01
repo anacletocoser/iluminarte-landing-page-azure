@@ -5,8 +5,8 @@ Este documento acompanha o desenvolvimento da landing page e será atualizado a 
 ## Acordo de trabalho
 
 - Explicar o objetivo, a alteração proposta e como verificar seu resultado.
-- Pedir autorização antes de modificar o computador, instalar ferramentas ou criar recursos externos.
-- Obter autorização específica antes de fazer commit e antes de enviar conteúdo ao GitHub.
+- Conforme atualização de 31/10/2026, executar alterações rotineiras, testes, commits, pushes e PRs dentro do projeto com autonomia. Pedir autorização para modificações fora do projeto, ações destrutivas, custos e mudanças de escopo.
+- Pedir autorização explícita antes de merge na `main` e publicação em produção. Os registros abaixo preservam as permissões históricas de cada etapa.
 - Explicar e aprovar os gatilhos antes de habilitar qualquer deploy automático.
 - Manter o fluxo inicial dentro das opções gratuitas, verificando as condições antes da criação de recursos.
 - Não registrar tokens, senhas ou credenciais neste guia.
@@ -424,3 +424,67 @@ Proteção de branch e revisão obrigatória continuam sendo configurações sep
 | 21/10/2026 | Primeiro envio     | `main` enviada ao GitHub e SHA remoto confirmado.                                                          |
 | 21/10/2026 | Qualidade e CI     | PR #1 integrado em `b42a576`; CI passou no PR e na `main`.                                                 |
 | 21/10/2026 | Azure pelo portal  | Recurso Free informado pelo responsável; configuração de deploy manual preparada para o recurso existente. |
+
+## Implementação local da versão 2.0 — 31/10/2026
+
+O clone neste computador está em `Site-IluminArte/iluminarte-landing-page-azure`. A branch de trabalho permanece `feat/reestruturacao-iluminarte`. O usuário forneceu seis fotografias e autorizou usar os nomes e preços dos arquivos como produtos.
+
+Foram criados dados estáticos (`produtos.js`), funções de cálculo/rascunho (`loja-core.js`), catálogo e montador (`loja.js`). As fotografias foram orientadas conforme EXIF e exportadas em JPEG sem metadados nos tamanhos 480/960, preservando originais. As 12 versões públicas somam 417.814 bytes. O site continua sem backend, pagamentos ou rastreadores.
+
+O carrossel é manual, com botões, setas do teclado e gesto de toque. Filtros usam parâmetros na URL e respondem ao histórico do navegador. O montador limita quantidades de 1 a 99, guarda apenas identificadores/opções/quantidades, preço de referência e observações no navegador; restaura usando preços atuais e descarta itens inválidos. O resumo identifica total estimado, personalização/frete a consultar e ausência de pedido confirmado. Há cópia manual quando a API de clipboard não estiver disponível.
+
+O mapa permanece sem destino até confirmação de endereço público. A política de segurança permite quadros apenas de `https://www.google.com`; a configuração prevê somente URL de incorporação desse domínio. Nenhuma API paga foi ativada. O envio WhatsApp depende do número oficial. Não foi enviado pedido durante testes.
+
+O runtime Node do sistema é 22.16.0; usamos o Node 24.22.1 já fornecido pelo Codex no PATH da sessão, dentro da faixa exigida, sem instalação global. Dependências do lockfile foram instaladas apenas no projeto.
+
+Validação: HTML das três páginas, ESLint e Prettier; quatro testes de cálculo/dados/rascunho/mensagem; três testes de proteção do pacote. No navegador: carrossel, filtro de sabonetes, estado sem resultados, combinação de duas velas e caixa (R$ 145,00), observações com acentos e recuperação após recarga, menu compacto e Escape. Revisão visual em largura de 390 pixels e desktop. Endereço/mapa e envio real ao WhatsApp não puderam ser verificados sem dados oficiais.
+
+Cinco originais contêm metadados GPS. A pasta de originais foi adicionada ao .gitignore para não enviar a localização ao repositório público; as cópias otimizadas sem EXIF são versionadas. Os originais permanecem intactos no computador. Testes adicionais no navegador confirmaram remoção, recálculo, cópia do resumo e limpeza da seleção, além de ausência de transbordamento horizontal nas três páginas a 320 pixels. A produção foi aberta para comparação e permanece com a versão anterior.
+
+## Contatos oficiais e privacidade da localização
+
+Após a primeira revisão, o responsável confirmou o WhatsApp de vendas da Marcela (+55 27 98114-8673), o Instagram @iluminarte.atelie e a localização pública Aracruz–ES. Como a loja funciona na residência, endereço, mapa e rotas foram cancelados. Removemos os campos e a integração de mapas e restringimos `frame-src` a `none`. O Instagram usa o endereço canônico sem parâmetro de compartilhamento. O número oficial habilita o botão do montador; a mensagem continua sendo enviada somente após ação do cliente no WhatsApp. Não foram enviadas mensagens durante a validação.
+
+## Refinamento da página inicial após revisão
+
+Removidos menu/seção Coleções e o passo a passo Da ideia ao presente. Menu principal atualizado nas três páginas para Monte seu kit. Sobre substituído pela foto fornecida e pelos três parágrafos escritos pelo responsável, com imagem completa para preservar o título já presente na fotografia. FAQ renomeada e localização simplificada para cidade, sem o título Feito em Aracruz–ES.
+
+A busca inicial usa formulário GET local e sugestões enquanto se digita; cada sugestão abre o catálogo filtrado, e Enter/Buscar pesquisa o termo. O catálogo lê e mantém q na URL, inclusive em recarga e navegação de histórico. A política form-action passou de none para self para permitir apenas o formulário local.
+
+Vídeo fornecido: MP4 H.264/AAC, 480×854, 7,5 segundos, menos de 1 MB. Foi preparada cópia sem metadados e com índice no início (faststart), sem recodificar áudio/vídeo; capa extraída do próprio arquivo. Ferramenta de processamento instalada somente em .cache/media-tools do projeto. Vídeo como sétimo item, sem autoplay, controles nativos, playsinline, carregamento adiado e pausa ao trocar item ou sair da aba. Os comentários visuais também estão disponíveis em texto.
+
+O pacote explícito continua com 27 arquivos: foram retiradas três ilustrações que deixaram de ser usadas e acrescentadas foto, capa e vídeo. O servidor local reconhece video/mp4; os testes do pacote verificam que só as cópias preparadas das novas mídias entram na saída. Originais permanecem intactos e ignorados no Git.
+
+Validação desta revisão: HTML das três páginas, ESLint, Prettier, cálculos/rascunhos e três testes de pacote passaram. No navegador, a busca “rosas” abriu o catálogo com q=rosas e apenas o Sabonete de rosas; sugestões foram exibidas durante a digitação. O menu compacto mostrou Início, Catálogo, Sobre, Contatos e Monte seu kit. Vídeo reproduziu com duração de 7,503 segundos, sem erro de mídia, e ficou pausado/oculto ao trocar para foto. Conferidos foto/texto em desktop e página inicial/Sobre a 320 pixels sem transbordamento; sem erros ou avisos no console. Merge e publicação continuam pendentes de autorização.
+
+## Busca no cabeçalho e feedback ao final
+
+CTA alterado para Compre aqui nas três páginas, preservando destino no montador. A busca Encontre seu produto foi movida para o cabeçalho de início, catálogo e montador, com formulário e sugestões resolvendo corretamente o caminho relativo de cada página. Em celular a busca permanece visível fora do menu. Sugestões fecham por Escape ou clique fora.
+
+Carrossel novamente só com seis fotografias. Vídeo e alternativa textual dos comentários movidos para Feedback de clientes, última seção antes do rodapé, sem link de navegação. Mantidos controles, reprodução manual e pausa ao ocultar a aba. Ilustração da caixa e legenda removidas; seção de personalização reorganizada em texto centralizado. A imagem deixou também a lista pública: pacote agora com 26 arquivos.
+
+Verificação desta alteração: HTML/ESLint/Prettier e os três testes de proteção do pacote passaram. Busca do cabeçalho testada a partir do montador com “melancia”, gerando o catálogo filtrado e uma criação encontrada. Cabeçalho e feedback conferidos a 320 e 1280 pixels, sem transbordamento horizontal; nenhum vídeo no carrossel, vídeo presente na seção final e sem autoplay; console sem erros ou avisos. Não houve merge nem deploy.
+
+## Cabeçalho móvel e animações da página inicial
+
+Cabeçalho usa position sticky apenas até 900 pixels. Após rolar 24 pixels, o fundo usa alfa 0,5 com desfoque, sem reduzir opacidade do texto ou pesquisa. Foco dentro do cabeçalho restaura fundo opaco. ResizeObserver mede a altura para compensar âncoras via scroll-padding-top. Menu aberto tem limite de altura e rolagem própria. Desktop permanece static.
+
+Carrossel usa temporizador de 3 segundos, controle Pausar/Reproduzir e pausa ao passar mouse, focar controles, sair da tela ou ocultar a aba. Prefers-reduced-motion desabilita avanço automático. A legenda não faz anúncios contínuos ao leitor de tela enquanto o avanço é automático.
+
+A classe home-page limita entradas por IntersectionObserver a blocos da inicial. Trechos em itálico nos títulos recebem letras com atraso de 32 ms entre elas, preservando palavras inteiras e uma cópia acessível do texto; a representação visual fica aria-hidden. Sem JavaScript o conteúdo original é visível. Movimento reduzido exibe o conteúdo sem efeitos. Catálogo e montador não recebem classes de revelação ou letras e têm animações/transições desabilitadas.
+
+Validação: HTML, ESLint e Prettier passaram; pacote gerado com 26 arquivos. No navegador: avanço observado após 3 segundos, pausa mantida por mais de 3,5 segundos e retomada funcionando. Cabeçalho a 390 pixels manteve top=0 durante rolagem e fundo rgba com alfa 0,5; pesquisa ficou visível. Desktop confirmou posição static. Inicial a 320 pixels sem transbordamento. Catálogo e montador com zero letras/revelações e animation-name none; console sem erros ou avisos.
+
+## Cabeçalho compacto e dissolvência das fotos
+
+Removidos alfa 0,5 e desfoque do cabeçalho. No modo móvel após rolagem, grid com pesquisa à esquerda e botão de menu de 44 pixels à direita do Buscar. Logo e texto Menu ocultos; botão mantém aria-label Menu principal. Nome da pesquisa permanece acessível, sem ocupar uma linha visual no estado compacto. Desktop preservado.
+
+Letras agora usam 60 ms entre caracteres e entrada de 320 ms. Carrossel carrega/decodifica a foto antes de trocar e mantém a foto anterior em camada visual aria-hidden durante a dissolvência de 550 ms. Requisições antigas são descartadas em cliques rápidos e a camada anterior é escondida ao terminar. Movimento reduzido dispensa a dissolvência.
+
+Verificação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador confirmou cabeçalho opaco de aproximadamente 69 pixels (antes 161), menu abrindo e fechando por Escape e largura de 320 pixels sem transbordamento. Desktop confirmou posição static. Durante troca manual, foto observada com opacidade 0 e depois 1, camada anterior escondida ao finalizar; letras com atraso de 60 ms e console sem erros ou avisos.
+
+## Correção da oscilação do cabeçalho móvel
+
+A alternância de altura do cabeçalho alterava o fluxo da página e podia mudar o próprio scroll usado para decidir o estado, provocando piscadas. O script agora cria uma reserva de espaço estável para o cabeçalho no modo móvel; a barra fica fixa e muda apenas o tamanho visível. No desktop a reserva usa display: contents e o cabeçalho continua static. A reserva é recalculada em redimensionamentos, sem acompanhar a compactação ou a abertura do menu. O modo compacto entra acima de 32 pixels e sai até 8 pixels, evitando alternâncias em pequenos movimentos perto do topo.
+
+Validação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador com rolagem real: topo em scroll 0 (expandido), scroll 58,4 (compacto), retorno a 23,2 (continua compacto) e scroll 0 (expandido). O início do main permaneceu na posição documental 161 em todos os estados. Tela de 320 pixels sem transbordamento e barra em top 0; desktop confirmou static/display contents; console sem erros ou avisos.

@@ -14,13 +14,15 @@
     "pnpm": "11.25.0"
   },
   "scripts": {
-    "lint:html": "html-validate --max-warnings 0 index.html",
+    "lint:html": "html-validate --max-warnings 0 index.html catalogo.html catalogo/monte-seu-kit.html",
     "lint:js": "eslint . --max-warnings 0",
     "format:check": "prettier . --check",
     "format": "prettier . --write",
     "check": "pnpm run lint:html && pnpm run lint:js && pnpm run format:check",
     "package:site": "node scripts/package-site.mjs",
-    "test:package": "node --test scripts/package-site.test.mjs"
+    "test:package": "node --test scripts/package-site.test.mjs",
+    "test:shop": "node --test scripts/loja.test.mjs",
+    "preview": "node scripts/preview.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

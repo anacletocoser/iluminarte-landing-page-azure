@@ -56,6 +56,9 @@ jobs:
       - name: Conferir formatação
         run: pnpm run format:check
 
+      - name: Testar cálculos e rascunhos
+        run: pnpm run test:shop
+
       - name: Gerar pacote público
         run: pnpm run package:site
 

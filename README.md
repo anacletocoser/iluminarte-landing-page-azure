@@ -4,7 +4,31 @@ Landing page da IluminArte, com apresentação de velas, sabonetes artesanais, p
 
 Este também é um projeto de aprendizado: acompanhar a criação de uma aplicação simples, do desenvolvimento local ao versionamento no GitHub e à publicação na Azure com CI/CD.
 
-## Estado atual
+## Versão 2.0 em desenvolvimento local
+
+A branch `feat/reestruturacao-iluminarte` contém catálogo com seis produtos reais, busca e filtros, montador com caixa MDF opcional, cálculo em centavos, observações e rascunho local. As fotos originais ficam em `assets/fotos-produtos/`; somente as versões otimizadas em `assets/produtos/` entram no pacote público e no Git. Os originais foram excluídos do versionamento por conterem metadados GPS; permanecem intactos no computador.
+
+Para revisar: `pnpm run package:site` e `pnpm run preview`, depois abra `http://127.0.0.1:4173`. O servidor escuta apenas neste computador e serve somente `dist/`, usando os cabeçalhos de segurança da hospedagem. Encerre com Ctrl+C. Também é possível abrir `index.html` diretamente, mas HTTP local é recomendado para testar rascunho e cópia.
+
+Cadastre produtos em `produtos.js`: identificador, nome, categoria, preço em centavos, descrição, opções confirmadas e fotografias com o mesmo identificador nos tamanhos 480 e 960. Inclua novos arquivos na lista de `scripts/package-site.mjs`.
+
+Os contatos oficiais ficam em `Iluminarte.contact`, em `produtos.js`, e na seção Contatos da página inicial. WhatsApp de vendas (Marcela): +55 (27) 98114-8673. Instagram: `https://www.instagram.com/iluminarte.atelie/`. A localização pública é somente Aracruz–ES, conforme decisão da marca; não incluir endereço residencial, mapa ou rotas. O resumo abre o WhatsApp para o cliente revisar e confirmar o envio.
+
+Verificações adicionais: `pnpm run test:shop` testa cálculos, formatação, rascunhos antigos e mensagem. O HTML das três páginas é validado pela CI; `pnpm run test:package` verifica o pacote.
+
+**Pendente antes da publicação:** revisão das descrições/composição/opções, regras de personalização, prazo e frete e aprovação visual final. Não houve merge ou deploy desta versão.
+
+### Revisão da página inicial
+
+O menu usa Início, Catálogo, Sobre, Contatos e **Compre aqui**. A busca **Encontre seu produto** fica no cabeçalho das três páginas, com sugestões que encaminham ao catálogo filtrado por ?q=termo. Em celular, permanece disponível fora do menu compacto. O cabeçalho acompanha a rolagem e fica compacto e opaco: somente pesquisa, Buscar e ícone do menu na mesma linha, com logo e rótulos ocultos. No desktop, o cabeçalho continua sem fixação. O catálogo preserva a busca na URL e ao recarregar.
+
+Apenas na página inicial, os blocos aparecem deslizando para cima e os destaques dos títulos surgem letra a letra, com respeito a movimento reduzido. Catálogo e montador ficam sem animações. Coleções, passo a passo e ilustração da caixa foram retirados. Sobre traz a foto e o texto do casal; a FAQ se chama Perguntas frequentes. A cidade permanece em texto simples, sem endereço residencial ou mapa.
+
+O carrossel contém somente as seis fotos dos produtos e avança a cada 3 segundos, com dissolvência de 550 ms e carregamento da próxima foto antes da troca. Há controle de pausa; interação por teclado/mouse, aba oculta e carrossel fora da tela suspendem o avanço. Com movimento reduzido, a navegação é manual. O vídeo fica em **Feedback de clientes**, última seção da página inicial, depois dos contatos e antes do rodapé, sem link no menu. Tem controles manuais, sem autoplay, e alternativa textual dos comentários.
+
+A foto pública é assets/quem-somos/casal-iluminarte.jpg; vídeo e capa ficam em assets/feedbacks/feedback-iluminarte.mp4 e feedback-capa.jpg. Originais com nomes do WhatsApp permanecem locais; as cópias públicas estão sem metadados de origem. Essas mídias não integram a licença MIT do código.
+
+## Histórico da versão em produção
 
 - Landing page local implementada em HTML, CSS e JavaScript.
 - Logo da marca incorporada como uma cópia do arquivo original.
@@ -86,7 +110,7 @@ pnpm run package:site
 pnpm run test:package
 ```
 
-`package:site` recria `dist/` com uma lista explícita de dez arquivos públicos: página, CSS, JavaScript, configuração de hospedagem, logo e ilustrações. Não há compilação de framework. `dist/`, dependências, caches, documentação, metadados Git e segredos não são adicionados ao histórico como pacote de publicação.
+`package:site` recria `dist/` com uma lista explícita de arquivos públicos (26 na versão 2.0): página, CSS, JavaScript, configuração de hospedagem, logo e ilustrações. Não há compilação de framework. `dist/`, dependências, caches, documentação, metadados Git e segredos não são adicionados ao histórico como pacote de publicação.
 
 O script confere os arquivos antes de substituir a saída anterior e recusa um destino `dist` que seja um link para outra pasta. Os testes verificam exclusão de arquivos de desenvolvimento, limpeza de saída antiga, preservação da saída quando falta uma entrada e recusa de um link no destino.
 
@@ -204,7 +228,7 @@ O `.gitignore` exclui arquivos locais como `.env`, chaves privadas e saídas de 
 
 O código, a documentação e as ilustrações SVG originais deste projeto são disponibilizados sob a [licença MIT](LICENSE), com autoria identificada pelo usuário GitHub `anacletocoser`.
 
-O arquivo `assets/iluminarte.png`, o nome IluminArte e os elementos de identidade da marca não são licenciados pela MIT deste repositório. A presença desses elementos no projeto não concede permissão para reutilizar a marca ou sua logo.
+As fotografias fornecidas pela marca em `assets/fotos-produtos/` e suas versões otimizadas em `assets/produtos/` também não são licenciadas pela MIT. O arquivo `assets/iluminarte.png`, o nome IluminArte e os elementos de identidade da marca não são licenciados pela MIT deste repositório. A presença desses elementos no projeto não concede permissão para reutilizar a marca ou sua logo.
 
 ## Guia do aprendizado
 
