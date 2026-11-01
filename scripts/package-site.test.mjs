@@ -7,6 +7,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
   realpath,
   rm,
   symlink,
@@ -74,6 +75,13 @@ test("publica a página sem copiar arquivos privados ou manter saídas antigas",
   ]) {
     await assert.rejects(access(join(fixture, "dist", excluded)), { code: "ENOENT" });
   }
+  assert.deepEqual((await readdir(join(fixture, "dist/assets/feedbacks"))).sort(), [
+    "feedback-capa.jpg",
+    "feedback-iluminarte.mp4",
+  ]);
+  assert.deepEqual(await readdir(join(fixture, "dist/assets/quem-somos")), [
+    "casal-iluminarte.jpg",
+  ]);
   assert.deepEqual(
     await readFile(join(fixture, "dist/assets/iluminarte.png")),
     await readFile(join(fixture, "assets/iluminarte.png")),

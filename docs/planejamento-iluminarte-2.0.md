@@ -21,7 +21,6 @@ Evoluir a landing page para um site com catálogo, preços e montagem de combina
 ```text
 Início
 ├── Apresentação com carrossel de fotos reais da loja/produtos
-├── Coleções: Velas · Sabonetes · MDF
 ├── Sobre a IluminArte
 ├── Convite “Vamos criar juntos”
 ├── Perguntas frequentes
@@ -42,13 +41,13 @@ Monte sua combinação
 └── Mensagem pronta para envio pelo WhatsApp
 ```
 
-Menu principal: **Início · Coleções · Catálogo · Sobre · Contatos**, com **“Vamos criar juntos”** como botão de destaque. Nas páginas internas, os links de seções levam à respectiva seção da página inicial.
+Menu principal: **Início · Catálogo · Sobre · Contatos**, com **“Monte seu kit”** como botão de destaque. Nas páginas internas, os links de seções levam à respectiva seção da página inicial.
 
 ## Comportamento das áreas
 
 ### Início, fotos e identidade visual
 
-O carrossel inicial usará exclusivamente fotos reais fornecidas pela loja, não ilustrações ou fotos geradas por IA. Terá controles visíveis, navegação por teclado, suporte a toque, imagens responsivas e textos alternativos. Se houver reprodução automática, oferecer pausa e respeitar movimento reduzido. Não apresentar imagens de teste como fotografias reais da loja.
+O carrossel inicial usa fotos reais dos produtos e o vídeo de feedback fornecido pela marca, sem imagens geradas por IA. O vídeo tem controles, reprodução manual e pausa ao trocar de item. Terá controles visíveis, navegação por teclado, suporte a toque, imagens responsivas e textos alternativos. Se houver reprodução automática, oferecer pausa e respeitar movimento reduzido. Não apresentar imagens de teste como fotografias reais da loja.
 
 As ilustrações usadas em outras áreas podem receber mais detalhes, texturas, elementos botânicos e sombras, mantendo um padrão artístico consistente. Elas não substituem as fotos reais do carrossel. A escolha de fotos ou ilustrações para cada produto será revisada com o responsável; imagens ilustrativas não devem sugerir modelos reais disponíveis.
 
@@ -60,7 +59,7 @@ Manter Sobre e Perguntas frequentes, ajustando o conteúdo às encomendas. Remov
 
 Organizar os produtos em um arquivo de dados com identificador estável, nome, categoria, descrição, imagens, preço, opções e informações de personalização. Manter dados separados da renderização para evitar duplicar HTML ao cadastrar produtos.
 
-Os três destaques de Coleções abrirão o catálogo com filtro correspondente, por exemplo `catalogo.html?categoria=velas`. A categoria ativa ficará visível; será possível trocar o filtro ou selecionar “Todos os produtos”. Busca por nome, estados sem resultados e categorias ainda vazias deverão ser tratados explicitamente. Não será obrigatória uma página individual por produto nesta etapa; os detalhes podem ser expansíveis.
+O catálogo oferece filtros de categoria no endereço, busca por nome/categoria e estados sem resultados. A busca na página inicial mostra sugestões e encaminha ao catálogo com `?q=termo`, já filtrado. A categoria ativa permanece visível e pode ser trocada ou removida.
 
 Os preços serão armazenados em centavos e exibidos em reais, com formatação brasileira. Produtos com preço definido entram no cálculo. Itens com “a partir de” devem identificar o valor base e o que depende de orçamento. Personalização e frete sem valor definido aparecem como “a consultar”, nunca como gratuitos. O total será explicitamente estimado quando houver valores pendentes.
 
@@ -87,7 +86,7 @@ WhatsApp de vendas da Marcela: **+55 (27) 98114-8673**, destino `https://wa.me/5
 1. **Preparação e isolamento:** conferir instruções, Git e arquivos existentes; criar a branch dedicada com autorização; conferir gatilhos de publicação. Concluir com produção e `main` preservadas.
 2. **Estrutura e navegação:** criar catálogo e montador; organizar estilos e elementos comuns; atualizar menu, Contatos e rodapé. Concluir com todos os caminhos funcionando em computador e celular.
 3. **Dados dos produtos:** definir estrutura estática de produtos, opções, imagens e preços; adaptar o empacotamento público às novas páginas e recursos. Concluir com inclusão de produto sem duplicação de estrutura e sem exposição de arquivos internos.
-4. **Catálogo:** implementar cartões, detalhes, preços, busca, filtros no endereço e estados vazios; ligar Coleções ao filtro correto. Concluir com troca e remoção de filtros funcionando de forma clara.
+4. **Catálogo:** implementar cartões, detalhes, preços, busca, filtros no endereço e estados vazios; ligar a busca da página inicial ao catálogo filtrado. Concluir com troca e remoção de filtros funcionando de forma clara.
 5. **Montagem da combinação:** implementar seleção, opções, quantidades, remoção, observações, cálculos e rascunho local. Concluir com resumo consistente e tratamento de seleções inválidas ou antigas.
 6. **WhatsApp:** gerar a mensagem pronta e integrar o número oficial. Concluir com conteúdo correto e envio sob controle do cliente, incluindo alternativa para copiar o resumo.
 7. **Fotos, arte e movimento:** incorporar fotos reais autorizadas ao carrossel; refinar ilustrações das demais áreas e animações. Concluir com identidade consistente, imagens otimizadas, controles acessíveis e movimento reduzido respeitado.
@@ -119,3 +118,7 @@ O canal oficial da etapa 6 foi configurado; envio efetivo da mensagem fica sob c
 ## Contatos confirmados e mudança de localização
 
 WhatsApp de vendas da Marcela e Instagram oficial configurados. A antiga previsão de mapa/endereço está cancelada por solicitação do responsável. A abertura e o envio efetivo da mensagem ficam sob controle do cliente; não foram enviadas mensagens em testes. A revisão final e as autorizações de merge/publicação permanecem pendentes.
+
+## Revisão de conteúdo e navegação solicitada pelo responsável
+
+Retiradas as seções Coleções/Três formas de encantar e Da ideia ao presente/passo a passo. Menu sem Coleções e com CTA Monte seu kit. Sobre substituído pela foto fornecida e pelo texto integral do casal sob o título Quem está por trás da marca. FAQ renomeada para Perguntas frequentes. Retirado o título Feito em Aracruz–ES, preservando a cidade em texto simples. Busca inicial com sugestões e catálogo filtrado por parâmetro q. Vídeo de feedback incluído como sétimo item do carrossel; controles manuais, pausa ao sair e alternativa textual dos comentários. Esses ajustes substituem os trechos anteriores do planejamento relativos às áreas removidas.

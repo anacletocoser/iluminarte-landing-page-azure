@@ -18,6 +18,14 @@ Verificações adicionais: `pnpm run test:shop` testa cálculos, formatação, r
 
 **Pendente antes da publicação:** revisão das descrições/composição/opções, regras de personalização, prazo e frete e aprovação visual final. Não houve merge ou deploy desta versão.
 
+### Revisão da página inicial
+
+O menu usa Início, Catálogo, Sobre, Contatos e **Monte seu kit**. As seções Coleções e o passo a passo de encomenda foram retirados. A seção Sobre traz a foto e o texto do casal; o título da FAQ é Perguntas frequentes. A localização continua apenas como cidade, sem o título Feito em Aracruz–ES.
+
+A busca da página inicial oferece sugestões locais e abre o catálogo com ?q=termo ao selecionar uma sugestão, pressionar Enter ou Buscar. O catálogo preserva a busca na URL e ao recarregar a página. O carrossel tem seis fotos e o vídeo de feedback fornecido pela marca, com controles, sem reprodução automática e com comentários disponíveis em texto. A troca de item pausa o vídeo.
+
+A foto pública é assets/quem-somos/casal-iluminarte.jpg; vídeo e capa ficam em assets/feedbacks/feedback-iluminarte.mp4 e feedback-capa.jpg. Os arquivos originais com nomes do WhatsApp permanecem locais. As cópias públicas estão sem metadados de origem. Imagens e vídeo fornecidos pela marca não integram a licença MIT do código.
+
 ## Histórico da versão em produção
 
 - Landing page local implementada em HTML, CSS e JavaScript.

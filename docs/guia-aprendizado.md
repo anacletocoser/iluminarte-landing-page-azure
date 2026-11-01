@@ -444,3 +444,15 @@ Cinco originais contêm metadados GPS. A pasta de originais foi adicionada ao .g
 ## Contatos oficiais e privacidade da localização
 
 Após a primeira revisão, o responsável confirmou o WhatsApp de vendas da Marcela (+55 27 98114-8673), o Instagram @iluminarte.atelie e a localização pública Aracruz–ES. Como a loja funciona na residência, endereço, mapa e rotas foram cancelados. Removemos os campos e a integração de mapas e restringimos `frame-src` a `none`. O Instagram usa o endereço canônico sem parâmetro de compartilhamento. O número oficial habilita o botão do montador; a mensagem continua sendo enviada somente após ação do cliente no WhatsApp. Não foram enviadas mensagens durante a validação.
+
+## Refinamento da página inicial após revisão
+
+Removidos menu/seção Coleções e o passo a passo Da ideia ao presente. Menu principal atualizado nas três páginas para Monte seu kit. Sobre substituído pela foto fornecida e pelos três parágrafos escritos pelo responsável, com imagem completa para preservar o título já presente na fotografia. FAQ renomeada e localização simplificada para cidade, sem o título Feito em Aracruz–ES.
+
+A busca inicial usa formulário GET local e sugestões enquanto se digita; cada sugestão abre o catálogo filtrado, e Enter/Buscar pesquisa o termo. O catálogo lê e mantém q na URL, inclusive em recarga e navegação de histórico. A política form-action passou de none para self para permitir apenas o formulário local.
+
+Vídeo fornecido: MP4 H.264/AAC, 480×854, 7,5 segundos, menos de 1 MB. Foi preparada cópia sem metadados e com índice no início (faststart), sem recodificar áudio/vídeo; capa extraída do próprio arquivo. Ferramenta de processamento instalada somente em .cache/media-tools do projeto. Vídeo como sétimo item, sem autoplay, controles nativos, playsinline, carregamento adiado e pausa ao trocar item ou sair da aba. Os comentários visuais também estão disponíveis em texto.
+
+O pacote explícito continua com 27 arquivos: foram retiradas três ilustrações que deixaram de ser usadas e acrescentadas foto, capa e vídeo. O servidor local reconhece video/mp4; os testes do pacote verificam que só as cópias preparadas das novas mídias entram na saída. Originais permanecem intactos e ignorados no Git.
+
+Validação desta revisão: HTML das três páginas, ESLint, Prettier, cálculos/rascunhos e três testes de pacote passaram. No navegador, a busca “rosas” abriu o catálogo com q=rosas e apenas o Sabonete de rosas; sugestões foram exibidas durante a digitação. O menu compacto mostrou Início, Catálogo, Sobre, Contatos e Monte seu kit. Vídeo reproduziu com duração de 7,503 segundos, sem erro de mídia, e ficou pausado/oculto ao trocar para foto. Conferidos foto/texto em desktop e página inicial/Sobre a 320 pixels sem transbordamento; sem erros ou avisos no console. Merge e publicação continuam pendentes de autorização.

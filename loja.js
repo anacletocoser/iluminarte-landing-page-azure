@@ -13,12 +13,14 @@
     const buttons = [...document.querySelectorAll("[data-category]")];
     const readCategory = () => new URL(location.href).searchParams.get("categoria") || "";
     let category = readCategory();
+    search.value = (new URL(location.href).searchParams.get("q") || "").slice(0, 100);
     function render() {
       const valid = !category || Object.hasOwn(categories, category);
       const query = normalize(search.value.trim());
       const filtered = products.filter(
         (product) =>
-          (!category || product.category === category) && normalize(product.name).includes(query),
+          (!category || product.category === category) &&
+          normalize(product.name + " " + categories[product.category]).includes(query),
       );
       buttons.forEach((button) =>
         button.setAttribute("aria-pressed", String(button.dataset.category === category)),
@@ -51,9 +53,16 @@
         render();
       }),
     );
-    search.addEventListener("input", render);
+    search.addEventListener("input", () => {
+      const url = new URL(location.href);
+      if (search.value.trim()) url.searchParams.set("q", search.value.trim());
+      else url.searchParams.delete("q");
+      history.replaceState(null, "", url);
+      render();
+    });
     window.addEventListener("popstate", () => {
       category = readCategory();
+      search.value = (new URL(location.href).searchParams.get("q") || "").slice(0, 100);
       render();
     });
     render();

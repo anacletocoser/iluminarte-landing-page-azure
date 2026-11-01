@@ -27,10 +27,10 @@ const publicFiles = [
   "staticwebapp.config.json",
   "assets/iluminarte.png",
   "assets/favicon.svg",
-  "assets/kit-artesanal.svg",
-  "assets/vela.svg",
-  "assets/sabonetes.svg",
   "assets/caixa-mdf.svg",
+  "assets/quem-somos/casal-iluminarte.jpg",
+  "assets/feedbacks/feedback-iluminarte.mp4",
+  "assets/feedbacks/feedback-capa.jpg",
 ];
 
 const projectRoot = await realpath(fileURLToPath(new URL("../", import.meta.url)));
