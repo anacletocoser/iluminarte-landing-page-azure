@@ -5,8 +5,8 @@ Este documento acompanha o desenvolvimento da landing page e será atualizado a 
 ## Acordo de trabalho
 
 - Explicar o objetivo, a alteração proposta e como verificar seu resultado.
-- Pedir autorização antes de modificar o computador, instalar ferramentas ou criar recursos externos.
-- Obter autorização específica antes de fazer commit e antes de enviar conteúdo ao GitHub.
+- Conforme atualização de 31/10/2026, executar alterações rotineiras, testes, commits, pushes e PRs dentro do projeto com autonomia. Pedir autorização para modificações fora do projeto, ações destrutivas, custos e mudanças de escopo.
+- Pedir autorização explícita antes de merge na `main` e publicação em produção. Os registros abaixo preservam as permissões históricas de cada etapa.
 - Explicar e aprovar os gatilhos antes de habilitar qualquer deploy automático.
 - Manter o fluxo inicial dentro das opções gratuitas, verificando as condições antes da criação de recursos.
 - Não registrar tokens, senhas ou credenciais neste guia.
@@ -424,3 +424,19 @@ Proteção de branch e revisão obrigatória continuam sendo configurações sep
 | 21/10/2026 | Primeiro envio     | `main` enviada ao GitHub e SHA remoto confirmado.                                                          |
 | 21/10/2026 | Qualidade e CI     | PR #1 integrado em `b42a576`; CI passou no PR e na `main`.                                                 |
 | 21/10/2026 | Azure pelo portal  | Recurso Free informado pelo responsável; configuração de deploy manual preparada para o recurso existente. |
+
+## Implementação local da versão 2.0 — 31/10/2026
+
+O clone neste computador está em `Site-IluminArte/iluminarte-landing-page-azure`. A branch de trabalho permanece `feat/reestruturacao-iluminarte`. O usuário forneceu seis fotografias e autorizou usar os nomes e preços dos arquivos como produtos.
+
+Foram criados dados estáticos (`produtos.js`), funções de cálculo/rascunho (`loja-core.js`), catálogo e montador (`loja.js`). As fotografias foram orientadas conforme EXIF e exportadas em JPEG sem metadados nos tamanhos 480/960, preservando originais. As 12 versões públicas somam 417.814 bytes. O site continua sem backend, pagamentos ou rastreadores.
+
+O carrossel é manual, com botões, setas do teclado e gesto de toque. Filtros usam parâmetros na URL e respondem ao histórico do navegador. O montador limita quantidades de 1 a 99, guarda apenas identificadores/opções/quantidades, preço de referência e observações no navegador; restaura usando preços atuais e descarta itens inválidos. O resumo identifica total estimado, personalização/frete a consultar e ausência de pedido confirmado. Há cópia manual quando a API de clipboard não estiver disponível.
+
+O mapa permanece sem destino até confirmação de endereço público. A política de segurança permite quadros apenas de `https://www.google.com`; a configuração prevê somente URL de incorporação desse domínio. Nenhuma API paga foi ativada. O envio WhatsApp depende do número oficial. Não foi enviado pedido durante testes.
+
+O runtime Node do sistema é 22.16.0; usamos o Node 24.22.1 já fornecido pelo Codex no PATH da sessão, dentro da faixa exigida, sem instalação global. Dependências do lockfile foram instaladas apenas no projeto.
+
+Validação: HTML das três páginas, ESLint e Prettier; quatro testes de cálculo/dados/rascunho/mensagem; três testes de proteção do pacote. No navegador: carrossel, filtro de sabonetes, estado sem resultados, combinação de duas velas e caixa (R$ 145,00), observações com acentos e recuperação após recarga, menu compacto e Escape. Revisão visual em largura de 390 pixels e desktop. Endereço/mapa e envio real ao WhatsApp não puderam ser verificados sem dados oficiais.
+
+Cinco originais contêm metadados GPS. A pasta de originais foi adicionada ao .gitignore para não enviar a localização ao repositório público; as cópias otimizadas sem EXIF são versionadas. Os originais permanecem intactos no computador. Testes adicionais no navegador confirmaram remoção, recálculo, cópia do resumo e limpeza da seleção, além de ausência de transbordamento horizontal nas três páginas a 320 pixels. A produção foi aberta para comparação e permanece com a versão anterior.

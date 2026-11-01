@@ -16,7 +16,7 @@ export default [
     },
   },
   {
-    files: ["script.js"],
+    files: ["script.js", "produtos.js", "loja-core.js", "loja.js"],
     languageOptions: {
       sourceType: "script",
       globals: globals.browser,

@@ -31,7 +31,17 @@ async function createFixture(t) {
     join(projectRoot, "scripts/package-site.mjs"),
     join(fixture, "scripts/package-site.mjs"),
   );
-  for (const file of ["index.html", "styles.css", "script.js", "staticwebapp.config.json"]) {
+  await cp(join(projectRoot, "catalogo"), join(fixture, "catalogo"), { recursive: true });
+  for (const file of [
+    "index.html",
+    "catalogo.html",
+    "produtos.js",
+    "loja-core.js",
+    "loja.js",
+    "styles.css",
+    "script.js",
+    "staticwebapp.config.json",
+  ]) {
     await copyFile(join(projectRoot, file), join(fixture, file));
   }
   await cp(join(projectRoot, "assets"), join(fixture, "assets"), { recursive: true });
@@ -55,7 +65,13 @@ test("publica a página sem copiar arquivos privados ou manter saídas antigas",
 
   runPackage(fixture);
 
-  for (const excluded of [".env", "README.md", "scripts", "arquivo-antigo.txt"]) {
+  for (const excluded of [
+    ".env",
+    "README.md",
+    "scripts",
+    "arquivo-antigo.txt",
+    "assets/fotos-produtos",
+  ]) {
     await assert.rejects(access(join(fixture, "dist", excluded)), { code: "ENOENT" });
   }
   assert.deepEqual(

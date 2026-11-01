@@ -1,6 +1,6 @@
 # IluminArte 2.0 — planejamento de implementação
 
-Atualizado em 31/10/2026. Estado: planejamento pronto para transferência pelo GitHub; implementação 2.0 ainda não iniciada.
+Atualizado em 31/10/2026. Estado: implementação local 2.0 disponível para revisão; integrações de contato/localização e validação final pendentes.
 
 ## Objetivo e acordos
 
@@ -114,3 +114,9 @@ Esses materiais podem ser fornecidos gradualmente. A estrutura poderá ser desen
 ## Ponto de retomada
 
 O responsável solicitou pausa após salvar este plano e, em 31/10/2026, autorizou sua transferência por uma branch no GitHub para continuar em outro computador. Esta preparação inclui branch, commit e push do planejamento; não inicia a implementação 2.0 nem inclui merge ou publicação. Na outra máquina, clonar o repositório, selecionar `feat/reestruturacao-iluminarte` e ler este documento, o README e o guia de aprendizado. Depois de conferir o ambiente, retomar a etapa 1 quando solicitado. Ferramentas e autenticações locais precisam ser verificadas na nova máquina; não copiar tokens ou arquivos de credenciais.
+
+## Retomada no computador atual — 31/10/2026
+
+Implementados localmente: navegação, Sobre, catálogo com filtros/busca, dados dos seis produtos fornecidos, montador com caixa opcional, cálculos/quantidades/observações, rascunho e resumo copiável, infraestrutura do WhatsApp e mapa aguardando dados oficiais, carrossel manual com fotos reais, animações discretas e pacote público ampliado. As ilustrações existentes foram preservadas e continuam identificadas como ilustrações.
+
+Etapas 6 e 8 dependem do número oficial e endereço/ponto público confirmado. A etapa 9 permanece aberta para revisão da marca, composição/opções/personalização, prazo/frete e aprovação explícita de merge/publicação. Não apresentar a integração WhatsApp/mapa como concluída antes da configuração e teste dos destinos reais.

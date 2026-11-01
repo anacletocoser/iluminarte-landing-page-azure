@@ -31,3 +31,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Fotos originais locais podem conter localização GPS em EXIF.
+# Versionar apenas assets/produtos/, otimizado e sem metadados.
+assets/fotos-produtos/
