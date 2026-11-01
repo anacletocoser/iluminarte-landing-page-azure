@@ -27,7 +27,6 @@ const publicFiles = [
   "staticwebapp.config.json",
   "assets/iluminarte.png",
   "assets/favicon.svg",
-  "assets/caixa-mdf.svg",
   "assets/quem-somos/casal-iluminarte.jpg",
   "assets/feedbacks/feedback-iluminarte.mp4",
   "assets/feedbacks/feedback-capa.jpg",

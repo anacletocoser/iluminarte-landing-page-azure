@@ -47,36 +47,28 @@ if (menuButton && headerInner && siteNavigation) {
   });
 }
 
-// Carrossel manual: nunca reproduzir vídeo automaticamente.
+// O carrossel contém somente fotografias reais dos produtos.
 const photo = document.querySelector("#hero-photo");
-const video = document.querySelector("#hero-video");
-if (photo && video && globalThis.Iluminarte) {
+if (photo && globalThis.Iluminarte) {
   const products = globalThis.Iluminarte.products;
-  const count = products.length + 1;
   let current = 0;
   const show = (delta) => {
-    video.pause();
-    current = (current + delta + count) % count;
-    const isVideo = current === products.length;
-    photo.hidden = isVideo;
-    video.hidden = !isVideo;
-    document.querySelector("#video-description").hidden = !isVideo;
-    document.querySelector(".photo-tag").hidden = isVideo;
-    let title = "Vídeo da IluminArte · toque em reproduzir";
-    if (!isVideo) {
-      const product = products[current];
-      photo.src = "assets/produtos/" + product.id + "-960.jpg";
-      photo.srcset =
-        "assets/produtos/" +
-        product.id +
-        "-480.jpg 480w, assets/produtos/" +
-        product.id +
-        "-960.jpg 960w";
-      photo.alt = product.name + " da IluminArte";
-      title = product.name;
-    }
+    current = (current + delta + products.length) % products.length;
+    const product = products[current];
+    photo.src = "assets/produtos/" + product.id + "-960.jpg";
+    photo.srcset =
+      "assets/produtos/" +
+      product.id +
+      "-480.jpg 480w, assets/produtos/" +
+      product.id +
+      "-960.jpg 960w";
+    photo.alt = product.name + " da IluminArte";
     document.querySelector("#photo-caption").textContent =
-      String(current + 1).padStart(2, "0") + " / " + String(count).padStart(2, "0") + " · " + title;
+      String(current + 1).padStart(2, "0") +
+      " / " +
+      String(products.length).padStart(2, "0") +
+      " · " +
+      product.name;
   };
   for (const [id, delta] of [
     ["photo-prev", -1],
@@ -88,7 +80,6 @@ if (photo && video && globalThis.Iluminarte) {
   }
   const carousel = document.querySelector(".carousel");
   carousel.addEventListener("keydown", (event) => {
-    if (event.target.closest("video")) return;
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
       show(event.key === "ArrowLeft" ? -1 : 1);
@@ -98,7 +89,7 @@ if (photo && video && globalThis.Iluminarte) {
   carousel.addEventListener(
     "touchstart",
     (event) => {
-      startX = event.target.closest("video") ? null : event.touches[0].clientX;
+      startX = event.touches[0].clientX;
     },
     { passive: true },
   );
@@ -111,8 +102,11 @@ if (photo && video && globalThis.Iluminarte) {
     },
     { passive: true },
   );
+}
+const feedbackVideo = document.querySelector("#feedback-video");
+if (feedbackVideo) {
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) video.pause();
+    if (document.hidden) feedbackVideo.pause();
   });
 }
 
@@ -121,6 +115,15 @@ const homeSearch = document.querySelector("#home-search");
 if (homeSearch && globalThis.Iluminarte) {
   const results = document.querySelector("#home-search-results");
   const status = document.querySelector("#home-search-status");
+  homeSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") results.hidden = true;
+  });
+  document.addEventListener("click", (event) => {
+    if (!homeSearch.form.contains(event.target)) results.hidden = true;
+  });
+  homeSearch.addEventListener("focus", () => {
+    results.hidden = !homeSearch.value.trim() || !results.children.length;
+  });
   homeSearch.addEventListener("input", () => {
     const query = globalThis.LojaCore.normalize(homeSearch.value.trim());
     results.replaceChildren();
@@ -143,7 +146,7 @@ if (homeSearch && globalThis.Iluminarte) {
     matches.forEach((product) => {
       const li = document.createElement("li");
       const link = document.createElement("a");
-      link.href = "catalogo.html?q=" + encodeURIComponent(product.name);
+      link.href = homeSearch.form.getAttribute("action") + "?q=" + encodeURIComponent(product.name);
       link.textContent = product.name + " · " + globalThis.LojaCore.money(product.price);
       li.append(link);
       results.append(li);

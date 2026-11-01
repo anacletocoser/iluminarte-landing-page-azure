@@ -40,8 +40,29 @@
         <nav id="menu-principal" class="main-nav" aria-label="Navegação principal">
           <a href="../index.html#inicio">Início</a><a href="../catalogo.html">Catálogo</a
           ><a href="../index.html#sobre">Sobre</a><a href="../index.html#contato">Contatos</a
-          ><a class="nav-contact" href="../catalogo/monte-seu-kit.html">Monte seu kit ↗</a>
+          ><a class="nav-contact" href="../catalogo/monte-seu-kit.html">Compre aqui ↗</a>
         </nav>
+        <form
+          class="home-search header-search"
+          role="search"
+          action="../catalogo.html"
+          method="get"
+        >
+          <label for="home-search">Encontre seu produto</label>
+          <div class="home-search-row">
+            <input
+              id="home-search"
+              type="search"
+              name="q"
+              maxlength="100"
+              placeholder="Busque por velas, sabonetes, MDF…"
+              autocomplete="off"
+              aria-describedby="home-search-status"
+            /><button class="button button-primary" type="submit">Buscar →</button>
+          </div>
+          <p id="home-search-status" class="small-note" role="status"></p>
+          <ul id="home-search-results" class="search-results" hidden></ul>
+        </form>
       </div>
     </header>
     <main id="conteudo">

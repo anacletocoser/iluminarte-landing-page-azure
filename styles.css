@@ -1422,13 +1422,6 @@ label {
   object-fit: cover;
   border-radius: 8px;
 }
-.photo-frame video {
-  width: 100%;
-  height: clamp(380px, 43vw, 550px);
-  object-fit: contain;
-  background: #272b23;
-  display: block;
-}
 .photo-frame:has(video:not([hidden])) {
   border-radius: 8px;
 }
@@ -1440,7 +1433,145 @@ label {
   .about-photo {
     max-height: none;
   }
-  .photo-frame video {
-    height: 440px;
+}
+
+/* Busca no cabeçalho, disponível também nas páginas internas. */
+.header-inner {
+  display: grid;
+  grid-template-columns: 180px 1fr minmax(220px, 280px);
+  gap: 24px;
+}
+.main-nav {
+  justify-content: center;
+  gap: 20px;
+}
+.header-search {
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+  max-width: none;
+}
+.header-search label {
+  font-size: 11px;
+}
+.header-search input {
+  font-size: 12px;
+}
+.header-search .home-search-row {
+  gap: 5px;
+}
+.header-search button {
+  min-height: 44px;
+  padding: 10px;
+}
+.header-search #home-search-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.header-search .search-results {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  z-index: 5;
+  margin-top: 6px;
+  box-shadow: 0 8px 24px #44352e1f;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.personalized-grid {
+  display: block;
+}
+.personalized-copy {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+.personalized-copy > p:not(.eyebrow) {
+  max-width: 600px;
+  margin-inline: auto;
+}
+.occasion-list {
+  text-align: left;
+  max-width: 480px;
+  margin-inline: auto;
+}
+.feedback {
+  background: #eeeee5;
+}
+.feedback-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 80px;
+  align-items: center;
+}
+.feedback h2 {
+  margin-bottom: 24px;
+}
+#feedback-description {
+  color: var(--muted);
+  max-width: 480px;
+}
+.feedback-media {
+  justify-self: center;
+  width: min(100%, 300px);
+}
+.feedback-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 854;
+  background: #272b23;
+  border-radius: 8px;
+}
+.feedback .video-description {
+  margin-top: 25px;
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .header-inner {
+    grid-template-columns: 156px 1fr 230px;
+    gap: 16px;
+  }
+  .main-nav {
+    gap: 12px;
+  }
+}
+@media (max-width: 900px) {
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .brand {
+    order: 1;
+  }
+  .menu-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+  .header-search {
+    order: 3;
+    flex-basis: 100%;
+    margin: 0 0 18px;
+  }
+  .main-nav {
+    order: 4;
+  }
+  .header-search input {
+    font-size: 16px;
+  }
+  .feedback-grid {
+    gap: 35px;
+  }
+}
+@media (max-width: 640px) {
+  .feedback-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .feedback-media {
+    width: min(100%, 300px);
   }
 }

@@ -456,3 +456,11 @@ Vídeo fornecido: MP4 H.264/AAC, 480×854, 7,5 segundos, menos de 1 MB. Foi prep
 O pacote explícito continua com 27 arquivos: foram retiradas três ilustrações que deixaram de ser usadas e acrescentadas foto, capa e vídeo. O servidor local reconhece video/mp4; os testes do pacote verificam que só as cópias preparadas das novas mídias entram na saída. Originais permanecem intactos e ignorados no Git.
 
 Validação desta revisão: HTML das três páginas, ESLint, Prettier, cálculos/rascunhos e três testes de pacote passaram. No navegador, a busca “rosas” abriu o catálogo com q=rosas e apenas o Sabonete de rosas; sugestões foram exibidas durante a digitação. O menu compacto mostrou Início, Catálogo, Sobre, Contatos e Monte seu kit. Vídeo reproduziu com duração de 7,503 segundos, sem erro de mídia, e ficou pausado/oculto ao trocar para foto. Conferidos foto/texto em desktop e página inicial/Sobre a 320 pixels sem transbordamento; sem erros ou avisos no console. Merge e publicação continuam pendentes de autorização.
+
+## Busca no cabeçalho e feedback ao final
+
+CTA alterado para Compre aqui nas três páginas, preservando destino no montador. A busca Encontre seu produto foi movida para o cabeçalho de início, catálogo e montador, com formulário e sugestões resolvendo corretamente o caminho relativo de cada página. Em celular a busca permanece visível fora do menu. Sugestões fecham por Escape ou clique fora.
+
+Carrossel novamente só com seis fotografias. Vídeo e alternativa textual dos comentários movidos para Feedback de clientes, última seção antes do rodapé, sem link de navegação. Mantidos controles, reprodução manual e pausa ao ocultar a aba. Ilustração da caixa e legenda removidas; seção de personalização reorganizada em texto centralizado. A imagem deixou também a lista pública: pacote agora com 26 arquivos.
+
+Verificação desta alteração: HTML/ESLint/Prettier e os três testes de proteção do pacote passaram. Busca do cabeçalho testada a partir do montador com “melancia”, gerando o catálogo filtrado e uma criação encontrada. Cabeçalho e feedback conferidos a 320 e 1280 pixels, sem transbordamento horizontal; nenhum vídeo no carrossel, vídeo presente na seção final e sem autoplay; console sem erros ou avisos. Não houve merge nem deploy.

@@ -41,7 +41,7 @@ Monte sua combinação
 └── Mensagem pronta para envio pelo WhatsApp
 ```
 
-Menu principal: **Início · Catálogo · Sobre · Contatos**, com **“Monte seu kit”** como botão de destaque. Nas páginas internas, os links de seções levam à respectiva seção da página inicial.
+Menu principal: **Início · Catálogo · Sobre · Contatos**, com **“Compre aqui”** como botão de destaque. Nas páginas internas, os links de seções levam à respectiva seção da página inicial.
 
 ## Comportamento das áreas
 
@@ -122,3 +122,7 @@ WhatsApp de vendas da Marcela e Instagram oficial configurados. A antiga previs�
 ## Revisão de conteúdo e navegação solicitada pelo responsável
 
 Retiradas as seções Coleções/Três formas de encantar e Da ideia ao presente/passo a passo. Menu sem Coleções e com CTA Monte seu kit. Sobre substituído pela foto fornecida e pelo texto integral do casal sob o título Quem está por trás da marca. FAQ renomeada para Perguntas frequentes. Retirado o título Feito em Aracruz–ES, preservando a cidade em texto simples. Busca inicial com sugestões e catálogo filtrado por parâmetro q. Vídeo de feedback incluído como sétimo item do carrossel; controles manuais, pausa ao sair e alternativa textual dos comentários. Esses ajustes substituem os trechos anteriores do planejamento relativos às áreas removidas.
+
+## Ajuste mais recente: compra, busca no cabeçalho e feedback
+
+O responsável substituiu o CTA do menu por Compre aqui, mantendo o destino no montador. Busca Encontre seu produto movida ao cabeçalho das três páginas, com sugestões e catálogo filtrado. Vídeo retirado do carrossel, que volta a conter somente seis fotos; vídeo e comentários ficam na seção Feedback de clientes ao final da página, depois dos contatos, sem link no menu. Ilustração da caixa e texto para guardar bons momentos removidos; conteúdo restante de personalização reorganizado sem a imagem. Essas decisões substituem as posições e os rótulos anteriores.

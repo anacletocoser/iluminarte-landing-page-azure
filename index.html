@@ -41,8 +41,24 @@
         <nav id="menu-principal" class="main-nav" aria-label="Navegação principal">
           <a href="#inicio">Início</a><a href="catalogo.html">Catálogo</a><a href="#sobre">Sobre</a
           ><a href="#contato">Contatos</a
-          ><a class="nav-contact" href="catalogo/monte-seu-kit.html">Monte seu kit ↗</a>
+          ><a class="nav-contact" href="catalogo/monte-seu-kit.html">Compre aqui ↗</a>
         </nav>
+        <form class="home-search header-search" role="search" action="catalogo.html" method="get">
+          <label for="home-search">Encontre seu produto</label>
+          <div class="home-search-row">
+            <input
+              id="home-search"
+              type="search"
+              name="q"
+              maxlength="100"
+              placeholder="Busque por velas, sabonetes, MDF…"
+              autocomplete="off"
+              aria-describedby="home-search-status"
+            /><button class="button button-primary" type="submit">Buscar →</button>
+          </div>
+          <p id="home-search-status" class="small-note" role="status"></p>
+          <ul id="home-search-results" class="search-results" hidden></ul>
+        </form>
       </div>
     </header>
 
@@ -56,22 +72,6 @@
               Velas, sabonetes e criações em madeira que se encontram para transformar um presente
               em uma lembrança especial.
             </p>
-            <form class="home-search" role="search" action="catalogo.html" method="get">
-              <label for="home-search">Encontre sua próxima criação</label>
-              <div class="home-search-row">
-                <input
-                  id="home-search"
-                  type="search"
-                  name="q"
-                  maxlength="100"
-                  placeholder="Busque por velas, sabonetes, MDF…"
-                  autocomplete="off"
-                  aria-describedby="home-search-status"
-                /><button class="button button-primary" type="submit">Buscar →</button>
-              </div>
-              <p id="home-search-status" class="small-note" role="status"></p>
-              <ul id="home-search-results" class="search-results" hidden></ul>
-            </form>
             <div class="hero-actions">
               <a class="button button-primary" href="catalogo.html"
                 >Explore nossas criações <span aria-hidden="true">↗</span></a
@@ -87,7 +87,7 @@
           </div>
           <figure
             class="hero-visual carousel"
-            aria-label="Fotos e vídeo da IluminArte"
+            aria-label="Fotografias dos produtos IluminArte"
             tabindex="0"
           >
             <div class="photo-frame">
@@ -103,46 +103,12 @@
                 width="720"
                 height="960"
                 fetchpriority="high"
-              /><video
-                id="hero-video"
-                controls
-                playsinline
-                preload="none"
-                poster="assets/feedbacks/feedback-capa.jpg"
-                aria-label="Vídeo compartilhado pela IluminArte"
-                aria-describedby="photo-caption"
-                hidden
-              >
-                <source src="assets/feedbacks/feedback-iluminarte.mp4" type="video/mp4" />
-                Seu navegador não reproduziu o vídeo.
-                <a href="assets/feedbacks/feedback-iluminarte.mp4">Abrir vídeo</a>.</video
-              ><span class="photo-tag">Feito de ideias &amp; afeto</span>
+              /><span class="photo-tag">Feito de ideias &amp; afeto</span>
             </div>
-            <details id="video-description" class="video-description" hidden>
-              <summary>Ler os comentários do vídeo</summary>
-              <p>
-                O vídeo mostra sabonetes diante de frutas cítricas e comentários de clientes,
-                encerrando com “Garanta o seu kit”.
-              </p>
-              <p>
-                “Simplesmente amei! Produtos lindos, de ótima qualidade e com uma embalagem
-                impecável. Encantada.”
-              </p>
-              <p>
-                “Vocês arrasam!!! Trabalho com muito cuidado e carinho e dá para ver essa excelência
-                em cada produto de vocês. A fixação do spray para realçar o cheiro no ambiente, o
-                aroma da vela para trazer um momento ainda mais relaxante... cada item sempre muito
-                pensado e planejado por vocês. Já quero os próximos.”
-              </p>
-              <p>
-                “Adquirimos velinha e o cheirinho de água de lençóis, uso todas as vezes que
-                finalizo a limpeza da casa. Simplesmente maravilhoso! Já queremos outros produtos.”
-              </p>
-            </details>
             <div class="carousel-bar">
               <button type="button" id="photo-prev" aria-label="Item anterior" hidden>←</button>
               <p class="carousel-caption" id="photo-caption" aria-live="polite">
-                01 / 07 · Vela aromática drink
+                01 / 06 · Vela aromática drink
               </p>
               <button type="button" id="photo-next" aria-label="Próximo item" hidden>→</button>
             </div>
@@ -160,16 +126,6 @@
 
       <section class="personalized" id="personalizados" aria-labelledby="personalized-title">
         <div class="container personalized-grid">
-          <div class="personalized-art">
-            <span class="detail-label">O carinho também está na embalagem.</span
-            ><img
-              src="assets/caixa-mdf.svg"
-              alt="Exemplo ilustrado de uma caixa de madeira personalizada para compor um kit"
-              width="480"
-              height="440"
-              loading="lazy"
-            /><span class="handwritten" aria-hidden="true">para guardar bons momentos</span>
-          </div>
           <div class="personalized-copy">
             <p class="eyebrow">Do seu jeito, em cada detalhe</p>
             <h2 id="personalized-title">Um kit.<br /><em>Muitas possibilidades.</em></h2>
@@ -282,6 +238,53 @@
             Disponibilidade, prazo, personalização e frete são confirmados no atendimento. Nenhum
             pagamento é realizado neste site.
           </p>
+        </div>
+      </section>
+      <section id="feedback" class="feedback section-space" aria-labelledby="feedback-title">
+        <div class="container feedback-grid">
+          <div>
+            <p class="eyebrow">Carinho que volta para o ateliê</p>
+            <h2 id="feedback-title">Feedback <em>de clientes.</em></h2>
+            <p id="feedback-description">
+              Comentários compartilhados por quem já recebeu um pouco da IluminArte.
+            </p>
+            <details id="video-description" class="video-description">
+              <summary>Ler os comentários do vídeo</summary>
+              <p>
+                O vídeo mostra sabonetes diante de frutas cítricas e comentários de clientes,
+                encerrando com “Garanta o seu kit”.
+              </p>
+              <p>
+                “Simplesmente amei! Produtos lindos, de ótima qualidade e com uma embalagem
+                impecável. Encantada.”
+              </p>
+              <p>
+                “Vocês arrasam!!! Trabalho com muito cuidado e carinho e dá para ver essa excelência
+                em cada produto de vocês. A fixação do spray para realçar o cheiro no ambiente, o
+                aroma da vela para trazer um momento ainda mais relaxante... cada item sempre muito
+                pensado e planejado por vocês. Já quero os próximos.”
+              </p>
+              <p>
+                “Adquirimos velinha e o cheirinho de água de lençóis, uso todas as vezes que
+                finalizo a limpeza da casa. Simplesmente maravilhoso! Já queremos outros produtos.”
+              </p>
+            </details>
+          </div>
+          <div class="feedback-media">
+            <video
+              id="feedback-video"
+              controls
+              playsinline
+              preload="none"
+              poster="assets/feedbacks/feedback-capa.jpg"
+              aria-label="Vídeo compartilhado pela IluminArte"
+              aria-describedby="feedback-description"
+            >
+              <source src="assets/feedbacks/feedback-iluminarte.mp4" type="video/mp4" />
+              Seu navegador não reproduziu o vídeo.
+              <a href="assets/feedbacks/feedback-iluminarte.mp4">Abrir vídeo</a>.
+            </video>
+          </div>
         </div>
       </section>
     </main>

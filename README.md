@@ -20,11 +20,13 @@ Verificações adicionais: `pnpm run test:shop` testa cálculos, formatação, r
 
 ### Revisão da página inicial
 
-O menu usa Início, Catálogo, Sobre, Contatos e **Monte seu kit**. As seções Coleções e o passo a passo de encomenda foram retirados. A seção Sobre traz a foto e o texto do casal; o título da FAQ é Perguntas frequentes. A localização continua apenas como cidade, sem o título Feito em Aracruz–ES.
+O menu usa Início, Catálogo, Sobre, Contatos e **Compre aqui**. A busca **Encontre seu produto** fica no cabeçalho das três páginas, com sugestões que encaminham ao catálogo filtrado por ?q=termo. Em celular, permanece disponível fora do menu compacto. O catálogo preserva a busca na URL e ao recarregar.
 
-A busca da página inicial oferece sugestões locais e abre o catálogo com ?q=termo ao selecionar uma sugestão, pressionar Enter ou Buscar. O catálogo preserva a busca na URL e ao recarregar a página. O carrossel tem seis fotos e o vídeo de feedback fornecido pela marca, com controles, sem reprodução automática e com comentários disponíveis em texto. A troca de item pausa o vídeo.
+Coleções, passo a passo e ilustração da caixa foram retirados. Sobre traz a foto e o texto do casal; a FAQ se chama Perguntas frequentes. A cidade permanece em texto simples, sem endereço residencial ou mapa.
 
-A foto pública é assets/quem-somos/casal-iluminarte.jpg; vídeo e capa ficam em assets/feedbacks/feedback-iluminarte.mp4 e feedback-capa.jpg. Os arquivos originais com nomes do WhatsApp permanecem locais. As cópias públicas estão sem metadados de origem. Imagens e vídeo fornecidos pela marca não integram a licença MIT do código.
+O carrossel contém somente as seis fotos dos produtos. O vídeo fica em **Feedback de clientes**, última seção da página inicial, depois dos contatos e antes do rodapé, sem link no menu. Tem controles manuais, sem autoplay, e alternativa textual dos comentários.
+
+A foto pública é assets/quem-somos/casal-iluminarte.jpg; vídeo e capa ficam em assets/feedbacks/feedback-iluminarte.mp4 e feedback-capa.jpg. Originais com nomes do WhatsApp permanecem locais; as cópias públicas estão sem metadados de origem. Essas mídias não integram a licença MIT do código.
 
 ## Histórico da versão em produção
 
@@ -108,7 +110,7 @@ pnpm run package:site
 pnpm run test:package
 ```
 
-`package:site` recria `dist/` com uma lista explícita de arquivos públicos (27 na versão 2.0): página, CSS, JavaScript, configuração de hospedagem, logo e ilustrações. Não há compilação de framework. `dist/`, dependências, caches, documentação, metadados Git e segredos não são adicionados ao histórico como pacote de publicação.
+`package:site` recria `dist/` com uma lista explícita de arquivos públicos (26 na versão 2.0): página, CSS, JavaScript, configuração de hospedagem, logo e ilustrações. Não há compilação de framework. `dist/`, dependências, caches, documentação, metadados Git e segredos não são adicionados ao histórico como pacote de publicação.
 
 O script confere os arquivos antes de substituir a saída anterior e recusa um destino `dist` que seja um link para outra pasta. Os testes verificam exclusão de arquivos de desenvolvimento, limpeza de saída antiga, preservação da saída quando falta uma entrada e recusa de um link no destino.
 
