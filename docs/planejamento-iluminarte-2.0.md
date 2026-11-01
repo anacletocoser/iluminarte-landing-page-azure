@@ -126,3 +126,7 @@ Retiradas as seções Coleções/Três formas de encantar e Da ideia ao presente
 ## Ajuste mais recente: compra, busca no cabeçalho e feedback
 
 O responsável substituiu o CTA do menu por Compre aqui, mantendo o destino no montador. Busca Encontre seu produto movida ao cabeçalho das três páginas, com sugestões e catálogo filtrado. Vídeo retirado do carrossel, que volta a conter somente seis fotos; vídeo e comentários ficam na seção Feedback de clientes ao final da página, depois dos contatos, sem link no menu. Ilustração da caixa e texto para guardar bons momentos removidos; conteúdo restante de personalização reorganizado sem a imagem. Essas decisões substituem as posições e os rótulos anteriores.
+
+## Ajuste de movimento e navegação móvel
+
+Cabeçalho móvel fixado ao topo durante a rolagem, com pesquisa sempre disponível; fundo com transparência de 50% após rolar e campos opacos, com desfoque para leitura. Desktop preservado sem fixação. Carrossel de seis fotos avança a cada 3 segundos, com pausa/reprodução e suspensão durante interação, fora da tela ou com aba oculta. Movimento reduzido mantém navegação manual. Somente a página inicial recebe entrada dos elementos de baixo para cima e letras rápidas nos trechos em destaque dos títulos. Catálogo e montador permanecem sem animações.

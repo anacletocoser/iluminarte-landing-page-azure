@@ -464,3 +464,13 @@ CTA alterado para Compre aqui nas três páginas, preservando destino no montado
 Carrossel novamente só com seis fotografias. Vídeo e alternativa textual dos comentários movidos para Feedback de clientes, última seção antes do rodapé, sem link de navegação. Mantidos controles, reprodução manual e pausa ao ocultar a aba. Ilustração da caixa e legenda removidas; seção de personalização reorganizada em texto centralizado. A imagem deixou também a lista pública: pacote agora com 26 arquivos.
 
 Verificação desta alteração: HTML/ESLint/Prettier e os três testes de proteção do pacote passaram. Busca do cabeçalho testada a partir do montador com “melancia”, gerando o catálogo filtrado e uma criação encontrada. Cabeçalho e feedback conferidos a 320 e 1280 pixels, sem transbordamento horizontal; nenhum vídeo no carrossel, vídeo presente na seção final e sem autoplay; console sem erros ou avisos. Não houve merge nem deploy.
+
+## Cabeçalho móvel e animações da página inicial
+
+Cabeçalho usa position sticky apenas até 900 pixels. Após rolar 24 pixels, o fundo usa alfa 0,5 com desfoque, sem reduzir opacidade do texto ou pesquisa. Foco dentro do cabeçalho restaura fundo opaco. ResizeObserver mede a altura para compensar âncoras via scroll-padding-top. Menu aberto tem limite de altura e rolagem própria. Desktop permanece static.
+
+Carrossel usa temporizador de 3 segundos, controle Pausar/Reproduzir e pausa ao passar mouse, focar controles, sair da tela ou ocultar a aba. Prefers-reduced-motion desabilita avanço automático. A legenda não faz anúncios contínuos ao leitor de tela enquanto o avanço é automático.
+
+A classe home-page limita entradas por IntersectionObserver a blocos da inicial. Trechos em itálico nos títulos recebem letras com atraso de 32 ms entre elas, preservando palavras inteiras e uma cópia acessível do texto; a representação visual fica aria-hidden. Sem JavaScript o conteúdo original é visível. Movimento reduzido exibe o conteúdo sem efeitos. Catálogo e montador não recebem classes de revelação ou letras e têm animações/transições desabilitadas.
+
+Validação: HTML, ESLint e Prettier passaram; pacote gerado com 26 arquivos. No navegador: avanço observado após 3 segundos, pausa mantida por mais de 3,5 segundos e retomada funcionando. Cabeçalho a 390 pixels manteve top=0 durante rolagem e fundo rgba com alfa 0,5; pesquisa ficou visível. Desktop confirmou posição static. Inicial a 320 pixels sem transbordamento. Catálogo e montador com zero letras/revelações e animation-name none; console sem erros ou avisos.

@@ -47,11 +47,53 @@ if (menuButton && headerInner && siteNavigation) {
   });
 }
 
-// O carrossel contém somente fotografias reais dos produtos.
+// Cabeçalho móvel fixo durante a rolagem; o desktop mantém o comportamento original.
+const siteHeader = document.querySelector(".site-header");
+if (siteHeader) {
+  const updateHeader = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 24);
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  updateHeader();
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() =>
+      document.documentElement.style.setProperty(
+        "--mobile-header-height",
+        siteHeader.offsetHeight + "px",
+      ),
+    ).observe(siteHeader);
+  }
+}
+
+// Fotografias automáticas a cada 3 segundos, com pausa e navegação manual.
 const photo = document.querySelector("#hero-photo");
 if (photo && globalThis.Iluminarte) {
   const products = globalThis.Iluminarte.products;
-  let current = 0;
+  const carousel = document.querySelector(".carousel");
+  const caption = document.querySelector("#photo-caption");
+  const playback = document.querySelector("#carousel-playback");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let current = 0,
+    timer = null,
+    userPaused = false,
+    hovered = false,
+    focused = false,
+    visible = true;
+  const stop = () => {
+    window.clearTimeout(timer);
+    timer = null;
+  };
+  const sync = () => {
+    stop();
+    playback.hidden = reducedMotion.matches;
+    playback.textContent = userPaused ? "Reproduzir carrossel" : "Pausar carrossel";
+    const running =
+      !userPaused && !hovered && !focused && visible && !document.hidden && !reducedMotion.matches;
+    caption.setAttribute("aria-live", running ? "off" : "polite");
+    if (running)
+      timer = window.setTimeout(() => {
+        show(1);
+        sync();
+      }, 3000);
+  };
   const show = (delta) => {
     current = (current + delta + products.length) % products.length;
     const product = products[current];
@@ -63,7 +105,7 @@ if (photo && globalThis.Iluminarte) {
       product.id +
       "-960.jpg 960w";
     photo.alt = product.name + " da IluminArte";
-    document.querySelector("#photo-caption").textContent =
+    caption.textContent =
       String(current + 1).padStart(2, "0") +
       " / " +
       String(products.length).padStart(2, "0") +
@@ -76,13 +118,44 @@ if (photo && globalThis.Iluminarte) {
   ]) {
     const button = document.getElementById(id);
     button.hidden = false;
-    button.addEventListener("click", () => show(delta));
+    button.addEventListener("click", () => {
+      show(delta);
+      sync();
+    });
   }
-  const carousel = document.querySelector(".carousel");
+  playback.addEventListener("click", () => {
+    userPaused = !userPaused;
+    if (!userPaused) {
+      focused = false;
+      hovered = false;
+    }
+    sync();
+  });
+  carousel.addEventListener("pointerenter", (event) => {
+    if (event.pointerType === "mouse") {
+      hovered = true;
+      sync();
+    }
+  });
+  carousel.addEventListener("pointerleave", () => {
+    hovered = false;
+    sync();
+  });
+  carousel.addEventListener("focusin", () => {
+    focused = true;
+    sync();
+  });
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) {
+      focused = false;
+      sync();
+    }
+  });
   carousel.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
       show(event.key === "ArrowLeft" ? -1 : 1);
+      sync();
     }
   });
   let startX = null;
@@ -90,6 +163,7 @@ if (photo && globalThis.Iluminarte) {
     "touchstart",
     (event) => {
       startX = event.touches[0].clientX;
+      stop();
     },
     { passive: true },
   );
@@ -99,9 +173,30 @@ if (photo && globalThis.Iluminarte) {
       const distance = event.changedTouches[0].clientX - startX;
       if (startX !== null && Math.abs(distance) > 50) show(distance < 0 ? 1 : -1);
       startX = null;
+      sync();
     },
     { passive: true },
   );
+  carousel.addEventListener(
+    "touchcancel",
+    () => {
+      startX = null;
+      sync();
+    },
+    { passive: true },
+  );
+  document.addEventListener("visibilitychange", sync);
+  reducedMotion.addEventListener("change", sync);
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      (entries) => {
+        visible = entries[0].isIntersecting;
+        sync();
+      },
+      { threshold: 0.1 },
+    ).observe(carousel);
+  }
+  sync();
 }
 const feedbackVideo = document.querySelector("#feedback-video");
 if (feedbackVideo) {
@@ -154,23 +249,72 @@ if (homeSearch && globalThis.Iluminarte) {
   });
 }
 
-// Conteúdo sempre visível; a animação é apenas um acabamento visual.
+// Animações exclusivas da página inicial; conteúdo legível sem JavaScript.
 if (
+  document.body.classList.contains("home-page") &&
   "IntersectionObserver" in window &&
   !window.matchMedia("(prefers-reduced-motion: reduce)").matches
 ) {
-  const observer = new IntersectionObserver(
+  const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("arrived");
-          observer.unobserve(entry.target);
+          entry.target.classList.add("is-revealed");
+          revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.1 },
+    { threshold: 0.12 },
   );
   document
-    .querySelectorAll(".personalized-copy, .about-grid")
-    .forEach((element) => observer.observe(element));
+    .querySelectorAll(
+      ".hero-copy, .hero-visual, .personalized-copy, .about-photo, .about-grid > div, .faq-grid > div, .contact-inner, .feedback-grid > div",
+    )
+    .forEach((element) => {
+      element.classList.add("scroll-reveal");
+      revealObserver.observe(element);
+    });
+  const letterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("letters-visible");
+          letterObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 },
+  );
+  document.querySelectorAll("main h1 em, main h2 em").forEach((element) => {
+    const text = element.textContent;
+    const accessible = document.createElement("span");
+    accessible.className = "visually-hidden";
+    accessible.textContent = text;
+    const visual = document.createElement("span");
+    visual.setAttribute("aria-hidden", "true");
+    let index = 0;
+    text
+      .split(/(\s+)/)
+      .filter(Boolean)
+      .forEach((word) => {
+        if (/^\s+$/.test(word)) {
+          visual.append(document.createTextNode(word));
+          return;
+        }
+        const group = document.createElement("span");
+        group.className = "animated-word";
+        Array.from(word).forEach((letter) => {
+          const span = document.createElement("span");
+          span.className = "animated-letter";
+          span.textContent = letter;
+          span.style.setProperty("--letter-delay", Math.min(index * 32, 800) + "ms");
+          group.append(span);
+          index++;
+        });
+        visual.append(group);
+      });
+    element.replaceChildren(accessible, visual);
+    element.classList.add("letter-highlight");
+    letterObserver.observe(element);
+  });
 }
