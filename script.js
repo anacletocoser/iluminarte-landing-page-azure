@@ -94,9 +94,43 @@ if (photo && globalThis.Iluminarte) {
         sync();
       }, 3000);
   };
-  const show = (delta) => {
+  let imageRequest = 0;
+  let fade = null;
+  const previousPhoto = photo.cloneNode();
+  previousPhoto.removeAttribute("id");
+  previousPhoto.removeAttribute("fetchpriority");
+  previousPhoto.alt = "";
+  previousPhoto.setAttribute("aria-hidden", "true");
+  previousPhoto.className = "carousel-previous";
+  previousPhoto.hidden = true;
+  photo.before(previousPhoto);
+  const show = async (delta) => {
     current = (current + delta + products.length) % products.length;
     const product = products[current];
+    const request = ++imageRequest;
+    const incoming = new Image();
+    incoming.sizes = photo.sizes;
+    incoming.srcset =
+      "assets/produtos/" +
+      product.id +
+      "-480.jpg 480w, assets/produtos/" +
+      product.id +
+      "-960.jpg 960w";
+    incoming.src = "assets/produtos/" + product.id + "-960.jpg";
+    try {
+      await incoming.decode();
+    } catch {
+      return;
+    }
+    if (request !== imageRequest) return;
+    if (fade) {
+      fade.cancel();
+      fade = null;
+    }
+    previousPhoto.src = photo.src;
+    previousPhoto.srcset = photo.srcset;
+    previousPhoto.sizes = photo.sizes;
+    previousPhoto.hidden = reducedMotion.matches;
     photo.src = "assets/produtos/" + product.id + "-960.jpg";
     photo.srcset =
       "assets/produtos/" +
@@ -111,6 +145,18 @@ if (photo && globalThis.Iluminarte) {
       String(products.length).padStart(2, "0") +
       " · " +
       product.name;
+    if (!reducedMotion.matches) {
+      fade = photo.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 550,
+        easing: "ease-in-out",
+      });
+      fade.onfinish = () => {
+        previousPhoto.hidden = true;
+        fade = null;
+      };
+    } else {
+      previousPhoto.hidden = true;
+    }
   };
   for (const [id, delta] of [
     ["photo-prev", -1],
@@ -307,7 +353,7 @@ if (
           const span = document.createElement("span");
           span.className = "animated-letter";
           span.textContent = letter;
-          span.style.setProperty("--letter-delay", Math.min(index * 32, 800) + "ms");
+          span.style.setProperty("--letter-delay", Math.min(index * 60, 1600) + "ms");
           group.append(span);
           index++;
         });

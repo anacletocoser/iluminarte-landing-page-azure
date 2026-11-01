@@ -130,3 +130,7 @@ O responsável substituiu o CTA do menu por Compre aqui, mantendo o destino no m
 ## Ajuste de movimento e navegação móvel
 
 Cabeçalho móvel fixado ao topo durante a rolagem, com pesquisa sempre disponível; fundo com transparência de 50% após rolar e campos opacos, com desfoque para leitura. Desktop preservado sem fixação. Carrossel de seis fotos avança a cada 3 segundos, com pausa/reprodução e suspensão durante interação, fora da tela ou com aba oculta. Movimento reduzido mantém navegação manual. Somente a página inicial recebe entrada dos elementos de baixo para cima e letras rápidas nos trechos em destaque dos títulos. Catálogo e montador permanecem sem animações.
+
+## Refinamento do cabeçalho e ritmo visual
+
+A pedido do responsável, removida a transparência. Durante rolagem móvel, cabeçalho compacto e opaco com pesquisa, Buscar e ícone do menu à direita; logo, label da busca e texto Menu ocultos visualmente, mantendo nomes acessíveis. No topo a apresentação completa permanece. Letras com 60 ms entre caracteres (antes 32 ms), mantendo efeito rápido e mais perceptível. Carrossel com dissolvência de 550 ms, foto carregada antes da troca e proteção para cliques rápidos; movimento reduzido continua sem efeitos.

@@ -20,11 +20,11 @@ Verificações adicionais: `pnpm run test:shop` testa cálculos, formatação, r
 
 ### Revisão da página inicial
 
-O menu usa Início, Catálogo, Sobre, Contatos e **Compre aqui**. A busca **Encontre seu produto** fica no cabeçalho das três páginas, com sugestões que encaminham ao catálogo filtrado por ?q=termo. Em celular, permanece disponível fora do menu compacto. O cabeçalho acompanha a rolagem; após rolar, só seu fundo fica com opacidade de 50%, preservando a leitura da pesquisa. No desktop, o cabeçalho continua sem fixação. O catálogo preserva a busca na URL e ao recarregar.
+O menu usa Início, Catálogo, Sobre, Contatos e **Compre aqui**. A busca **Encontre seu produto** fica no cabeçalho das três páginas, com sugestões que encaminham ao catálogo filtrado por ?q=termo. Em celular, permanece disponível fora do menu compacto. O cabeçalho acompanha a rolagem e fica compacto e opaco: somente pesquisa, Buscar e ícone do menu na mesma linha, com logo e rótulos ocultos. No desktop, o cabeçalho continua sem fixação. O catálogo preserva a busca na URL e ao recarregar.
 
 Apenas na página inicial, os blocos aparecem deslizando para cima e os destaques dos títulos surgem letra a letra, com respeito a movimento reduzido. Catálogo e montador ficam sem animações. Coleções, passo a passo e ilustração da caixa foram retirados. Sobre traz a foto e o texto do casal; a FAQ se chama Perguntas frequentes. A cidade permanece em texto simples, sem endereço residencial ou mapa.
 
-O carrossel contém somente as seis fotos dos produtos e avança a cada 3 segundos. Há controle de pausa; interação por teclado/mouse, aba oculta e carrossel fora da tela suspendem o avanço. Com movimento reduzido, a navegação é manual. O vídeo fica em **Feedback de clientes**, última seção da página inicial, depois dos contatos e antes do rodapé, sem link no menu. Tem controles manuais, sem autoplay, e alternativa textual dos comentários.
+O carrossel contém somente as seis fotos dos produtos e avança a cada 3 segundos, com dissolvência de 550 ms e carregamento da próxima foto antes da troca. Há controle de pausa; interação por teclado/mouse, aba oculta e carrossel fora da tela suspendem o avanço. Com movimento reduzido, a navegação é manual. O vídeo fica em **Feedback de clientes**, última seção da página inicial, depois dos contatos e antes do rodapé, sem link no menu. Tem controles manuais, sem autoplay, e alternativa textual dos comentários.
 
 A foto pública é assets/quem-somos/casal-iluminarte.jpg; vídeo e capa ficam em assets/feedbacks/feedback-iluminarte.mp4 e feedback-capa.jpg. Originais com nomes do WhatsApp permanecem locais; as cópias públicas estão sem metadados de origem. Essas mídias não integram a licença MIT do código.
 

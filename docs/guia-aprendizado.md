@@ -474,3 +474,11 @@ Carrossel usa temporizador de 3 segundos, controle Pausar/Reproduzir e pausa ao 
 A classe home-page limita entradas por IntersectionObserver a blocos da inicial. Trechos em itálico nos títulos recebem letras com atraso de 32 ms entre elas, preservando palavras inteiras e uma cópia acessível do texto; a representação visual fica aria-hidden. Sem JavaScript o conteúdo original é visível. Movimento reduzido exibe o conteúdo sem efeitos. Catálogo e montador não recebem classes de revelação ou letras e têm animações/transições desabilitadas.
 
 Validação: HTML, ESLint e Prettier passaram; pacote gerado com 26 arquivos. No navegador: avanço observado após 3 segundos, pausa mantida por mais de 3,5 segundos e retomada funcionando. Cabeçalho a 390 pixels manteve top=0 durante rolagem e fundo rgba com alfa 0,5; pesquisa ficou visível. Desktop confirmou posição static. Inicial a 320 pixels sem transbordamento. Catálogo e montador com zero letras/revelações e animation-name none; console sem erros ou avisos.
+
+## Cabeçalho compacto e dissolvência das fotos
+
+Removidos alfa 0,5 e desfoque do cabeçalho. No modo móvel após rolagem, grid com pesquisa à esquerda e botão de menu de 44 pixels à direita do Buscar. Logo e texto Menu ocultos; botão mantém aria-label Menu principal. Nome da pesquisa permanece acessível, sem ocupar uma linha visual no estado compacto. Desktop preservado.
+
+Letras agora usam 60 ms entre caracteres e entrada de 320 ms. Carrossel carrega/decodifica a foto antes de trocar e mantém a foto anterior em camada visual aria-hidden durante a dissolvência de 550 ms. Requisições antigas são descartadas em cliques rápidos e a camada anterior é escondida ao terminar. Movimento reduzido dispensa a dissolvência.
+
+Verificação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador confirmou cabeçalho opaco de aproximadamente 69 pixels (antes 161), menu abrindo e fechando por Escape e largura de 320 pixels sem transbordamento. Desktop confirmou posição static. Durante troca manual, foto observada com opacidade 0 e depois 1, camada anterior escondida ao finalizar; letras com atraso de 60 ms e console sem erros ou avisos.

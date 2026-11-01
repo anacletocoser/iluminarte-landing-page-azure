@@ -1609,7 +1609,7 @@ label {
   transform: translateY(0.25em);
 }
 .home-page .letters-visible .animated-letter {
-  animation: letter-in 0.22s ease both;
+  animation: letter-in 0.32s ease both;
   animation-delay: var(--letter-delay);
 }
 @keyframes letter-in {
@@ -1639,9 +1639,7 @@ label {
     z-index: 20;
   }
   .site-header.is-scrolled {
-    background: rgb(215 195 176 / 50%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--sand);
     box-shadow: 0 3px 18px #44352e15;
   }
   .site-header:focus-within {
@@ -1680,4 +1678,65 @@ body:not(.home-page) *::after {
 }
 body:not(.home-page) .product-photo:hover img {
   transform: none;
+}
+
+/* Troca de fotos por dissolvência, sem alterar as páginas internas. */
+.photo-frame > #hero-photo {
+  position: relative;
+  z-index: 1;
+}
+.photo-frame > .carousel-previous {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-tag {
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .site-header.is-scrolled .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+    min-height: 64px;
+    padding-block: 10px;
+  }
+  .site-header.is-scrolled .brand {
+    display: none;
+  }
+  .site-header.is-scrolled .header-search {
+    order: 1;
+    margin: 0;
+    min-width: 0;
+  }
+  .site-header.is-scrolled .header-search > label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .site-header.is-scrolled .menu-toggle {
+    order: 2;
+    margin: 0;
+    padding: 0;
+    width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .site-header.is-scrolled .menu-toggle > span:first-child {
+    display: none;
+  }
+  .site-header.is-scrolled .main-nav {
+    order: 3;
+    grid-column: 1 / -1;
+  }
+  .site-header.is-scrolled .header-inner.menu-ready .main-nav {
+    display: none;
+  }
+  .site-header.is-scrolled .header-inner.menu-open .main-nav {
+    display: flex;
+  }
 }
