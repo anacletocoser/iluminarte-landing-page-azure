@@ -482,3 +482,9 @@ Removidos alfa 0,5 e desfoque do cabeçalho. No modo móvel após rolagem, grid 
 Letras agora usam 60 ms entre caracteres e entrada de 320 ms. Carrossel carrega/decodifica a foto antes de trocar e mantém a foto anterior em camada visual aria-hidden durante a dissolvência de 550 ms. Requisições antigas são descartadas em cliques rápidos e a camada anterior é escondida ao terminar. Movimento reduzido dispensa a dissolvência.
 
 Verificação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador confirmou cabeçalho opaco de aproximadamente 69 pixels (antes 161), menu abrindo e fechando por Escape e largura de 320 pixels sem transbordamento. Desktop confirmou posição static. Durante troca manual, foto observada com opacidade 0 e depois 1, camada anterior escondida ao finalizar; letras com atraso de 60 ms e console sem erros ou avisos.
+
+## Correção da oscilação do cabeçalho móvel
+
+A alternância de altura do cabeçalho alterava o fluxo da página e podia mudar o próprio scroll usado para decidir o estado, provocando piscadas. O script agora cria uma reserva de espaço estável para o cabeçalho no modo móvel; a barra fica fixa e muda apenas o tamanho visível. No desktop a reserva usa display: contents e o cabeçalho continua static. A reserva é recalculada em redimensionamentos, sem acompanhar a compactação ou a abertura do menu. O modo compacto entra acima de 32 pixels e sai até 8 pixels, evitando alternâncias em pequenos movimentos perto do topo.
+
+Validação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador com rolagem real: topo em scroll 0 (expandido), scroll 58,4 (compacto), retorno a 23,2 (continua compacto) e scroll 0 (expandido). O início do main permaneceu na posição documental 161 em todos os estados. Tela de 320 pixels sem transbordamento e barra em top 0; desktop confirmou static/display contents; console sem erros ou avisos.

@@ -47,19 +47,47 @@ if (menuButton && headerInner && siteNavigation) {
   });
 }
 
-// Cabeçalho móvel fixo durante a rolagem; o desktop mantém o comportamento original.
+// A reserva de espaço não muda quando o cabeçalho móvel encolhe.
+// Assim, a mudança de altura não altera a rolagem que controla seu estado.
 const siteHeader = document.querySelector(".site-header");
 if (siteHeader) {
-  const updateHeader = () => siteHeader.classList.toggle("is-scrolled", window.scrollY > 24);
-  window.addEventListener("scroll", updateHeader, { passive: true });
+  const headerSpace = document.createElement("div");
+  headerSpace.className = "header-space";
+  siteHeader.before(headerSpace);
+  headerSpace.append(siteHeader);
+  const root = document.documentElement;
+  const measureExpanded = () => {
+    if (headerInner.classList.contains("menu-open")) return;
+    const compact = siteHeader.classList.contains("is-scrolled");
+    siteHeader.classList.remove("is-scrolled");
+    root.style.setProperty("--expanded-header-height", siteHeader.offsetHeight + "px");
+    siteHeader.classList.toggle("is-scrolled", compact);
+  };
+  const updateHeader = () => {
+    const compact = siteHeader.classList.contains("is-scrolled");
+    // Limiares diferentes evitam oscilar com pequenos movimentos junto ao topo.
+    siteHeader.classList.toggle(
+      "is-scrolled",
+      mobileScreen.matches && window.scrollY > (compact ? 8 : 32),
+    );
+  };
+  measureExpanded();
   updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("resize", () => {
+    measureExpanded();
+    updateHeader();
+  });
   if ("ResizeObserver" in window) {
-    new ResizeObserver(() =>
-      document.documentElement.style.setProperty(
-        "--mobile-header-height",
-        siteHeader.offsetHeight + "px",
-      ),
-    ).observe(siteHeader);
+    new ResizeObserver(() => {
+      if (
+        !siteHeader.classList.contains("is-scrolled") &&
+        !headerInner.classList.contains("menu-open")
+      ) {
+        root.style.setProperty("--expanded-header-height", siteHeader.offsetHeight + "px");
+      }
+      root.style.setProperty("--mobile-header-height", siteHeader.offsetHeight + "px");
+    }).observe(siteHeader);
   }
 }
 

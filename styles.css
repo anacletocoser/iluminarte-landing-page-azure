@@ -1740,3 +1740,19 @@ body:not(.home-page) .product-photo:hover img {
     display: flex;
   }
 }
+
+/* Mantém o fluxo da página estável nos dois tamanhos do cabeçalho. */
+.header-space {
+  display: contents;
+}
+@media (max-width: 900px) {
+  .header-space {
+    display: block;
+    height: var(--expanded-header-height, 165px);
+  }
+  .header-space .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    width: 100%;
+  }
+}
