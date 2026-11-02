@@ -510,3 +510,9 @@ No modo compacto, o cabeçalho mantém 60% de transparência apenas com a navega
 A mudança de altura usa uma animação de 180 ms, respeita movimento reduzido e conserva a reserva de espaço e os limiares de rolagem que evitam oscilações. Desktop e aparência do cabeçalho normal preservados.
 
 Validação DOM/CSS em 36 estados nas três páginas: ciclos de abertura e fechamento com foco, retorno da transparência, fechamento automático e configuração da animação. Media queries, foco ancestral, resolução da variável de cor e animação foram simulados; não houve revisão visual real nesta sessão. HTML, ESLint, Prettier e empacotamento conferidos. Sem publicação em produção.
+
+## Estabilidade durante a expansão animada do cabeçalho
+
+O ResizeObserver atualizava a reserva de espaço com alturas intermediárias da animação de expansão. Essa mudança no fluxo podia reposicionar a rolagem e inverter o estado do cabeçalho. Agora a reserva não é medida durante uma animação ativa. Eventos de resize que mudam apenas a altura da janela, como os da barra de endereço móvel, também não recalculam a reserva. A transição passou de 180 para 360 ms, com ease-in-out e respeito à preferência de movimento reduzido.
+
+Verificação: HTML, ESLint, Prettier e pacote público aprovados. Teste DOM/CSS nas três páginas confirmou os 36 estados anteriores e simulou alturas intermediárias de 72 a 155 pixels, eventos de resize e rolagem lenta até o topo; a reserva permaneceu em 161 pixels, sem iniciar transições adicionais. Teste simulado, sem revisão visual real no celular. Alteração preparada em branch própria, sem deploy.
