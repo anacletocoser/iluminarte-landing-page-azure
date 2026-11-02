@@ -63,13 +63,41 @@ if (siteHeader) {
     root.style.setProperty("--expanded-header-height", siteHeader.offsetHeight + "px");
     siteHeader.classList.toggle("is-scrolled", compact);
   };
+  let headerTransition = null;
+  const headerReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const updateHeader = () => {
     const compact = siteHeader.classList.contains("is-scrolled");
-    // Limiares diferentes evitam oscilar com pequenos movimentos junto ao topo.
-    siteHeader.classList.toggle(
-      "is-scrolled",
-      mobileScreen.matches && window.scrollY > (compact ? 8 : 32),
-    );
+    const nextCompact = mobileScreen.matches && window.scrollY > (compact ? 8 : 32);
+    if (compact === nextCompact) return;
+    const previousHeight = siteHeader.getBoundingClientRect().height;
+    if (headerTransition) headerTransition.cancel();
+    if (nextCompact) {
+      const navigationHadFocus = siteNavigation.contains(document.activeElement);
+      menuButton.setAttribute("aria-expanded", "false");
+      headerInner.classList.remove("menu-open");
+      if (navigationHadFocus) menuButton.focus({ preventScroll: true });
+    }
+    siteHeader.classList.toggle("is-scrolled", nextCompact);
+    const nextHeight = siteHeader.getBoundingClientRect().height;
+    if (
+      mobileScreen.matches &&
+      !headerReducedMotion.matches &&
+      typeof siteHeader.animate === "function"
+    ) {
+      siteHeader.style.overflow = "hidden";
+      const animation = siteHeader.animate(
+        [{ height: previousHeight + "px" }, { height: nextHeight + "px" }],
+        { duration: 180, easing: "ease-out" },
+      );
+      headerTransition = animation;
+      const finish = () => {
+        if (headerTransition !== animation) return;
+        siteHeader.style.removeProperty("overflow");
+        headerTransition = null;
+      };
+      animation.onfinish = finish;
+      animation.oncancel = finish;
+    }
   };
   measureExpanded();
   updateHeader();

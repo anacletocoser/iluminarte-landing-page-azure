@@ -502,3 +502,11 @@ Os seis testes de domínio e três de proteção do pacote passaram, assim como 
 Conteúdo de Detalhes da criação agrupado em product-details-content com fundo branco nas páginas de catálogo e compra, sem incluir o summary/título. Peso e tamanho mantêm valores sem negrito. Cabeçalho compacto usa fundo com alfa 0,4 (60% de transparência), preservando opacidade dos textos e controles. Regras específicas mantêm o fundo ao receber foco e deixam a navegação expandida transparente, evitando a antiga camada opaca ao clicar no menu.
 
 Validação: HTML/ESLint/Prettier e empacotamento passaram. Teste DOM/CSS isolado executou 33 estados nas três páginas, com abertura/fechamento repetidos e foco no ícone ou nos links. Fundo do cabeçalho manteve alfa 0,4 e fundo da navegação permaneceu transparente. Conferidas seis caixas brancas em cada página de produtos e compra, com título fora e valores das medidas em peso normal. Media queries e foco ancestral foram simulados para verificar a cascata, pois o controle do navegador real continuou sem resposta; não equivale a revisão visual real. Dependência de teste apenas no cache, sem alteração no lockfile ou nas dependências versionadas.
+
+## Menu compacto opaco quando aberto
+
+No modo compacto, o cabeçalho mantém 60% de transparência apenas com a navegação recolhida. Ao abrir o menu, o fundo passa a ser opaco; ao fechar, a transparência retorna, inclusive com foco no botão ou nos links. Entrar no modo compacto fecha automaticamente a navegação e devolve o foco ao botão se ele estava em um link ocultado.
+
+A mudança de altura usa uma animação de 180 ms, respeita movimento reduzido e conserva a reserva de espaço e os limiares de rolagem que evitam oscilações. Desktop e aparência do cabeçalho normal preservados.
+
+Validação DOM/CSS em 36 estados nas três páginas: ciclos de abertura e fechamento com foco, retorno da transparência, fechamento automático e configuração da animação. Media queries, foco ancestral, resolução da variável de cor e animação foram simulados; não houve revisão visual real nesta sessão. HTML, ESLint, Prettier e empacotamento conferidos. Sem publicação em produção.

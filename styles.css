@@ -2014,3 +2014,10 @@ body:not(.home-page) .product-photo:hover img {
     background: transparent;
   }
 }
+
+@media (max-width: 900px) {
+  /* O painel aberto precisa de fundo opaco, mesmo com foco no ícone ou links. */
+  .site-header.is-scrolled:has(.header-inner.menu-open) {
+    background: var(--sand);
+  }
+}
