@@ -1,7 +1,8 @@
 "use strict";
 
 // Preços fornecidos pela marca nos nomes das fotografias, em centavos.
-// Não acrescentar opções de aroma/tamanho sem confirmação de disponibilidade.
+// Cada produto tem um único modelo. Variações devem ser cadastradas como novos produtos.
+// Peso e tamanho aguardam as medidas reais da marca.
 globalThis.Iluminarte = {
   contact: { whatsapp: "5527981148673", instagram: "https://www.instagram.com/iluminarte.atelie/" },
   categories: { velas: "Velas", sabonetes: "Sabonetes", mdf: "MDF", kits: "Kits" },
@@ -12,7 +13,8 @@ globalThis.Iluminarte = {
       category: "velas",
       price: 6000,
       description: "Uma vela para compor momentos e presentes especiais.",
-      options: ["Modelo da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
     },
     {
       id: "sabonete-rosas",
@@ -20,7 +22,8 @@ globalThis.Iluminarte = {
       category: "sabonetes",
       price: 1000,
       description: "Delicadeza em forma de sabonete para presentear com carinho.",
-      options: ["Modelo da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
     },
     {
       id: "sabonete-melancia",
@@ -28,7 +31,8 @@ globalThis.Iluminarte = {
       category: "sabonetes",
       price: 1000,
       description: "Um toque de cor na sua combinação de presentes.",
-      options: ["Modelo da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
     },
     {
       id: "caixa-mdf",
@@ -37,7 +41,8 @@ globalThis.Iluminarte = {
       price: 2500,
       description:
         "Uma caixa para dar forma à sua ideia. Descreva a personalização desejada nas observações; detalhes e eventuais acréscimos serão confirmados no orçamento.",
-      options: ["Modelo da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
       box: true,
     },
     {
@@ -46,7 +51,8 @@ globalThis.Iluminarte = {
       category: "mdf",
       price: 4000,
       description: "Um detalhe especial para acolher e decorar.",
-      options: ["Modelo da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
     },
     {
       id: "kit-lavabo",
@@ -55,7 +61,8 @@ globalThis.Iluminarte = {
       price: 6000,
       description:
         "A composição apresentada na fotografia, para um presente cheio de cuidado. Consulte os detalhes da composição com a loja.",
-      options: ["Composição da foto"],
+      weight: "A confirmar",
+      dimensions: "A confirmar",
     },
   ],
 };

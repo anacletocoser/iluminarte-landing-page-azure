@@ -10,7 +10,7 @@ A branch `feat/reestruturacao-iluminarte` contém catálogo com seis produtos re
 
 Para revisar: `pnpm run package:site` e `pnpm run preview`, depois abra `http://127.0.0.1:4173`. O servidor escuta apenas neste computador e serve somente `dist/`, usando os cabeçalhos de segurança da hospedagem. Encerre com Ctrl+C. Também é possível abrir `index.html` diretamente, mas HTTP local é recomendado para testar rascunho e cópia.
 
-Cadastre produtos em `produtos.js`: identificador, nome, categoria, preço em centavos, descrição, opções confirmadas e fotografias com o mesmo identificador nos tamanhos 480 e 960. Inclua novos arquivos na lista de `scripts/package-site.mjs`.
+Cadastre produtos em `produtos.js`: identificador, nome, categoria, preço em centavos, descrição, peso, tamanho e fotografias com o mesmo identificador nos tamanhos 480 e 960. Inclua novos arquivos na lista de `scripts/package-site.mjs`.
 
 Os contatos oficiais ficam em `Iluminarte.contact`, em `produtos.js`, e na seção Contatos da página inicial. WhatsApp de vendas (Marcela): +55 (27) 98114-8673. Instagram: `https://www.instagram.com/iluminarte.atelie/`. A localização pública é somente Aracruz–ES, conforme decisão da marca; não incluir endereço residencial, mapa ou rotas. O resumo abre o WhatsApp para o cliente revisar e confirmar o envio.
 
@@ -233,3 +233,11 @@ As fotografias fornecidas pela marca em `assets/fotos-produtos/` e suas versões
 ## Guia do aprendizado
 
 Leia o [guia de aprendizado](docs/guia-aprendizado.md) para acompanhar o que já foi feito, o significado dos comandos e as próximas etapas.
+
+## Revisão local de catálogo e compra — 02/11/2026
+
+Na branch `feat/fluxo-catalogo-compra`, o catálogo adiciona uma unidade pelo botão + sem navegar. A confirmação verde temporária oferece link para Compre aqui, com a combinação já salva e âncora no resumo. Fotografias não são links; detalhes usam setas para abrir/recolher. A chamada Monte sua combinação ganhou aparência de botão e os textos explicam a revisão e o envio pelo WhatsApp em outra página. A chamada inicial passou a Nossos produtos.
+
+Produtos não possuem variações: novos modelos devem ser novos produtos com identificadores próprios. Peso e tamanho aguardam dados reais e são exibidos como A confirmar; não foram inventados valores. Rascunhos antigos são migrados sem o campo de modelo. O montador mostra descrição, peso e tamanho e destaca a confirmação de adição com fundo verde.
+
+Validação estática, seis testes de dados/cálculos e três de pacote passaram. Também foi feito teste de integração DOM do catálogo ao montador, incluindo persistência, observações, migração, limite de quantidade e falha de armazenamento. O controle visual do navegador não ficou disponível nesta sessão; a revisão de layout e da posição real da âncora deve ser feita na prévia local. Nenhum merge ou deploy desta revisão foi autorizado.
