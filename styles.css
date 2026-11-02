@@ -1908,3 +1908,54 @@ body:not(.home-page) .product-photo:hover img {
     background: #e8dfd3;
   }
 }
+
+/* Descrição completa em uma única caixa; medidas com destaque. */
+.product-description-box {
+  margin: 14px 0 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f1ede5;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.product-description-box h4 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.product-description-box p {
+  margin: 0 0 8px;
+}
+.product-description-box p:last-child {
+  margin-bottom: 0;
+}
+.product-description-box strong {
+  color: var(--ink);
+}
+/* Desenho geométrico evita o desalinhamento de linha-base do caractere +. */
+.add-symbol {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 0;
+}
+.add-symbol::before,
+.add-symbol::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+.add-symbol::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
