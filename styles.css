@@ -1804,11 +1804,11 @@ body:not(.home-page) .product-photo:hover img {
   visibility: visible;
   opacity: 1;
 }
-.product-copy details > summary::after {
+.product-details > summary::after {
   content: "↓";
   font-size: 20px;
 }
-.product-copy details[open] > summary::after {
+.product-details[open] > summary::after {
   content: "↑";
 }
 .product-specs {
@@ -1920,7 +1920,7 @@ body:not(.home-page) .product-photo:hover img {
   line-height: 1.7;
   color: var(--muted);
 }
-.product-description-box h4 {
+.product-description-box .description-title {
   margin: 0 0 10px;
   color: var(--ink);
   font: inherit;
@@ -1958,4 +1958,23 @@ body:not(.home-page) .product-photo:hover img {
 }
 .add-symbol::after {
   transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Apenas os rótulos das medidas têm destaque; valores em peso normal. */
+.product-specs dd {
+  font-weight: 400;
+}
+.builder-card .product-details {
+  margin: 14px 0 18px;
+}
+.builder-card .product-details > summary {
+  padding-block: 12px;
+  font-size: 12px;
+}
+.builder-card .product-details > summary::after {
+  top: 7px;
+}
+.builder-card .product-details p {
+  padding-right: 0;
+  font-size: 12px;
 }
