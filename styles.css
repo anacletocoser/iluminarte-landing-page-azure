@@ -1984,3 +1984,33 @@ body:not(.home-page) .product-photo:hover img {
   padding-right: 0;
   font-size: 12px;
 }
+
+/* O título fica fora da caixa branca nas duas páginas. */
+.product-details-content {
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+}
+.product-details .product-details-content p {
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.product-details .product-details-content p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  /* 60% transparente = fundo com 40% de opacidade; texto e controles preservados. */
+  .site-header.is-scrolled,
+  .site-header.is-scrolled:focus-within {
+    background: rgb(215 195 176 / 40%);
+  }
+  .site-header.is-scrolled .header-inner,
+  .site-header.is-scrolled .main-nav,
+  .site-header.is-scrolled .header-inner.menu-open .main-nav {
+    background: transparent;
+  }
+}
