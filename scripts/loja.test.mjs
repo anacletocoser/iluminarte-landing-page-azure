@@ -9,7 +9,7 @@ const { products } = context.Iluminarte;
 const core = context.LojaCore;
 const item = (id, quantity = 1) => {
   const p = products.find((p) => p.id === id);
-  return { id, quantity, price: p.price, option: p.options[0] };
+  return { id, quantity, price: p.price };
 };
 test("soma preços em centavos e formata reais", () => {
   const items = [item("vela-drink", 2), item("sabonete-rosas", 3), item("caixa-mdf")];
@@ -57,4 +57,36 @@ test("ids únicos, preços válidos e arquivos reais para todos os produtos", as
           .length > 0,
       );
   }
+});
+
+test("adição soma por produto e não altera a seleção quando excede o limite", () => {
+  const items = [];
+  const product = products.find((p) => p.id === "sabonete-rosas");
+  assert.equal(core.add(items, product), true);
+  assert.equal(core.add(items, product, 2), true);
+  assert.equal(items.length, 1);
+  assert.equal(items[0].quantity, 3);
+  assert.equal(core.total(items), 3000);
+  assert.equal(core.add(items, product, 97), false);
+  assert.equal(core.add(items, product, 0), false);
+  assert.equal(core.add(items, product, 1.5), false);
+  assert.equal(items[0].quantity, 3);
+});
+
+test("migra modelos antigos sem perder produtos e consolida duplicatas", () => {
+  const result = core.reconcile(
+    [
+      { ...item("sabonete-rosas", 2), option: "Modelo da foto" },
+      { ...item("kit-lavabo"), option: "Composição da foto" },
+      item("sabonete-rosas", 3),
+    ],
+    products,
+  );
+  assert.equal(result.changed, true);
+  assert.equal(result.items.length, 2);
+  assert.equal(result.items[0].quantity, 5);
+  assert.equal(result.items[0].option, undefined);
+  const text = core.message(result.items, products, "");
+  assert.doesNotMatch(text, /Modelo|Composição da foto|undefined/);
+  assert.match(text, /110,00/);
 });

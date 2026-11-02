@@ -488,3 +488,25 @@ Verificação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador confir
 A alternância de altura do cabeçalho alterava o fluxo da página e podia mudar o próprio scroll usado para decidir o estado, provocando piscadas. O script agora cria uma reserva de espaço estável para o cabeçalho no modo móvel; a barra fica fixa e muda apenas o tamanho visível. No desktop a reserva usa display: contents e o cabeçalho continua static. A reserva é recalculada em redimensionamentos, sem acompanhar a compactação ou a abertura do menu. O modo compacto entra acima de 32 pixels e sai até 8 pixels, evitando alternâncias em pequenos movimentos perto do topo.
 
 Validação: HTML, ESLint e Prettier passaram; pacote gerado. Navegador com rolagem real: topo em scroll 0 (expandido), scroll 58,4 (compacto), retorno a 23,2 (continua compacto) e scroll 0 (expandido). O início do main permaneceu na posição documental 161 em todos os estados. Tela de 320 pixels sem transbordamento e barra em top 0; desktop confirmou static/display contents; console sem erros ou avisos.
+
+## Adição pelo catálogo e produtos sem variação — 02/11/2026
+
+Criada a branch feat/fluxo-catalogo-compra a partir da main limpa. Nova chamada Nossos produtos. O + do catálogo usa o mesmo rascunho do montador, soma uma unidade e preserva observações. O catálogo relê o rascunho a cada clique; a confirmação só afirma que o item foi adicionado se a gravação for bem-sucedida. Falha de armazenamento oferece acesso ao produto no montador. Aviso temporário verde por 12 segundos, com fechamento e pausa do prazo ao receber foco ou ponteiro. Link de finalização leva a monte-seu-kit.html#resumo; o montador reposiciona a âncora após renderizar o resumo.
+
+Imagens deixaram de ser links. O + tem explicação por hover/foco e nome acessível por produto. Detalhes da criação usa setas para expandir/recolher. CTA do catálogo em botão verde e textos distinguindo catálogo de revisão/envio pelo WhatsApp. Removidos dropdowns e opções dos dados; modelo diferente deve ser novo cadastro. Peso e tamanho em campos próprios, ambos A confirmar nos seis produtos. Migração preserva rascunhos com os antigos modelos e consolida itens repetidos, mantendo o limite de 99. Mensagem do WhatsApp deixa de listar modelo. Confirmação do montador recebe fundo verde.
+
+Os seis testes de domínio e três de proteção do pacote passaram, assim como HTML/ESLint/Prettier. Teste DOM pontual confirmou adição sem navegação, soma e persistência entre páginas, preservação de observações, destino #resumo, ausência de selects, descrição/peso/tamanho, total, mensagem sem modelo, limite e falha de armazenamento. A biblioteca de integração foi usada temporariamente no ambiente local, sem mudança nas dependências versionadas. O navegador integrado não respondeu; a alternativa de abertura do Chrome expirou na autorização do controle visual. Portanto não foi concluída validação visual ou medição real da rolagem ao resumo nesta sessão. A prévia está disponível para revisão; produção permanece intacta.
+
+## Caixas brancas e transparência uniforme do cabeçalho compacto
+
+Conteúdo de Detalhes da criação agrupado em product-details-content com fundo branco nas páginas de catálogo e compra, sem incluir o summary/título. Peso e tamanho mantêm valores sem negrito. Cabeçalho compacto usa fundo com alfa 0,4 (60% de transparência), preservando opacidade dos textos e controles. Regras específicas mantêm o fundo ao receber foco e deixam a navegação expandida transparente, evitando a antiga camada opaca ao clicar no menu.
+
+Validação: HTML/ESLint/Prettier e empacotamento passaram. Teste DOM/CSS isolado executou 33 estados nas três páginas, com abertura/fechamento repetidos e foco no ícone ou nos links. Fundo do cabeçalho manteve alfa 0,4 e fundo da navegação permaneceu transparente. Conferidas seis caixas brancas em cada página de produtos e compra, com título fora e valores das medidas em peso normal. Media queries e foco ancestral foram simulados para verificar a cascata, pois o controle do navegador real continuou sem resposta; não equivale a revisão visual real. Dependência de teste apenas no cache, sem alteração no lockfile ou nas dependências versionadas.
+
+## Menu compacto opaco quando aberto
+
+No modo compacto, o cabeçalho mantém 60% de transparência apenas com a navegação recolhida. Ao abrir o menu, o fundo passa a ser opaco; ao fechar, a transparência retorna, inclusive com foco no botão ou nos links. Entrar no modo compacto fecha automaticamente a navegação e devolve o foco ao botão se ele estava em um link ocultado.
+
+A mudança de altura usa uma animação de 180 ms, respeita movimento reduzido e conserva a reserva de espaço e os limiares de rolagem que evitam oscilações. Desktop e aparência do cabeçalho normal preservados.
+
+Validação DOM/CSS em 36 estados nas três páginas: ciclos de abertura e fechamento com foco, retorno da transparência, fechamento automático e configuração da animação. Media queries, foco ancestral, resolução da variável de cor e animação foram simulados; não houve revisão visual real nesta sessão. HTML, ESLint, Prettier e empacotamento conferidos. Sem publicação em produção.

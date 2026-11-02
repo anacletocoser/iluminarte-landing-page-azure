@@ -1756,3 +1756,268 @@ body:not(.home-page) .product-photo:hover img {
     width: 100%;
   }
 }
+
+/* Catálogo: conhecer o produto, adicionar com + e depois revisar em Compre aqui. */
+.catalog-checkout {
+  margin-top: 12px;
+  font-size: 14px;
+}
+.add-to-cart {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--olive);
+  border-radius: 50%;
+  background: var(--olive);
+  color: #fffdf7;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  line-height: 1;
+}
+.add-to-cart:hover,
+.add-to-cart:focus-visible {
+  background: #414932;
+}
+.add-tooltip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  width: 225px;
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--olive);
+  color: #fffdf7;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.add-to-cart:hover .add-tooltip,
+.add-to-cart:focus-visible .add-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+/* Chevron discreta: v fechado, invertida quando aberto. */
+.product-details > summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  top: 50%;
+  right: 8px;
+}
+.product-details[open] > summary::after {
+  content: "";
+  transform: translateY(-50%) rotate(225deg);
+  top: 50%;
+}
+.product-specs {
+  margin: 14px 0 18px;
+  font-size: 12px;
+}
+.product-specs > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-block: 4px;
+}
+.product-specs dt {
+  font-weight: 600;
+}
+.product-specs dt::after {
+  content: ":";
+}
+.product-specs dd {
+  margin: 0;
+  color: var(--muted);
+}
+.builder-description {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.inline-feedback:empty {
+  display: none;
+}
+.inline-feedback:not(:empty) {
+  padding: 10px 12px;
+  border-radius: 5px;
+  background: #dfe5d2;
+  color: #354024;
+  border: 1px solid #b1bea0;
+  font-weight: 600;
+}
+.inline-feedback.feedback-error {
+  background: #f1e4d8;
+  color: #63483c;
+  border-color: #cfb8a3;
+}
+.cart-notice {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  width: min(410px, calc(100% - 40px));
+  padding: 20px 44px 20px 20px;
+  background: var(--olive);
+  color: #fffdf7;
+  border-radius: 8px;
+  box-shadow: 0 8px 28px #27301a33;
+}
+.cart-notice p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.notice-link {
+  display: inline-block;
+  padding-block: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.notice-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 26px;
+}
+.cart-notice :focus-visible {
+  outline-color: #fffdf7;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  .cart-notice {
+    right: 20px;
+    bottom: 20px;
+  }
+  .builder-card {
+    grid-template-columns: 1fr;
+  }
+  .builder-card > img {
+    max-height: 320px;
+    object-fit: contain;
+    background: #e8dfd3;
+  }
+}
+
+/* Descrição completa em uma única caixa; medidas com destaque. */
+.product-description-box {
+  margin: 14px 0 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f1ede5;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.product-description-box .description-title {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.product-description-box p {
+  margin: 0 0 8px;
+}
+.product-description-box p:last-child {
+  margin-bottom: 0;
+}
+.product-description-box strong {
+  color: var(--ink);
+}
+/* Desenho geométrico evita o desalinhamento de linha-base do caractere +. */
+.add-symbol {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 0;
+}
+.add-symbol::before,
+.add-symbol::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+.add-symbol::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Apenas os rótulos das medidas têm destaque; valores em peso normal. */
+.product-specs dd {
+  font-weight: 400;
+}
+.builder-card .product-details {
+  margin: 14px 0 18px;
+}
+.builder-card .product-details > summary {
+  padding-block: 12px;
+  font-size: 12px;
+}
+.builder-card .product-details p {
+  padding-right: 0;
+  font-size: 12px;
+}
+
+/* O título fica fora da caixa branca nas duas páginas. */
+.product-details-content {
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+}
+.product-details .product-details-content p {
+  margin: 0 0 12px;
+  padding: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.product-details .product-details-content p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  /* 60% transparente = fundo com 40% de opacidade; texto e controles preservados. */
+  .site-header.is-scrolled,
+  .site-header.is-scrolled:focus-within {
+    background: rgb(215 195 176 / 40%);
+  }
+  .site-header.is-scrolled .header-inner,
+  .site-header.is-scrolled .main-nav,
+  .site-header.is-scrolled .header-inner.menu-open .main-nav {
+    background: transparent;
+  }
+}
+
+@media (max-width: 900px) {
+  /* O painel aberto precisa de fundo opaco, mesmo com foco no ícone ou links. */
+  .site-header.is-scrolled:has(.header-inner.menu-open) {
+    background: var(--sand);
+  }
+}
