@@ -1804,12 +1804,21 @@ body:not(.home-page) .product-photo:hover img {
   visibility: visible;
   opacity: 1;
 }
+/* Chevron discreta: v fechado, invertida quando aberto. */
 .product-details > summary::after {
-  content: "↓";
-  font-size: 20px;
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  top: 50%;
+  right: 8px;
 }
 .product-details[open] > summary::after {
-  content: "↑";
+  content: "";
+  transform: translateY(-50%) rotate(225deg);
+  top: 50%;
 }
 .product-specs {
   margin: 14px 0 18px;
@@ -1970,9 +1979,6 @@ body:not(.home-page) .product-photo:hover img {
 .builder-card .product-details > summary {
   padding-block: 12px;
   font-size: 12px;
-}
-.builder-card .product-details > summary::after {
-  top: 7px;
 }
 .builder-card .product-details p {
   padding-right: 0;
