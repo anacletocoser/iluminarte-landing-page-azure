@@ -56,14 +56,14 @@ if (siteHeader) {
   siteHeader.before(headerSpace);
   headerSpace.append(siteHeader);
   const root = document.documentElement;
+  let headerTransition = null;
   const measureExpanded = () => {
-    if (headerInner.classList.contains("menu-open")) return;
+    if (headerTransition || headerInner.classList.contains("menu-open")) return;
     const compact = siteHeader.classList.contains("is-scrolled");
     siteHeader.classList.remove("is-scrolled");
     root.style.setProperty("--expanded-header-height", siteHeader.offsetHeight + "px");
     siteHeader.classList.toggle("is-scrolled", compact);
   };
-  let headerTransition = null;
   const headerReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const updateHeader = () => {
     const compact = siteHeader.classList.contains("is-scrolled");
@@ -87,7 +87,7 @@ if (siteHeader) {
       siteHeader.style.overflow = "hidden";
       const animation = siteHeader.animate(
         [{ height: previousHeight + "px" }, { height: nextHeight + "px" }],
-        { duration: 180, easing: "ease-out" },
+        { duration: 360, easing: "ease-in-out" },
       );
       headerTransition = animation;
       const finish = () => {
@@ -102,12 +102,18 @@ if (siteHeader) {
   measureExpanded();
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
+  let measuredWidth = window.innerWidth;
   window.addEventListener("resize", () => {
+    // A barra de endereço móvel altera a altura da janela durante a rolagem.
+    if (window.innerWidth === measuredWidth) return;
+    measuredWidth = window.innerWidth;
     measureExpanded();
     updateHeader();
   });
   if ("ResizeObserver" in window) {
     new ResizeObserver(() => {
+      // Alturas intermediárias da animação não podem mudar o fluxo da página.
+      if (headerTransition) return;
       if (
         !siteHeader.classList.contains("is-scrolled") &&
         !headerInner.classList.contains("menu-open")
